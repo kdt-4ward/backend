@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from backend.core.db import SessionLocal
-from backend.models.db_models import Message
+from core.db import SessionLocal
+from models.db_models import Message
 
 router = APIRouter()
 

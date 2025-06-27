@@ -1,10 +1,9 @@
 # sample_app/core/bot.py
 import json
 from datetime import datetime
-
-from backend.core.redis import redis_client
-from backend.models.db_models import AIMessage, PersonaConfig  # <- 추가
-from backend.core.db import SessionLocal
+from core.redis import redis_client
+from models.db_models import AIMessage, PersonaConfig  # <- 추가
+from core.db import SessionLocal
 
 DEFAULT_SYSTEM_PROMPT = "너는 연애 조력자로서 사용자에게 공감하고 친절히 대답해주는 chatbot이야. 사용자가 요청하기 전까진 최대한 간략히 대답해줘."
 DEFAULT_NAME="무민"

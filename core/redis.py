@@ -1,6 +1,6 @@
 import json
 import redis
-from backend.core.settings import settings
+from core.settings import settings
 
 # Redis 연결
 redis_client = redis.StrictRedis(host=settings.redis_host, port=settings.redis_port, db=0, decode_responses=True)

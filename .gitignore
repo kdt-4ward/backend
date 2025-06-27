@@ -1,0 +1,22 @@
+# 환경변수
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# VSCode, JetBrains 등 에디터 설정
+.vscode/
+.idea/
+
+# 로그파일, 캐시
+*.log
+.cache/
+*.db
+
+# OS별 무시 파일
+.DS_Store
+Thumbs.db

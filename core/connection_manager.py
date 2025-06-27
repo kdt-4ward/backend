@@ -1,7 +1,6 @@
 from fastapi import WebSocket
 from typing import Dict, Tuple, Optional
-import json
-from backend.core.redis import save_couple_mapping, load_couple_mapping
+from core.redis import save_couple_mapping, load_couple_mapping
 
 class ConnectionManager:
     def __init__(self):

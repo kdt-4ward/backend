@@ -1,9 +1,9 @@
 from openai import AsyncOpenAI
-from backend.core.db import get_engine
-from backend.core.settings import settings
-from backend.core.connection_manager import ConnectionManager
+from core.db import get_engine
+from core.connection_manager import ConnectionManager
 from fastapi import APIRouter
 from asyncio import Semaphore
+from core.settings import settings
 
 client = AsyncOpenAI(api_key=settings.openai_api_key)
 engine = get_engine()

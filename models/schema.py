@@ -1,6 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
+class GoogleAuthCode(BaseModel):
+    code: str
+
 class ChatRequest(BaseModel):
     user_id: str
     message: str

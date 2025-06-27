@@ -1,10 +1,10 @@
 from tenacity import retry, stop_after_attempt, wait_fixed
-from backend.config import client
+from config import client
 from langchain_openai import ChatOpenAI
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-
+from core.settings import settings
 ##############TODO: 수정 중 ####################
 
 # output parser
@@ -16,7 +16,8 @@ chat_llm_async: BaseChatModel = ChatOpenAI(
     temperature=0.7,
     streaming=False,
     verbose=True,
-    max_tokens=1024
+    max_tokens=1024,
+    api_key=settings.openai_api_key
 )
 
 # prompt

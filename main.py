@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routers import ai_chat, ws_chat, history
-from backend.models.db_models import Base
-from backend.core.db import engine
-from backend.core.settings import settings
+from routers import ai_chat, ws_chat, history, auth
+from models.db_models import Base
+from core.db import engine
+from core.settings import settings
 
 app = FastAPI(
     title=settings.app_name,
@@ -25,3 +25,4 @@ app.add_middleware(
 app.include_router(ai_chat.router)
 app.include_router(ws_chat.router)
 app.include_router(history.router)  # 선택
+app.include_router(auth.router)

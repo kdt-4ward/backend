@@ -30,6 +30,6 @@ class AIMessage(Base):
 class PersonaConfig(Base):
     __tablename__ = "persona_config"
 
-    user_id = Column(String, primary_key=True, index=True)
-    persona_name = Column(String, default="무민")
+    user_id = Column(String(255), primary_key=True, index=True)
+    persona_name = Column(String(255), default="무민")
     updated_at = Column(DateTime, default=datetime.utcnow)

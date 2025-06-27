@@ -1,8 +1,8 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
-from backend.core.connection_manager import ConnectionManager
-from backend.core.db import SessionLocal
-from backend.models.db_models import Message
-from backend.config import client, router, manager
+from core.connection_manager import ConnectionManager
+from core.db import SessionLocal
+from models.db_models import Message
+from config import client, router, manager
 import json
 from datetime import datetime
 

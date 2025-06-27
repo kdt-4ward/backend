@@ -1,10 +1,10 @@
 from fastapi.responses import StreamingResponse
 from typing import AsyncGenerator
-from backend.models.schema import ChatRequest, BotConfigRequest
-from backend.config import client, router, semaphore, manager
-from backend.core.bot import PersonaChatBot
+from models.schema import ChatRequest, BotConfigRequest
+from config import client, router, semaphore, manager
+from core.bot import PersonaChatBot
 from tenacity import retry, stop_after_attempt, wait_fixed, RetryError
-from backend.services.openai_client import call_openai_stream_async
+from services.openai_client import call_openai_stream_async
 
 @router.post("/chat/stream")
 async def stream_chat_with_persona(req: ChatRequest):

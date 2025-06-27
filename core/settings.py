@@ -24,10 +24,14 @@ class Settings(BaseSettings):
     redis_port: int = Field(default=6379, env="REDIS_PORT")
     redis_db: int = Field(default=0, env="REDIS_DB")
 
+    # === Google OAuth ===
+    google_client_id: str = Field(..., env="GOOGLE_CLIENT_ID")
+    google_client_secret: str = Field(..., env="GOOGLE_CLIENT_SECRET")
+    google_redirect_uri: str = Field(..., env="GOOGLE_REDIRECT_URI")
+    
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
-
 
 # 싱글톤 객체
 settings = Settings()
