@@ -5,3 +5,8 @@ pymysql
 openai
 langchain
 langchain_openai
+python-dotenv
+pydantic-settings
+httpx
+tenacity
+redis
