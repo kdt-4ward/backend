@@ -22,6 +22,6 @@ app.add_middleware(
 )
 
 # 라우터 등록
-app.include_router(ai_chat.router)
-app.include_router(ws_chat.router)
-app.include_router(history.router)  # 선택
+# app.include_router(ai_chat.router)
+# app.include_router(ws_chat.router)
+# app.include_router(history.router)  # 선택
