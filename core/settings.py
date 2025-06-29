@@ -4,7 +4,7 @@ from pydantic import Field
 
 class Settings(BaseSettings):
     # === 앱 설정 ===
-    app_name: str = Field(default="LoveTune", env="APP_NAME")
+    app_name: str = Field(default="LuvTune", env="APP_NAME")
     environment: str = Field(default="development", env="ENVIRONMENT")  # development, production, test
     debug: bool = Field(default=True, env="DEBUG")
     app_host: str = Field(default="0.0.0.0", env="APP_HOST")

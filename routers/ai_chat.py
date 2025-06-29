@@ -1,10 +1,11 @@
 from fastapi.responses import StreamingResponse
 from typing import AsyncGenerator
 from models.schema import ChatRequest, BotConfigRequest
-from config import client, router, semaphore, manager
+from config import router, semaphore
 from core.bot import PersonaChatBot
 from tenacity import retry, stop_after_attempt, wait_fixed, RetryError
 from services.openai_client import call_openai_stream_async
+from core.dependencies import get_connection_manager
 
 @router.post("/chat/stream")
 async def stream_chat_with_persona(req: ChatRequest):
@@ -54,7 +55,7 @@ async def reset_ai_chat_session(req: ChatRequest):
 @router.post("/chat/configure")
 async def set_ai_bot_config(req: BotConfigRequest):
     # 함께 키우는 반려펫이기 때문에 이름 같이 변경
-    partner_id = manager.get_partner(req.user_id)
+    partner_id = get_connection_manager().get_partner(req.user_id)
     bot = PersonaChatBot(req.user_id)
     bot.set_persona_name(req.persona_name)
 

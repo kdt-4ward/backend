@@ -4,16 +4,14 @@ from core.redis import save_couple_mapping, load_couple_mapping
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: Dict[str, WebSocket] = {}  # user_id → websocket
-        self.couple_map: Dict[str, Tuple[str, str]] = {}    # couple_id → (user1, user2)
-        self.user_to_couple: Dict[str, str] = {}            # user_id → couple_id
+        self.active_connections: Dict[str, WebSocket] = {}
+        self.couple_map: Dict[str, Tuple[str, str]] = {}
+        self.user_to_couple: Dict[str, str] = {}
 
-    # user_id - websocket 연결
     async def connect(self, user_id: str, websocket: WebSocket):
         await websocket.accept()
         self.active_connections[user_id] = websocket
 
-    # user_id - websocket 연결해제
     def disconnect(self, user_id: str):
         self.active_connections.pop(user_id, None)
         self.user_to_couple.pop(user_id, None)
@@ -51,20 +49,17 @@ class ConnectionManager:
         for target_id, conn in self.active_connections.items():
             if self.get_couple_id(target_id) == couple_id:
                 await conn.send_json({"type": "status", "user": user_id, "status": status})
-    
+
     def register_couple(self, user_id: str, partner_id: str, couple_id: str):
         self.couple_map[couple_id] = (user_id, partner_id)
         self.user_to_couple[user_id] = couple_id
         self.user_to_couple[partner_id] = couple_id
-
-        # Redis에도 저장
         save_couple_mapping(user_id, partner_id, couple_id)
 
     def auto_register_from_redis(self, user_id: str):
         couple_id, partner_id = load_couple_mapping(user_id)
         if not couple_id or not partner_id:
             return
-
         self.user_to_couple[user_id] = couple_id
         if couple_id not in self.couple_map:
             self.couple_map[couple_id] = (user_id, partner_id)

@@ -4,11 +4,19 @@ from routers import ai_chat, ws_chat, history, auth
 from models.db_models import Base
 from core.db import engine
 from core.settings import settings
+from core.db_utils import create_database_if_not_exists
 
 app = FastAPI(
     title=settings.app_name,
     debug=settings.debug
 )
+
+
+def startup():
+    create_database_if_not_exists()
+    # 추가로 테이블 생성, 마이그레이션 등
+
+startup()
 
 # DB 테이블 생성
 Base.metadata.create_all(bind=engine)

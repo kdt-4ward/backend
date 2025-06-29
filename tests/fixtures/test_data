@@ -1,0 +1,21 @@
+from models.db_models import User, Couple, Message
+from datetime import datetime
+
+def create_dummy_couple(db, user1_id="userA", user2_id="userB", couple_id="coupleAB"):
+    db.add_all([
+        User(id=user1_id),
+        User(id=user2_id),
+        Couple(id=couple_id, user1_id=user1_id, user2_id=user2_id)
+    ])
+    db.commit()
+
+def insert_dummy_message(db, couple_id, sender, content):
+    msg = Message(
+        couple_id=couple_id,
+        user_id=sender,
+        content=content,
+        created_at=datetime.utcnow(),
+        is_delivered=False
+    )
+    db.add(msg)
+    db.commit()

@@ -22,3 +22,18 @@ class BotConfigRequest(BaseModel):
 class ChatHistoryRequest(BaseModel):
     user1: str
     user2: str
+
+### solution ###
+class ChatInput(BaseModel):
+    text: str
+
+class QuestionnaireInput(BaseModel):
+    user_answers: str
+
+class DailyEmotionInput(BaseModel):
+    daily_log: str
+
+class WeeklySolutionInput(BaseModel):
+    chat_traits: str
+    questionnaire_traits: str
+    daily_emotions: str

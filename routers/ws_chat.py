@@ -1,29 +1,33 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
 from core.connection_manager import ConnectionManager
+from core.dependencies import get_connection_manager
 from core.db import SessionLocal
 from models.db_models import Message
-from config import client, router, manager
+from config import router
 import json
 from datetime import datetime
 
-
 @router.websocket("/ws/{user_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str):
+async def websocket_endpoint(
+    websocket: WebSocket,
+    user_id: str,
+    manager: ConnectionManager = Depends(get_connection_manager)
+):
     await manager.connect(user_id, websocket)
-    manager.auto_register_from_redis(user_id)  # 👈 자동 등록 추가
+    manager.auto_register_from_redis(user_id)  # 👈 자동 등록
     await manager.broadcast_status(user_id, "online")
 
     db = SessionLocal()
 
     try:
-        # ✅ 상대방이 접속 중일 경우 미전달 메시지 전송
         couple_id = manager.get_couple_id(user_id)
         partner_id = manager.get_partner(user_id)
 
+        # ✅ 미전달 메시지 전송
         if partner_id and couple_id:
             undelivered = db.query(Message).filter_by(
                 couple_id=couple_id,
-                user_id=partner_id,  # 상대방이 보낸 메시지
+                user_id=partner_id,
                 is_delivered=False
             ).order_by(Message.created_at).all()
 
@@ -60,7 +64,6 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
                     }, partner_id)
 
             elif message_data["type"] == "message":
-
                 couple_id = message_data["couple_id"]
                 message = message_data.get("message")
                 image_url = message_data.get("image_url")
@@ -78,7 +81,6 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
                 db.add(db_msg)
                 db.commit()
 
-                # 접속 상태에 따라 메시지 전송
                 if manager.is_user_connected(partner_id):
                     await manager.send_personal_message(json.dumps({
                         "type": "message",
