@@ -47,16 +47,6 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     # 기타 필요한 필드 추가
 
-# ================ ChatLog ================
-class ChatLog(Base):
-    __tablename__ = "chat_logs"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    couple_id = Column(String(255), nullable=False)
-    user_id = Column(String(255), nullable=False)
-    content = Column(Text)
-    timestamp = Column(DateTime, default=datetime.utcnow)
-
 # ================ Questionnaire ================
 class Questionnaire(Base):
     __tablename__ = "questionnaires"
@@ -72,8 +62,9 @@ class EmotionLog(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(String(255), nullable=False)
-    summary = Column(Text)
+    emotion = Column(Text)
     date = Column(DateTime, default=datetime.utcnow)
+    memo = Column(Text)
 
 # ================ WeeklySolution (분석 결과 저장용, 선택) ================
 class WeeklySolution(Base):

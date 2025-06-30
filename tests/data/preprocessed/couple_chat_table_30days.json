@@ -1,0 +1,2702 @@
+[
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "드디어 합격 문자 받았어!!! 나 진짜 붙었어!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-8-36",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "진짜?! 너무너무 축하해!!! 내가 더 기분 좋다!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-9-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "떨려서 손이 덜덜 떨릴 정도였는데 이제야 실감 나.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-9-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "너 노력한 거 다 봤잖아. 이건 당연한 결과야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-9-27",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "항상 옆에서 응원해준 너 덕분이야. 고마워 정말.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-10-4",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘은 무조건 축하파티 하자! 뭐 먹고 싶어?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-10-13",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고기! 진짜 제일 맛있는 고기 먹고 싶어 ㅎㅎ",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-10-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오케이! 내가 예약할게. 오늘 주인공은 너야!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-10-52",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내일도 나 기분 좋게 계속 웃을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-11-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그 웃음 내가 계속 지켜줄게. 다시 한 번 축하해 ♥",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-23-11-50",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "오늘 약속 생각 안 났어? 나 혼자 카페에서 기다렸어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-11-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "정말 미안해… 회의가 예상보다 길어졌고 정신이 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-11-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "한 마디라도 해줬으면 괜찮았을 텐데. 무시당한 기분이었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-11-43",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 너무 배려가 부족했어. 너한테 상처 줄 생각은 진짜 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-11-47",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "알아. 그래서 더 마음이 복잡해. 네가 그런 사람 아닌 거 아는데…",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-12-8",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 내가 만회할 수 있게 기회를 줘. 지금 당장 너한테 갈게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-12-36",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금은 아니더라도… 네 진심이 느껴지긴 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-13-0",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고마워. 다음엔 실망시키지 않게 더 신경 쓸게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-13-24",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 나도 좀 더 이해하려고 해볼게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-13-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 이런 일 겪으면서 더 단단해지는 거겠지.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-24-13-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 메시지 뭐야… 나 몰래 연락한 거야?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-12-52",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그건 그냥 친구야. 특별한 건 아니었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-13-19",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그럼 왜 숨겼어? 나랑 있을 땐 핸드폰도 못 보게 하면서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-13-43",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "숨긴 건 아니었고… 그냥 말 안 했을 뿐이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-14-3",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그게 숨긴 거지. 신뢰는 그렇게 무너지는 거야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-14-5",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "미안해. 내 행동이 문제였다는 건 알아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-14-33",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 너무 배신감 들어. 내 마음은 뭐였을까 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-14-39",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "제발 한 번만 믿어줘. 그 이상은 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-14-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 싶었는데… 오늘은 혼자 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-15-13",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "알겠어. 네 마음 정리될 때까지 기다릴게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-25-15-38",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "아까 했던 말… 진심 아니었어. 감정에 휩쓸렸어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-8-31",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "듣고 너무 상처였어. 네가 그런 말 할 줄 몰랐어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-8-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그때는 너무 화가 나서 아무 생각도 안 들었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-9-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "화났다고 해도 지켜야 할 선은 있었잖아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-9-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 나중에 얼마나 후회했는지 몰라.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-9-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "나한테 미안한 건 알겠어. 근데 쉽진 않아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-10-10",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그 말 들어도 괜찮아. 내가 감당할게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-10-21",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "앞으로는 말보다 마음을 먼저 전해줘.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-10-47",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "응. 지금처럼 너한테 후회하게 되는 일 안 만들게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-10-58",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 기다릴게. 진심이라면 보여줘.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-26-11-21",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 메시지 뭐야… 나 몰래 연락한 거야?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-8-6",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그건 그냥 친구야. 특별한 건 아니었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-8-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그럼 왜 숨겼어? 나랑 있을 땐 핸드폰도 못 보게 하면서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-8-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "숨긴 건 아니었고… 그냥 말 안 했을 뿐이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-8-56",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그게 숨긴 거지. 신뢰는 그렇게 무너지는 거야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-9-3",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "미안해. 내 행동이 문제였다는 건 알아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-9-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 너무 배신감 들어. 내 마음은 뭐였을까 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-9-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "제발 한 번만 믿어줘. 그 이상은 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-10-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 싶었는데… 오늘은 혼자 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-10-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "알겠어. 네 마음 정리될 때까지 기다릴게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-27-10-47",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "요즘 너무 무기력해. 뭐 하나 해도 재미가 없어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-12-26",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도 그래. 일어나서 일하고 자고, 반복이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-13-2",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "사람들도 만나기 싫고 그냥 멍하니 하루가 가.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-13-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 이런 날엔 서로 기대는 것도 필요해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-13-16",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "너랑 통화만 해도 조금 나아지는 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-13-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그럼 오늘 밤엔 아무 말 없이 음악 틀고 통화만 할래?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-14-14",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응… 그거 좋다. 네 숨소리만 들려도 안정될 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-14-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "같이 무기력한 기분 느끼더라도 혼자는 아니니까.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-15-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "맞아. 오늘도 네가 있어서 견딘다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-15-33",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 언젠간 이 시기도 지나가겠지. 함께 이겨내자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-28-15-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 이렇게 너랑 걷는 것만으로도 너무 행복하다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-7-31",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도. 별다른 이벤트 없이 그냥 함께 있다는 게 좋다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-7-39",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 평범한 순간이 오히려 제일 오래 기억에 남을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-8-17",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 우리 서로 바라보는 눈빛도 너무 따뜻하지 않아?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-8-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "가끔은 말 없이 함께 있는 게 가장 깊은 대화 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-9-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "지금 이 시간, 이 공간, 이 공기 다 소중해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-9-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이대로 시간이 멈췄으면 좋겠다는 생각까지 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-10-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 앞으로도 자주 이런 밤 함께 걷자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-11-1",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래. 오늘 너랑 있어서 정말 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-11-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 더 고마워. 나의 행복이 되어줘서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-29-12-0",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "오늘 하루 종일 무슨 일 있었어? 평소보다 연락이 없어서 좀 걱정됐어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-7-2",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "미안… 정신없이 바빴고 좀 기운도 없어서 그냥 조용히 쉬고 있었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-7-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "괜찮아? 어디 아픈 건 아니지? 네가 너무 조용하니까 자꾸 안 좋은 생각이 들었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-8-3",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "아프진 않아. 그냥 좀 우울했어. 요즘 일도 많고 생각도 많아서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-8-26",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그럼 더더욱 말해줬어야지… 네가 조용하면 난 계속 불안해져.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-8-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아… 미안해. 너한테 의지하고 싶으면서도 괜히 혼자 있고 싶고 그런 마음이었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-8-52",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그런 마음 드는 건 이해해. 근데 네가 혼자서 너무 오래 갇혀 있지 않았으면 해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-9-15",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "네가 이렇게 걱정하고 기다려줬다는 거 알게 되니까 마음이 조금 풀리는 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-9-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "다행이야. 다음엔 혼자 있고 싶어도 한 마디만이라도 해줘. 그게 난 너무 커.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-9-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "응, 약속할게. 나도 너 없으면 이렇게 버티기 힘든 사람이라는 거 새삼 느껴졌어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-06-30-9-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "드디어 합격 문자 받았어!!! 나 진짜 붙었어!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-10-40",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "진짜?! 너무너무 축하해!!! 내가 더 기분 좋다!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-11-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "떨려서 손이 덜덜 떨릴 정도였는데 이제야 실감 나.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-11-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "너 노력한 거 다 봤잖아. 이건 당연한 결과야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-11-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "항상 옆에서 응원해준 너 덕분이야. 고마워 정말.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-11-45",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘은 무조건 축하파티 하자! 뭐 먹고 싶어?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-11-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고기! 진짜 제일 맛있는 고기 먹고 싶어 ㅎㅎ",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-12-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오케이! 내가 예약할게. 오늘 주인공은 너야!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-12-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내일도 나 기분 좋게 계속 웃을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-12-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그 웃음 내가 계속 지켜줄게. 다시 한 번 축하해 ♥",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-01-13-5",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 많이 힘들었지? 표정이 말해주더라.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-7-38",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응… 아무것도 하기 싫고 눈물만 났어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-8-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "괜찮아. 오늘은 그냥 내가 옆에 있을게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-8-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "네 말 한 마디에 마음이 조금 풀리는 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-8-37",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "따뜻한 차 마실래? 조용히 같이 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-9-8",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 아무 말 안 해도 괜찮아. 네가 있어서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-9-21",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "이럴 때일수록 네가 얼마나 소중한지 더 느껴져.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-9-40",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고마워. 너랑 있으니 숨통이 트여.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-9-50",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "앞으론 힘든 날엔 꼭 나한테 기대. 혼자 두지 않을게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-10-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내가 정말 좋은 사람을 만났구나 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-02-10-38",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 많이 힘들었지? 표정이 말해주더라.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-7-46",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응… 아무것도 하기 싫고 눈물만 났어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-7-58",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "괜찮아. 오늘은 그냥 내가 옆에 있을게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-7-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "네 말 한 마디에 마음이 조금 풀리는 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-8-3",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "따뜻한 차 마실래? 조용히 같이 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-8-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 아무 말 안 해도 괜찮아. 네가 있어서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-9-6",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "이럴 때일수록 네가 얼마나 소중한지 더 느껴져.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-9-40",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고마워. 너랑 있으니 숨통이 트여.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-10-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "앞으론 힘든 날엔 꼭 나한테 기대. 혼자 두지 않을게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-10-46",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내가 정말 좋은 사람을 만났구나 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-03-11-8",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 메시지 뭐야… 나 몰래 연락한 거야?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-8-46",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그건 그냥 친구야. 특별한 건 아니었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-8-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그럼 왜 숨겼어? 나랑 있을 땐 핸드폰도 못 보게 하면서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-9-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "숨긴 건 아니었고… 그냥 말 안 했을 뿐이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-9-53",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그게 숨긴 거지. 신뢰는 그렇게 무너지는 거야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-9-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "미안해. 내 행동이 문제였다는 건 알아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-10-6",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 너무 배신감 들어. 내 마음은 뭐였을까 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-10-26",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "제발 한 번만 믿어줘. 그 이상은 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-11-0",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 싶었는데… 오늘은 혼자 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-11-29",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "알겠어. 네 마음 정리될 때까지 기다릴게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-04-11-47",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "오늘 약속 생각 안 났어? 나 혼자 카페에서 기다렸어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-11-37",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "정말 미안해… 회의가 예상보다 길어졌고 정신이 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-12-4",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "한 마디라도 해줬으면 괜찮았을 텐데. 무시당한 기분이었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-12-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 너무 배려가 부족했어. 너한테 상처 줄 생각은 진짜 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-12-55",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "알아. 그래서 더 마음이 복잡해. 네가 그런 사람 아닌 거 아는데…",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-13-35",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 내가 만회할 수 있게 기회를 줘. 지금 당장 너한테 갈게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-13-44",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금은 아니더라도… 네 진심이 느껴지긴 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-14-7",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고마워. 다음엔 실망시키지 않게 더 신경 쓸게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-14-24",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 나도 좀 더 이해하려고 해볼게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-14-29",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 이런 일 겪으면서 더 단단해지는 거겠지.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-05-14-29",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 메시지 뭐야… 나 몰래 연락한 거야?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-9-56",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그건 그냥 친구야. 특별한 건 아니었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-10-13",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그럼 왜 숨겼어? 나랑 있을 땐 핸드폰도 못 보게 하면서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-10-45",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "숨긴 건 아니었고… 그냥 말 안 했을 뿐이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-10-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그게 숨긴 거지. 신뢰는 그렇게 무너지는 거야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-11-19",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "미안해. 내 행동이 문제였다는 건 알아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-11-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 너무 배신감 들어. 내 마음은 뭐였을까 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-11-55",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "제발 한 번만 믿어줘. 그 이상은 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-12-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 싶었는데… 오늘은 혼자 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-13-7",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "알겠어. 네 마음 정리될 때까지 기다릴게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-06-13-46",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 메시지 뭐야… 나 몰래 연락한 거야?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-11-40",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그건 그냥 친구야. 특별한 건 아니었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-11-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그럼 왜 숨겼어? 나랑 있을 땐 핸드폰도 못 보게 하면서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-11-53",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "숨긴 건 아니었고… 그냥 말 안 했을 뿐이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-12-18",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그게 숨긴 거지. 신뢰는 그렇게 무너지는 거야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-12-21",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "미안해. 내 행동이 문제였다는 건 알아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-12-24",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 너무 배신감 들어. 내 마음은 뭐였을까 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-12-35",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "제발 한 번만 믿어줘. 그 이상은 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-12-51",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 싶었는데… 오늘은 혼자 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-13-0",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "알겠어. 네 마음 정리될 때까지 기다릴게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-07-13-39",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 이렇게 너랑 걷는 것만으로도 너무 행복하다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-9-0",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도. 별다른 이벤트 없이 그냥 함께 있다는 게 좋다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-9-14",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 평범한 순간이 오히려 제일 오래 기억에 남을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-9-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 우리 서로 바라보는 눈빛도 너무 따뜻하지 않아?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-9-45",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "가끔은 말 없이 함께 있는 게 가장 깊은 대화 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-9-53",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "지금 이 시간, 이 공간, 이 공기 다 소중해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-10-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이대로 시간이 멈췄으면 좋겠다는 생각까지 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-10-33",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 앞으로도 자주 이런 밤 함께 걷자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-10-55",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래. 오늘 너랑 있어서 정말 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-11-16",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 더 고마워. 나의 행복이 되어줘서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-08-11-45",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 이렇게 너랑 걷는 것만으로도 너무 행복하다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-11-14",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도. 별다른 이벤트 없이 그냥 함께 있다는 게 좋다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-11-31",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 평범한 순간이 오히려 제일 오래 기억에 남을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-11-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 우리 서로 바라보는 눈빛도 너무 따뜻하지 않아?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-11-40",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "가끔은 말 없이 함께 있는 게 가장 깊은 대화 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-12-6",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "지금 이 시간, 이 공간, 이 공기 다 소중해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-12-27",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이대로 시간이 멈췄으면 좋겠다는 생각까지 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-12-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 앞으로도 자주 이런 밤 함께 걷자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-13-0",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래. 오늘 너랑 있어서 정말 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-13-1",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 더 고마워. 나의 행복이 되어줘서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-09-13-7",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "요즘 너무 무기력해. 뭐 하나 해도 재미가 없어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-11-21",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도 그래. 일어나서 일하고 자고, 반복이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-11-33",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "사람들도 만나기 싫고 그냥 멍하니 하루가 가.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-12-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 이런 날엔 서로 기대는 것도 필요해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-12-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "너랑 통화만 해도 조금 나아지는 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-13-1",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그럼 오늘 밤엔 아무 말 없이 음악 틀고 통화만 할래?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-13-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응… 그거 좋다. 네 숨소리만 들려도 안정될 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-14-2",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "같이 무기력한 기분 느끼더라도 혼자는 아니니까.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-14-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "맞아. 오늘도 네가 있어서 견딘다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-14-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 언젠간 이 시기도 지나가겠지. 함께 이겨내자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-10-14-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "오늘 약속 생각 안 났어? 나 혼자 카페에서 기다렸어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-8-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "정말 미안해… 회의가 예상보다 길어졌고 정신이 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-8-56",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "한 마디라도 해줬으면 괜찮았을 텐데. 무시당한 기분이었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-9-35",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 너무 배려가 부족했어. 너한테 상처 줄 생각은 진짜 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-9-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "알아. 그래서 더 마음이 복잡해. 네가 그런 사람 아닌 거 아는데…",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-10-14",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 내가 만회할 수 있게 기회를 줘. 지금 당장 너한테 갈게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-10-15",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금은 아니더라도… 네 진심이 느껴지긴 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-10-49",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고마워. 다음엔 실망시키지 않게 더 신경 쓸게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-11-5",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 나도 좀 더 이해하려고 해볼게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-11-31",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 이런 일 겪으면서 더 단단해지는 거겠지.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-11-11-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "아까 했던 말… 진심 아니었어. 감정에 휩쓸렸어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-8-27",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "듣고 너무 상처였어. 네가 그런 말 할 줄 몰랐어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-8-39",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그때는 너무 화가 나서 아무 생각도 안 들었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-8-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "화났다고 해도 지켜야 할 선은 있었잖아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-9-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 나중에 얼마나 후회했는지 몰라.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-9-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "나한테 미안한 건 알겠어. 근데 쉽진 않아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-9-37",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그 말 들어도 괜찮아. 내가 감당할게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-10-8",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "앞으로는 말보다 마음을 먼저 전해줘.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-10-23",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "응. 지금처럼 너한테 후회하게 되는 일 안 만들게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-10-36",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "믿고 기다릴게. 진심이라면 보여줘.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-12-10-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 이렇게 너랑 걷는 것만으로도 너무 행복하다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-8-25",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도. 별다른 이벤트 없이 그냥 함께 있다는 게 좋다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-8-53",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 평범한 순간이 오히려 제일 오래 기억에 남을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-9-10",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 우리 서로 바라보는 눈빛도 너무 따뜻하지 않아?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-9-47",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "가끔은 말 없이 함께 있는 게 가장 깊은 대화 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-10-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "지금 이 시간, 이 공간, 이 공기 다 소중해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-10-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이대로 시간이 멈췄으면 좋겠다는 생각까지 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-11-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 앞으로도 자주 이런 밤 함께 걷자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-11-17",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래. 오늘 너랑 있어서 정말 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-11-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 더 고마워. 나의 행복이 되어줘서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-13-12-24",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "드디어 합격 문자 받았어!!! 나 진짜 붙었어!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-7-37",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "진짜?! 너무너무 축하해!!! 내가 더 기분 좋다!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-7-43",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "떨려서 손이 덜덜 떨릴 정도였는데 이제야 실감 나.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-8-8",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "너 노력한 거 다 봤잖아. 이건 당연한 결과야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-8-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "항상 옆에서 응원해준 너 덕분이야. 고마워 정말.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-8-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘은 무조건 축하파티 하자! 뭐 먹고 싶어?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-8-40",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고기! 진짜 제일 맛있는 고기 먹고 싶어 ㅎㅎ",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-9-16",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오케이! 내가 예약할게. 오늘 주인공은 너야!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-9-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내일도 나 기분 좋게 계속 웃을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-9-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그 웃음 내가 계속 지켜줄게. 다시 한 번 축하해 ♥",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-14-9-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "오늘 약속 생각 안 났어? 나 혼자 카페에서 기다렸어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-8-56",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "정말 미안해… 회의가 예상보다 길어졌고 정신이 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-9-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "한 마디라도 해줬으면 괜찮았을 텐데. 무시당한 기분이었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-9-39",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 너무 배려가 부족했어. 너한테 상처 줄 생각은 진짜 없었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-9-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "알아. 그래서 더 마음이 복잡해. 네가 그런 사람 아닌 거 아는데…",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-9-49",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 내가 만회할 수 있게 기회를 줘. 지금 당장 너한테 갈게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-9-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금은 아니더라도… 네 진심이 느껴지긴 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-10-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고마워. 다음엔 실망시키지 않게 더 신경 쓸게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-10-56",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 나도 좀 더 이해하려고 해볼게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-11-13",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 이런 일 겪으면서 더 단단해지는 거겠지.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-15-11-36",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘 많이 힘들었지? 표정이 말해주더라.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-12-3",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응… 아무것도 하기 싫고 눈물만 났어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-12-24",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "괜찮아. 오늘은 그냥 내가 옆에 있을게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-12-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "네 말 한 마디에 마음이 조금 풀리는 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-12-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "따뜻한 차 마실래? 조용히 같이 있고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-13-27",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "응. 아무 말 안 해도 괜찮아. 네가 있어서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-13-31",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "이럴 때일수록 네가 얼마나 소중한지 더 느껴져.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-14-2",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고마워. 너랑 있으니 숨통이 트여.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-14-7",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "앞으론 힘든 날엔 꼭 나한테 기대. 혼자 두지 않을게.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-14-25",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내가 정말 좋은 사람을 만났구나 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-16-14-52",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "드디어 합격 문자 받았어!!! 나 진짜 붙었어!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-9-48",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "진짜?! 너무너무 축하해!!! 내가 더 기분 좋다!!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-9-58",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "떨려서 손이 덜덜 떨릴 정도였는데 이제야 실감 나.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-10-21",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "너 노력한 거 다 봤잖아. 이건 당연한 결과야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-10-25",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "항상 옆에서 응원해준 너 덕분이야. 고마워 정말.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-10-52",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오늘은 무조건 축하파티 하자! 뭐 먹고 싶어?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-11-4",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "고기! 진짜 제일 맛있는 고기 먹고 싶어 ㅎㅎ",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-11-23",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "오케이! 내가 예약할게. 오늘 주인공은 너야!",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-11-57",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "내일도 나 기분 좋게 계속 웃을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-12-6",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그 웃음 내가 계속 지켜줄게. 다시 한 번 축하해 ♥",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-17-12-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내일 어디부터 갈까? 벌써 설레서 잠 안 올 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-10-13",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "나도! 옷도 3벌 꺼내놨다니까. 뭐 입을지 고민 중이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-10-53",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고민할 것도 없이 다 예쁠 거 알아. 그냥 넌 예쁘니까 ㅎㅎ",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-11-12",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "아 진짜 ㅋㅋ 설레게 하지 마. 얼굴 빨개졌잖아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-11-29",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내일 너 손 꼭 잡고 다닐 거야. 기대해도 좋아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-11-41",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그 말만으로 이미 80%는 행복이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-12-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 내일 하루 종일 웃고 있자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-12-46",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래! 사진도 많이 찍고 맛있는 것도 먹고.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-13-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "너랑 함께니까 뭐든 다 설레고 즐거워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-13-55",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "나 지금 이 대화마저도 너무 좋아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-18-14-13",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내일 어디부터 갈까? 벌써 설레서 잠 안 올 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-9-23",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "나도! 옷도 3벌 꺼내놨다니까. 뭐 입을지 고민 중이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-9-37",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고민할 것도 없이 다 예쁠 거 알아. 그냥 넌 예쁘니까 ㅎㅎ",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-10-7",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "아 진짜 ㅋㅋ 설레게 하지 마. 얼굴 빨개졌잖아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-10-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내일 너 손 꼭 잡고 다닐 거야. 기대해도 좋아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-10-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그 말만으로 이미 80%는 행복이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-11-14",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 내일 하루 종일 웃고 있자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-11-19",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래! 사진도 많이 찍고 맛있는 것도 먹고.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-11-27",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "너랑 함께니까 뭐든 다 설레고 즐거워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-11-31",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "나 지금 이 대화마저도 너무 좋아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-19-11-52",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "지금 이렇게 너랑 걷는 것만으로도 너무 행복하다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-7-27",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "나도. 별다른 이벤트 없이 그냥 함께 있다는 게 좋다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-7-30",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이 평범한 순간이 오히려 제일 오래 기억에 남을 것 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-8-1",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "맞아. 우리 서로 바라보는 눈빛도 너무 따뜻하지 않아?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-8-35",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "가끔은 말 없이 함께 있는 게 가장 깊은 대화 같아.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-8-56",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "지금 이 시간, 이 공간, 이 공기 다 소중해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-9-33",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이대로 시간이 멈췄으면 좋겠다는 생각까지 했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-9-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "우리 앞으로도 자주 이런 밤 함께 걷자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-10-11",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래. 오늘 너랑 있어서 정말 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-10-42",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "내가 더 고마워. 나의 행복이 되어줘서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-20-11-6",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "이거 너 주려고 산 거야. 별건 아니지만 네 생각나서.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-7-32",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "헉 이건 내가 좋아하는 향초잖아? 어떻게 알았어?",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-8-3",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "네 방에 어울릴 것 같아서 그냥 지나치지 못했어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-8-20",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "그리고 이건 뭐야? 편지까지? 이거 반칙이다…",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-8-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "요즘 네가 많이 지쳐 보여서 응원해주고 싶었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-8-43",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "고마워… 너한테 이렇게 소소한 감동 받을 줄이야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-8-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "표현 잘 못하니까 이렇게라도 하고 싶었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-9-26",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "진짜 훈훈하다 우리. 서로 이렇게 챙기니까 참 좋다.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-9-49",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그러니까 우리 오래오래 잘 챙기며 살자.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-10-25",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "완전 찬성. 오늘도 네 덕분에 마음이 따뜻해졌어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-21-10-58",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "오늘 말투 좀 심했지… 미안해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-11-59",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "응, 좀 서운했어. 그래도 먼저 말해줘서 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-12-28",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "상황이 겹쳐서 예민했는데 너한테 풀었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-12-44",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "다 이해하진 못해도, 네 마음은 느껴져.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-12-55",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "그래도 상처 줬으면 안 되는 거였는데…",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-13-8",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "괜찮아. 우린 이런 걸로 더 단단해질 거야.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-13-14",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "사랑한다고 말하면서 상처 준 내가 싫었어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-13-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "지금처럼 돌아봐 주는 네가 더 소중해.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-13-54",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "sun",
+    "content": "앞으론 더 조심할게. 너한텐 좋은 사람이고 싶어.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-14-22",
+    "is_delivered": true
+  },
+  {
+    "couple_id": "sun_moon",
+    "user_id": "moon",
+    "content": "충분히 그러고 있어. 나도 미안하고 고마워.",
+    "image_url": "",
+    "has_image": false,
+    "created_at": "2025-07-22-14-47",
+    "is_delivered": true
+  }
+]
