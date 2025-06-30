@@ -34,3 +34,7 @@ app.include_router(ai_chat.router)
 app.include_router(ws_chat.router)
 app.include_router(history.router)  # 선택
 app.include_router(auth.router)
+
+
+# from tests.data.preprocessed.insert_db import insert_data
+# insert_data()

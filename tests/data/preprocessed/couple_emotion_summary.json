@@ -1,0 +1,97 @@
+[
+  {
+    "date": "2025-06-23",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "기쁨/감사/설렘"
+  },
+  {
+    "date": "2025-06-23",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "기쁨/감사/설렘"
+  },
+  {
+    "date": "2025-06-24",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "서운함"
+  },
+  {
+    "date": "2025-06-24",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "미안함/후회/기쁨/감사/설렘"
+  },
+  {
+    "date": "2025-06-25",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "배신감/불신"
+  },
+  {
+    "date": "2025-06-25",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "미안함/후회"
+  },
+  {
+    "date": "2025-06-26",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "미안함/후회/배신감/불신"
+  },
+  {
+    "date": "2025-06-26",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "미안함/후회"
+  },
+  {
+    "date": "2025-06-27",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "배신감/불신"
+  },
+  {
+    "date": "2025-06-27",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "미안함/후회"
+  },
+  {
+    "date": "2025-06-28",
+    "user_id": "sun", 
+    "emotion": "무기력/우울/기쁨/감사/설렘"
+  },
+  {
+    "date": "2025-06-28",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "위로/따뜻함/무기력/우울"
+  },
+  {
+    "date": "2025-06-29",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "기쁨/감사/설렘"
+  },
+  {
+    "date": "2025-06-29",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "기쁨/감사/설렘/위로/따뜻함"
+  },
+  {
+    "date": "2025-06-30",
+    "user_id": "sun",
+    "memo": "",
+    "emotion": "배신감/불신/미안함/후회/위로/따뜻함"
+  },
+  {
+    "date": "2025-06-30",
+    "user_id": "moon",
+    "memo": "",
+    "emotion": "미안함/후회/무기력/우울"
+  }
+]

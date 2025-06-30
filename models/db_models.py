@@ -4,6 +4,14 @@ from datetime import datetime
 
 Base = declarative_base()
 
+import enum
+from sqlalchemy import Enum
+
+class GenderEnum(enum.Enum):
+    male = "male"
+    female = "female"
+    other = "other"
+
 # ================== 채팅 메시지 ===================
 class Message(Base):
     __tablename__ = "messages"
@@ -42,22 +50,32 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+<<<<<<< HEAD
     user_id = Column(String(255), unique=True, index=True)  # 해시된 email
+=======
+    user_id = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
+>>>>>>> ea0cfce23ac67d61a06a1aec37e3dedc6bc53b5d
     name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    deleted_at = Column(DateTime, nullable=True)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    birth = Column(DateTime, nullable=True)
+    gender = Column(Enum(GenderEnum), nullable=True)
     # 기타 필요한 필드 추가
-
-# ================ ChatLog ================
-class ChatLog(Base):
-    __tablename__ = "chat_logs"
+# ==================== Couple table =======================
+class Couple(Base):
+    __tablename__ = "couples"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     couple_id = Column(String(255), nullable=False)
-    user_id = Column(String(255), nullable=False)
-    content = Column(Text)
-    timestamp = Column(DateTime, default=datetime.utcnow)
-
+    user_1 = Column(String(255), nullable=False)
+    user_2 = Column(String(255), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    deleted_at = Column(DateTime, nullable=True)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+       
 # ================ Questionnaire ================
 class Questionnaire(Base):
     __tablename__ = "questionnaires"
@@ -73,8 +91,9 @@ class EmotionLog(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(String(255), nullable=False)
-    summary = Column(Text)
+    emotion = Column(Text)
     date = Column(DateTime, default=datetime.utcnow)
+    memo = Column(Text)
 
 # ================ WeeklySolution (분석 결과 저장용, 선택) ================
 class WeeklySolution(Base):

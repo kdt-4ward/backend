@@ -25,9 +25,11 @@ def analyze_daily_emotion(log_text: str):
     return daily_emotion_chain.run({"daily_log": log_text})
 
 
-def generate_weekly_solution(chat_traits, questionnaire_traits, daily_emotions):
+def generate_weekly_solution(chat_traits, user1_data, user2_data):
     return weekly_solution_chain.run({
-        "chat_traits": chat_traits,
-        "questionnaire_traits": questionnaire_traits,
-        "daily_emotions": daily_emotions
-    })
+            "chat_traits": chat_traits or "",
+            "user1_questionnaire_traits": user1_data["questionnaire_traits"] or "",
+            "user1_daily_emotions": user1_data["emotions_summary"] or "",
+            "user2_questionnaire_traits": user2_data["questionnaire_traits"] or "",
+            "user2_daily_emotions": user2_data["emotions_summary"] or "",
+        })
