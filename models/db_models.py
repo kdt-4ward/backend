@@ -4,6 +4,14 @@ from datetime import datetime
 
 Base = declarative_base()
 
+import enum
+from sqlalchemy import Enum
+
+class GenderEnum(enum.Enum):
+    male = "male"
+    female = "female"
+    other = "other"
+
 # ================== 채팅 메시지 ===================
 class Message(Base):
     __tablename__ = "messages"
@@ -42,11 +50,28 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
     name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    deleted_at = Column(DateTime, nullable=True)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    birth = Column(DateTime, nullable=True)
+    gender = Column(Enum(GenderEnum), nullable=True)
     # 기타 필요한 필드 추가
+# ==================== Couple table =======================
+class Couple(Base):
+    __tablename__ = "couples"
 
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), nullable=False)
+    user_1 = Column(String(255), nullable=False)
+    user_2 = Column(String(255), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    deleted_at = Column(DateTime, nullable=True)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+       
 # ================ Questionnaire ================
 class Questionnaire(Base):
     __tablename__ = "questionnaires"

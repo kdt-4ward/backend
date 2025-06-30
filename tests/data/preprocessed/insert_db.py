@@ -9,11 +9,11 @@ def load_data(data_path):
 
 def insert_data():
     db = SessionLocal()
-    # data = load_data("/home/leejd/project/lovetune_4ward/back/backend/tests/data/preprocessed/couple_chat_table_30days.json")
+    data = load_data("/home/leejd/project/lovetune_4ward/back/backend/tests/data/preprocessed/couple_chat_table_30days.json")
 
-    # for kwargs in data:
-    #     db.add(Message(**kwargs))
-    #     db.commit()
+    for kwargs in data:
+        db.add(Message(**kwargs))
+        db.commit()
 
     data = load_data("/home/leejd/project/lovetune_4ward/back/backend/tests/data/preprocessed/couple_emotion_summary.json")
 
