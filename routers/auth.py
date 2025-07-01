@@ -103,6 +103,7 @@ async def google_callback_get(request: Request):
                 user_id=user_id,
                 name=name,
                 email=email,
+                password="",
                 created_at=datetime.utcnow()
             )
             db.add(user)

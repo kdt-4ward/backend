@@ -50,12 +50,8 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-<<<<<<< HEAD
-    user_id = Column(String(255), unique=True, index=True)  # 해시된 email
-=======
-    user_id = Column(String(255), nullable=False)
+    user_id = Column(String(255), unique=True, index=True)
     password = Column(String(255), nullable=False)
->>>>>>> ea0cfce23ac67d61a06a1aec37e3dedc6bc53b5d
     name = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
