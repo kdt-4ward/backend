@@ -18,8 +18,10 @@ async def stream_chat_with_persona(req: ChatRequest):
             bot.save_history(history)
             bot.save_to_db(req.user_id, "user", req.message)
 
+            last_k_turns = bot.get_last_turns(10)
+
             try:
-                response = await call_openai_stream_async(history)
+                response = await call_openai_stream_async(last_k_turns)
             except RetryError:
                 yield "[ERROR] GPT 응답 실패\n"
                 return

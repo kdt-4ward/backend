@@ -35,7 +35,7 @@ def get_week_chat_logs(db, couple_id):
     ).order_by(Message.created_at).all()
 
 def get_questionnaire(db, user_id):
-    """사용자의 최신 질문지"""
+    """사용자 사전 질의응답"""
     return db.query(Questionnaire).filter_by(user_id=user_id).order_by(Questionnaire.created_at.desc()).first()
 
 def get_daily_emotions(db, user_id):

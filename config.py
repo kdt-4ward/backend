@@ -1,6 +1,4 @@
-from openai import AsyncOpenAI
 from core.db import get_engine
-from core.connection_manager import ConnectionManager
 from fastapi import APIRouter
 from asyncio import Semaphore
 from core.settings import settings

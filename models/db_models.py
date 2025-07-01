@@ -99,3 +99,22 @@ class WeeklySolution(Base):
     user_id = Column(String(255), nullable=False)
     content = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class AIChatSummary(Base):
+    __tablename__ = "ai_chat_summaries"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String(255), nullable=False)
+    couple_id = Column(String(255), nullable=False)
+    summary = Column(Text, nullable=False)
+    emb_id = Column(Integer, nullable=True)  # 벡터 DB 연결 시
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class CoupleChatSummary(Base):
+    __tablename__ = "couple_chat_summaries"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), nullable=False)
+    summary = Column(Text, nullable=False)
+    emb_id = Column(Integer, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
