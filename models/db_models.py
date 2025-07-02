@@ -41,7 +41,7 @@ class AIMessage(Base):
 class PersonaConfig(Base):
     __tablename__ = "persona_config"
 
-    user_id = Column(String(255), primary_key=True, index=True)
+    couple_id = Column(String(255), primary_key=True, index=True)
     persona_name = Column(String(255), default="무민")
     updated_at = Column(DateTime, default=datetime.utcnow)
 
@@ -109,6 +109,7 @@ class AIChatSummary(Base):
     summary = Column(Text, nullable=False)
     emb_id = Column(Integer, nullable=True)  # 벡터 DB 연결 시
     created_at = Column(DateTime, default=datetime.utcnow)
+    last_msg_id = Column(Integer, nullable=True)
 
 class CoupleChatSummary(Base):
     __tablename__ = "couple_chat_summaries"
