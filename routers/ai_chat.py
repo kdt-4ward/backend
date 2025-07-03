@@ -4,13 +4,18 @@ from models.schema import ChatRequest, BotConfigRequest
 from config import router, semaphore
 from core.bot import PersonaChatBot
 from tenacity import retry, stop_after_attempt, wait_fixed, RetryError
-from services.openai_client import call_openai_stream_async, openai_stream_with_function_call
+from services.openai_client import call_openai_stream_async, openai_stream_with_function_call, openai_completion_with_function_call
 from core.dependencies import get_connection_manager
 from services.rag_search import search_past_chats
 import asyncio
 
+# TODO: 배포시 제거
+from core.utils import ensure_couple_mapping
+
 @router.post("/chat/stream")
 async def stream_chat_with_persona(req: ChatRequest):
+    # TODO: test용 dummy 파트너 배포시 제거
+    ensure_couple_mapping(req.user_id, "테스트파트너", req.couple_id)
     async def event_generator() -> AsyncGenerator[str, None]:
         async with semaphore:
             bot = PersonaChatBot(user_id=req.user_id)
@@ -21,7 +26,7 @@ async def stream_chat_with_persona(req: ChatRequest):
                     "description": (
                         "질문과 관련된 실제 과거 대화 내용(채팅 메시지)을 검색하여, "
                         "정확한 근거가 필요하거나, 이전의 구체적인 사건, 날짜, 표현 등을 사용자가 물었을 때 반드시 사용해야 합니다. "
-                        "검색 결과가 없으면 그대로 안내하세요."
+                        "검색 결과가 없으면 찾을 수 없다고 안내하세요."
                     ),
                     "parameters": {
                         "type": "object",
@@ -60,33 +65,35 @@ async def stream_chat_with_persona(req: ChatRequest):
             bot.save_to_db(req.user_id, "user", req.message)
 
             try:
-                response = await openai_stream_with_function_call(history,
-                                                                  functions=functions,
-                                                                  function_map=function_map)
-            
+                response = await openai_completion_with_function_call(history,
+                                                            functions=functions,
+                                                            function_map=function_map,
+                                                            bot=bot)
+        
             except RetryError:
                 yield "[ERROR] GPT 응답 실패\n"
                 return
 
-            full_reply = ""
-            batch_buffer = ""
-            batch_size = 5
+            # print(response)
+            full_reply = response
+            # batch_buffer = ""
+            # batch_size = 5
 
-            async for chunk in response:
-                if isinstance(chunk, str):
-                    batch_buffer += chunk
-                    full_reply += chunk
-                if len(batch_buffer) >= batch_size:
-                    yield batch_buffer
-                    batch_buffer = ""
+            # async for chunk in response:
+            #     if isinstance(chunk, str):
+            #         batch_buffer += chunk
+            #         full_reply += chunk
+            #     if len(batch_buffer) >= batch_size:
+            #         yield batch_buffer
+            #         batch_buffer = ""
 
-            if batch_buffer:
-                yield batch_buffer
-            
+            # if batch_buffer:
+            #     yield batch_buffer
+            yield full_reply
             # 어시스턴트 응답 저장
             history.append({"role": "assistant", "content": full_reply})
             bot.save_history(history)
-            bot.save_to_db("assistant", "assistant", full_reply)
+            bot.save_to_db(req.user_id, "assistant", full_reply)
             asyncio.create_task(bot.check_and_summarize_if_needed())
 
     return StreamingResponse(event_generator(), media_type="text/plain")

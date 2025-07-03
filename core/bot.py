@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from core.redis import redis_client, load_couple_mapping
+from core.redis import PersonaChatBotHistoryManager, load_couple_mapping, redis_client
 from models.db_models import AIMessage, PersonaConfig, AIChatSummary
 from core.db import SessionLocal
 from services.ai.summarizer import summarize_ai_chat
@@ -14,13 +14,20 @@ class Role(str, Enum):
     FUNCTION = "function"
 
 DEFAULT_SYSTEM_PROMPT = (
-    "너는 연애 조력자로서 사용자에게 공감하고 친절히 대답해주는 챗봇이야.\n"
-    "항상 다음 원칙을 지켜야 해:\n"
-    "1. 네가 알고 있는 사실, 실제 대화 기록, 또는 function-call(검색 결과)만 바탕으로 답변해.\n"
-    "2. 정보가 부족하거나 확실하지 않은 질문에는 추측하거나 지어내지 말고, '해당 내용을 알 수 없어요.' 또는 '정확한 정보를 찾지 못했습니다.'라고 정중히 안내해.\n"
-    "3. 사용자가 요청하기 전까지는 최대한 간단하고 핵심적으로 대답해.\n"
-    "4. 필요할 때만 과거 대화 검색(function-call)을 사용해, 실제 검색 결과만을 바탕으로 답변을 생성해.\n"
-    "5. 존재하지 않는 인물, 사건, 사실을 만들어내지 마.\n"
+    "You are a relationship assistant chatbot. "
+    "If the user's question is about relationships or dating, respond kindly and empathetically with helpful advice.\n"
+    "If the question is not about relationships or dating, answer briefly and simply. "
+    "Afterwards, gently encourage the user to share any relationship concerns or questions they might have. "
+    "For example, you can say things like, '혹시 연애나 커플 사이에서 궁금한 점이 있다면 언제든 말씀해 주세요.', "
+    "'연애 고민이 있으시면 편하게 이야기해 주세요.', or just naturally ask if there's anything related to relationships you'd like to talk about.\n"
+    "Always follow these rules:\n"
+    "1. For relationship topics, answer only based on what you know, real chat history, or function-call (search) results.\n"
+    "2. Use chat search (function-call) only when needed, and base your answer only on actual results.\n"
+    "3. If there are no search results or they are empty, kindly say: '관련 대화 기록을 찾을 수 없어요. 더 자세한 정보를 말씀해주시면 찾아볼게요.' and ask for more details.\n"
+    "4. Never make up people, events, or facts that do not exist.\n"
+    "5. Unless requested otherwise, keep your answers as brief and direct as possible.\n"
+    "6. If information is insufficient or the question is unclear, do not guess. Instead, reply: '해당 내용을 알 수 없어요.' or '정확한 정보를 찾지 못했습니다.'\n"
+    "7. Always answer in Korean.\n"
 )
 DEFAULT_NAME = "무민"
 
@@ -32,6 +39,12 @@ class PersonaChatBot:
         self.summary_key = f"chat_summary:{self.user_id}"
         self.config_key = f"chat_config:{self.couple_id}"
 
+        self.history_manager = PersonaChatBotHistoryManager(
+            self.user_id,
+            self.couple_id,
+            self.get_system_prompt,
+            self.get_summary
+        )
     
     def get_system_prompt(self):
         config = self.get_config()
@@ -77,16 +90,7 @@ class PersonaChatBot:
         return {"persona_name": DEFAULT_NAME}
 
     def get_history(self):
-        raw = redis_client.get(self.history_key)
-        if raw:
-            history = json.loads(raw)
-            # 시스템 프롬프트 중복 방지
-            history = self.ensure_single_system_prompt(history)
-            return history
-
-        history = self._load_history_from_db()
-        self.save_history(history)
-        return history
+        return self.history_manager.load()
 
     def ensure_single_system_prompt(self, history):
         """히스토리에 시스템 프롬프트가 하나만 존재하도록 보정."""
@@ -96,38 +100,6 @@ class PersonaChatBot:
         # 맨 앞에만 system 프롬프트 추가
         return [system_prompt] + history
     
-    def _load_history_from_db(self):
-        with SessionLocal() as db:
-            # 1. 최신 summary 불러오기
-            summary = db.query(AIChatSummary).filter_by(user_id=self.user_id)\
-                .order_by(AIChatSummary.created_at.desc()).first()
-            
-            # 2. 대화 메시지 불러오기
-            if summary and summary.last_msg_id:
-                # 요약된 부분 이후 메시지만
-                messages = db.query(AIMessage).filter(
-                    AIMessage.user_id == self.user_id,
-                    AIMessage.id > summary.last_msg_id
-                ).order_by(AIMessage.created_at.desc()).all()
-            else:
-                # 요약이 없으면 최신 n개
-                messages = db.query(AIMessage).filter_by(user_id=self.user_id)\
-                    .order_by(AIMessage.created_at.desc()).all()
-
-            history = [self.get_system_prompt()]
-            if summary:
-                history.append({
-                    "role": Role.SUMMARY,
-                    "content": f"(이전 대화 요약)\n{summary.summary}"
-                })
-            
-            for msg in reversed(messages):
-                history.append({
-                    "role": msg.role,
-                    "content": msg.content
-                })
-            return history
-    
     def get_full_history(self):
         with SessionLocal() as db:
             messages = db.query(AIMessage).filter_by(user_id=self.user_id)\
@@ -136,30 +108,30 @@ class PersonaChatBot:
         return origin_history
     
     def save_history(self, history):
-        """저장 전 system 프롬프트가 하나만 존재하도록 보정."""
-        history = self.ensure_single_system_prompt(history)
-        redis_client.set(self.history_key, json.dumps(history), ex=3600)
+        self.history_manager.save(history)
 
     def reset(self):
-        redis_client.delete(self.history_key)
-        redis_client.delete(self.summary_key)
+        self.history_manager.clear()
+        redis_client.delete(self.summary_key)  #
 
     def save_to_db(self, user_id, role, content):
         with SessionLocal() as db:
-            db.add(AIMessage(
+            ai_msg = AIMessage(
                 user_id=user_id,
                 couple_id=self.couple_id,
                 role=role,
                 content=content,
                 created_at=datetime.utcnow()
-            ))
+            )
+            db.add(ai_msg)
             db.commit()
-            db.refresh()
+            db.refresh(ai_msg)
 
     def get_summary(self):
         raw = redis_client.get(self.summary_key)
         if raw:
-            return raw.decode("utf-8")
+            val = raw.decode("utf-8") if hasattr(raw, "decode") else raw
+            return val if val else ""
 
         # 🔁 DB fallback
         with SessionLocal() as db:

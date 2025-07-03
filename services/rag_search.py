@@ -16,7 +16,7 @@ async def build_faiss_index(chunks):
     return index, embeddings_np, chunks
 
 # TODO: index 기존 있으면 읽어오기, 코드 모듈화
-async def search_past_chats(query, top_k=3, user_id=None, couple_id=None):
+async def search_past_chats__(query, top_k=3, user_id=None, couple_id=None):
     bot = PersonaChatBot(user_id)
     # 1. DB에서 원본 메시지 chunk화
     messages = bot.get_full_history()
@@ -40,3 +40,6 @@ async def search_past_chats(query, top_k=3, user_id=None, couple_id=None):
 
     # 5. 반환 포맷(프롬프트 삽입용)
     return "\n\n".join(result_chunks)
+
+async def search_past_chats(query, top_k=3, user_id=None, couple_id=None):
+    return "어릴적 내 우상은 아빠야"
