@@ -5,7 +5,6 @@ from core.dependencies import (
 )
 from langchain_core.messages import HumanMessage, SystemMessage
 from typing import List, Optional
-from core.bot import PersonaChatBot
 
 import json
 
@@ -56,7 +55,7 @@ async def call_langchain_chat(prompt: str, system_prompt: str = None) -> str:
     return response.content
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(1))
-async def openai_stream_with_function_call(history, functions, function_map, bot: PersonaChatBot=None):
+async def openai_stream_with_function_call(history, functions, function_map, bot=None):
     client = get_openai_client()
     params = {
         "model": "gpt-4o",
