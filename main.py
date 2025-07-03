@@ -11,6 +11,9 @@ app = FastAPI(
     debug=settings.debug
 )
 
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
 
 def startup():
     create_database_if_not_exists()
