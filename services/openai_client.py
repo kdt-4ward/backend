@@ -143,7 +143,7 @@ async def openai_completion_with_function_call(
     client = get_openai_client()
     params = {
         "model": "gpt-4o",
-        "messages": history,
+        "messages": filter_for_openai(history),
         "stream": False,
         "functions": functions,
         "function_call": "auto"
@@ -181,16 +181,21 @@ async def openai_completion_with_function_call(
             # 실제 function 실행
             result = await function_map[func_name](**args)
             # history에 function 결과 append
+            function_msg_id = None
+            if bot is not None:
+                function_msg_id = bot.save_to_db(bot.user_id, "function", json.dumps({"name": func_name, "result": result}, ensure_ascii=False))
+            
             history.append({
                 "role": "function",
                 "name": func_name,
-                "content": json.dumps(result, ensure_ascii=False) if result is not None else ""
+                "content": json.dumps(result, ensure_ascii=False) if not isinstance(result, str) else result,
+                "id":function_msg_id
             })
+
             if bot is not None:
                 bot.save_history(history)
-                bot.save_to_db(bot.user_id, "function", json.dumps({"name": func_name, "result": result}, ensure_ascii=False))
             # function-call 후 루프 재시작
-            params["messages"] = history
+            params["messages"] = filter_for_openai(history)
             continue  # 다시 반복문 진입
 
         # 2. function_call이 아니라면 assistant 답변 반환
@@ -212,3 +217,14 @@ async def get_openai_embedding(text: str):
         model="text-embedding-3-small"
     )
     return resp.data[0].embedding
+
+def filter_for_openai(history: list) -> list:
+    """
+    OpenAI API에 전달할 메시지 리스트로 변환 (id 등 불필요 필드 제거)
+    """
+    # OpenAI API docs: role, content, name, function_call 등만 허용
+    allowed_keys = {"role", "content", "name", "function_call"}
+    return [
+        {k: v for k, v in msg.items() if k in allowed_keys}
+        for msg in history
+    ]

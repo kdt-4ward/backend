@@ -108,7 +108,7 @@ class AIChatSummary(Base):
     summary = Column(Text, nullable=False)
     emb_id = Column(Integer, nullable=True)  # 벡터 DB 연결 시
     created_at = Column(DateTime, default=datetime.utcnow)
-    last_msg_id = Column(Integer, nullable=True)
+    last_msg_id = Column(Integer, nullable=False)
 
 class CoupleChatSummary(Base):
     __tablename__ = "couple_chat_summaries"

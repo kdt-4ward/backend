@@ -104,7 +104,7 @@ class PersonaChatBot:
         with SessionLocal() as db:
             messages = db.query(AIMessage).filter_by(user_id=self.user_id)\
                         .order_by(AIMessage.created_at).all()
-            origin_history = [{"role": msg.role, "content": msg.content} for msg in messages]
+            origin_history = [{"role": msg.role, "content": msg.content, "id": msg.id, "created_at": msg.created_at} for msg in messages]
         return origin_history
     
     def save_history(self, history):
@@ -126,6 +126,7 @@ class PersonaChatBot:
             db.add(ai_msg)
             db.commit()
             db.refresh(ai_msg)
+        return ai_msg.id
 
     def get_summary(self):
         raw = redis_client.get(self.summary_key)
@@ -150,8 +151,8 @@ class PersonaChatBot:
         if not couple_id:
             raise ValueError(f"[PersonaChatBot] user_id={self.user_id}로 couple_id를 찾을 수 없습니다. 커플 매핑이 필요합니다.")
         return couple_id
-    
-    def save_summary_and_history_atomic(self, summary: str, new_history: list, last_msg_id: str):
+
+    def save_summary_and_history_atomic(self, summary: str, new_history: list, last_msg_id: int):
         # DB/Redis 동시 반영 (DB 기준 atomic, Redis는 최대한 맞춰줌)
         with SessionLocal() as db:
             db.add(AIChatSummary(
@@ -216,7 +217,7 @@ class PersonaChatBot:
                     prev_summary=prev_summary,
                     target=target_msgs
                 )
-
+                last_msg_id = get_last_msg_id(target_msgs)
                 # 남기는 부분: 최근 MIN_REMAINING_SIZE 턴
                 remaining_turns = turns[WINDOW_SIZE - MIN_REMAINING_SIZE:]
                 remaining_msgs = [msg for turn in remaining_turns for msg in turn]
@@ -228,7 +229,7 @@ class PersonaChatBot:
                         "content": f"(누적 요약)\n{summary}"
                     }
                 ] + remaining_msgs
-                self.save_summary_and_history_atomic(summary, new_history)
+                self.save_summary_and_history_atomic(summary, new_history, last_msg_id)
         finally:
             release_summary_lock(self.user_id)
 
@@ -239,3 +240,9 @@ def acquire_summary_lock(user_id, expire=30):
 
 def release_summary_lock(user_id):
     redis_client.delete(f"lock:summarize:{user_id}")
+
+def get_last_msg_id(msgs):
+    for msg in reversed(msgs):
+        if msg.get("id") is not None:
+            return msg["id"]
+    return None

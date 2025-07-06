@@ -59,10 +59,10 @@ async def stream_chat_with_persona(req: ChatRequest):
                                                                                             couple_id=bot.couple_id
                                                                                         )}
 
+            user_msg_id = bot.save_to_db(req.user_id, "user", req.message)
             history = bot.get_history()
-            history.append({"role": "user", "content": req.message})
+            history.append({"role": "user", "content": req.message, "id": user_msg_id})
             bot.save_history(history)
-            bot.save_to_db(req.user_id, "user", req.message)
 
             try:
                 response = await openai_completion_with_function_call(history,
@@ -74,26 +74,13 @@ async def stream_chat_with_persona(req: ChatRequest):
                 yield "[ERROR] GPT 응답 실패\n"
                 return
 
-            # print(response)
             full_reply = response
-            # batch_buffer = ""
-            # batch_size = 5
 
-            # async for chunk in response:
-            #     if isinstance(chunk, str):
-            #         batch_buffer += chunk
-            #         full_reply += chunk
-            #     if len(batch_buffer) >= batch_size:
-            #         yield batch_buffer
-            #         batch_buffer = ""
-
-            # if batch_buffer:
-            #     yield batch_buffer
             yield full_reply
             # 어시스턴트 응답 저장
-            history.append({"role": "assistant", "content": full_reply})
+            assistant_msg_id = bot.save_to_db(req.user_id, "assistant", full_reply)
+            history.append({"role": "assistant", "content": full_reply, "id": assistant_msg_id})
             bot.save_history(history)
-            bot.save_to_db(req.user_id, "assistant", full_reply)
             asyncio.create_task(bot.check_and_summarize_if_needed())
 
     return StreamingResponse(event_generator(), media_type="text/plain")

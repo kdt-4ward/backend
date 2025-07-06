@@ -148,7 +148,7 @@ class PersonaChatBotHistoryManager:
                     messages = db.query(AIMessage).filter_by(user_id=self.user_id)\
                                 .order_by(AIMessage.created_at).all()
 
-                chat_msgs = [{"role": msg.role, "content": msg.content} for msg in messages]
+                chat_msgs = [{"role": msg.role, "content": msg.content, "id": msg.id} for msg in messages]
         except SQLAlchemyError as e:
             print(f"[DB Fallback Error] {e}")
         
