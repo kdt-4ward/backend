@@ -25,6 +25,7 @@ class Message(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     deleted_at = Column(DateTime, nullable=True)
     is_delivered = Column(Boolean, default=False)
+    embed_index = Column(Integer, nullable=True)  # <--- 추가!
 
 # ================== AI 메시지(챗봇) =================
 class AIMessage(Base):
@@ -36,6 +37,7 @@ class AIMessage(Base):
     role = Column(String(20), nullable=False)  # 'user' or 'assistant'
     content = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
+    embed_index = Column(Integer, nullable=True)  # <--- 추가!
 
 # ================== 페르소나 설정 ==================
 class PersonaConfig(Base):
@@ -108,7 +110,7 @@ class AIChatSummary(Base):
     summary = Column(Text, nullable=False)
     emb_id = Column(Integer, nullable=True)  # 벡터 DB 연결 시
     created_at = Column(DateTime, default=datetime.utcnow)
-    last_msg_id = Column(Integer, nullable=True)
+    last_msg_id = Column(Integer, nullable=False)
 
 class CoupleChatSummary(Base):
     __tablename__ = "couple_chat_summaries"

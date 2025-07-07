@@ -3,7 +3,7 @@ from models.db_models import AIChatSummary, CoupleChatSummary
 from core.db import SessionLocal
 from datetime import datetime
 
-async def summarize_ai_chat(user_id: str, couple_id: str, prev_summary: str, target: list) -> str:
+async def summarize_ai_chat(prev_summary: str, target: list) -> str:
     """
     누적 요약 방식: 이전 summary(요약) + 최근 미요약 메시지(target)만 받아
     전체 누적 요약을 새로 만듭니다.
@@ -24,21 +24,11 @@ async def summarize_ai_chat(user_id: str, couple_id: str, prev_summary: str, tar
 """
 
     messages = [
-        {"role": "system", "content": "너는 심리 상담 전문가이자 요약가야."},
+        {"role": "system", "content": "너는 사용자와 대화를 지속적으로 하기 위해 누적요약을 해주는 시스템이야. 대화의 맥락을 유지하기 위해 누적 요약본을 보고 최근 대화를 요약해줘."},
         {"role": "user", "content": prompt.strip()}
     ]
 
-    summary = await call_openai_completion(messages)
-
-    # DB 저장
-    with SessionLocal() as db:
-        db.add(AIChatSummary(
-            user_id=user_id,
-            couple_id=couple_id,
-            summary=summary,
-            created_at=datetime.utcnow()
-        ))
-        db.commit()
+    summary, _ = await call_openai_completion(messages)
 
     return summary
 
