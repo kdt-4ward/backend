@@ -1,26 +1,18 @@
-from fastapi.responses import StreamingResponse
+import asyncio
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse, StreamingResponse, PlainTextResponse
+from tenacity import RetryError
 from typing import AsyncGenerator
+
 from models.schema import ChatRequest, BotConfigRequest
 from config import router, semaphore
 from core.bot import PersonaChatBot
-from tenacity import retry, stop_after_attempt, wait_fixed, RetryError
-from services.openai_client import call_openai_stream_async, openai_stream_with_function_call, openai_completion_with_function_call
+from services.rag_search import search_past_chats, process_incremental_faiss_embedding
+from services.openai_client import openai_completion_with_function_call
 from core.dependencies import get_connection_manager
-from services.rag_search import search_past_chats
-import asyncio
 
 # TODO: 배포시 제거
 from core.utils import ensure_couple_mapping
-
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
-from models.schema import ChatRequest
-from config import router, semaphore
-from core.bot import PersonaChatBot
-from tenacity import RetryError
-from services.rag_search import search_past_chats
-from services.openai_client import openai_completion_with_function_call
-import asyncio
 
 @router.post("/chat/completion")
 async def chat_with_persona(req: ChatRequest):
@@ -83,16 +75,14 @@ async def chat_with_persona(req: ChatRequest):
         except RetryError as e:
             print("============ERROR========\n", e)
             return JSONResponse(content={"error": "GPT 응답 실패"}, status_code=500)
-        
-        response
 
         # assistant 응답 저장
         assistant_msg_id = bot.save_to_db(req.user_id, "assistant", response)
         history.append({"role": "assistant", "content": response, "id": assistant_msg_id})
         bot.save_history(history)
         asyncio.create_task(bot.check_and_summarize_if_needed())
-
-        return response
+        asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
+        return PlainTextResponse(response)
 
 
 @router.post("/chat/stream")

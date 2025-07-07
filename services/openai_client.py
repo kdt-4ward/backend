@@ -137,7 +137,7 @@ async def openai_completion_with_function_call(
 ):
     client = get_openai_client()
     params = {
-        "model": "gpt-4o",
+        "model": "gpt-4o-mini", # 실시간 응답 속도를 위해 mini 사용
         "messages": filter_for_openai(history),
         "stream": False,
         "functions": functions,
