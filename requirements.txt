@@ -13,3 +13,4 @@ redis
 pytest
 numpy
 faiss-cpu
+pyjwt
