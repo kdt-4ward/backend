@@ -4,9 +4,13 @@ from core.settings import settings
 from models.db_models import Couple, AIMessage, Message, AIChatSummary
 from core.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
+import numpy as np
 
 # Redis 연결
-redis_client = redis.StrictRedis(host=settings.redis_host, port=settings.redis_port, db=0, decode_responses=True)
+redis_client = redis.StrictRedis(host=settings.redis_host,
+                                 port=settings.redis_port,
+                                 db=0,
+                                 decode_responses=True)
 
 class RedisAIHistory:
     PREFIX = "chatbot:history"
@@ -194,3 +198,53 @@ class PersonaChatBotHistoryManager:
             result.append({"role": "summary", "content": summary})
         result.extend(filtered)
         return result
+
+redis_bin_client = redis.StrictRedis(
+    host=settings.redis_host,
+    port=settings.redis_port,
+    db=0,
+    decode_responses=False
+)
+
+class RedisFaissChunkCache:
+    CHUNK_PREFIX = "chatbot:faiss:chunks"
+    EMB_PREFIX = "chatbot:faiss:emb"
+    SHAPE_PREFIX = "chatbot:faiss:shape"
+
+    @classmethod
+    def _chunk_key(cls, user_id):
+        return f"{cls.CHUNK_PREFIX}:{user_id}"
+
+    @classmethod
+    def _emb_key(cls, user_id):
+        return f"{cls.EMB_PREFIX}:{user_id}"
+
+    @classmethod
+    def _shape_key(cls, user_id):
+        return f"{cls.SHAPE_PREFIX}:{user_id}"
+
+    @classmethod
+    def save(cls, user_id, chunks, embeddings_np):
+        # chunk info: json (utf-8) 저장은 redis_client(문자열)
+        redis_client.set(cls._chunk_key(user_id), json.dumps(chunks))
+        # np.array: 바이너리 저장은 redis_bin_client
+        redis_bin_client.set(cls._emb_key(user_id), embeddings_np.tobytes())
+        redis_bin_client.set(cls._shape_key(user_id), json.dumps(list(embeddings_np.shape)).encode("utf-8"))
+
+    @classmethod
+    def load(cls, user_id):
+        chunks_raw = redis_client.get(cls._chunk_key(user_id))
+        emb_raw = redis_bin_client.get(cls._emb_key(user_id))
+        shape_raw = redis_bin_client.get(cls._shape_key(user_id))
+        if not chunks_raw or not emb_raw or not shape_raw:
+            return None, None
+        chunks = json.loads(chunks_raw)
+        shape = tuple(json.loads(shape_raw.decode("utf-8")))
+        embeddings_np = np.frombuffer(emb_raw, dtype=np.float32).reshape(shape)
+        return chunks, embeddings_np
+
+    @classmethod
+    def clear(cls, user_id):
+        redis_client.delete(cls._chunk_key(user_id))
+        redis_bin_client.delete(cls._emb_key(user_id))
+        redis_bin_client.delete(cls._shape_key(user_id))
