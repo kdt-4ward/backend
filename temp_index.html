@@ -155,7 +155,7 @@
 
       aiLog.innerHTML += `👤 나: ${message}\n🤖 AI: `;
 
-      const res = await fetch("http://localhost:8000/chat/stream", {
+      const res = await fetch("http://localhost:8000/chat/completion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, couple_id, message })

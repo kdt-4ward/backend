@@ -7,7 +7,7 @@ engine = get_engine()
 router = APIRouter()
 
 # 한번에 request 처리 갯수
-semaphore = Semaphore(3)
+semaphore = Semaphore(5)
 
 
 

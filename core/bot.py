@@ -159,14 +159,13 @@ class PersonaChatBot:
                 user_id=self.user_id,
                 couple_id=self.couple_id,
                 summary=summary,
+                created_at=datetime.utcnow(),
                 last_msg_id=last_msg_id,
-                created_at=datetime.utcnow()
             ))
             db.commit()   # summary DB에 확정
-
         # Redis는 보조 저장소이므로, DB 성공 후에 저장(최소 once)
+        self.history_manager.save(new_history)
         redis_client.set(self.summary_key, summary, ex=3600 * 6)
-        redis_client.set(self.history_key, json.dumps(new_history), ex=3600)
 
     async def check_and_summarize_if_needed(self):
         if not acquire_summary_lock(self.user_id):
@@ -212,8 +211,6 @@ class PersonaChatBot:
                 target_msgs = [msg for turn in target_turns for msg in turn]
 
                 summary = await summarize_ai_chat(
-                    user_id=self.user_id,
-                    couple_id=self.couple_id,
                     prev_summary=prev_summary,
                     target=target_msgs
                 )

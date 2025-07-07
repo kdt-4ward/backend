@@ -69,13 +69,11 @@ async def openai_stream_with_function_call(history, functions, function_map, bot
     while call_count < max_func_calls:
 
         # 1. 스트리밍 응답 시작
-        print(f"입력 prompt:{params}")
         response = await client.chat.completions.create(**params)
         function_call_triggered  = False
 
         # 2. 첫번째 청크에서 function-call 여부 확인
         async for chunk in response:
-            print(f"chunk: {chunk}")
             # OpenAI function-call 응답은 'choices[0].delta.function_call'에 나타남
             delta = chunk.choices[0].delta
             function_call = getattr(delta, "function_call", None) # or (delta.get("function_call") if isinstance(delta, dict) else None)
@@ -122,11 +120,8 @@ async def openai_stream_with_function_call(history, functions, function_map, bot
                     bot.save_to_db(bot.user_id, "function", json.dumps({"name": func_name, "result": result}, ensure_ascii=False))
                 # function-call 발생했으니 루프 상위로 올라가서 재시작
                 params["messages"] = history
-                print(f"Function call prompt:{history}")
             else:
                 # 일반 답변 청크라면 바로 yield (스트리밍)
-                print(f"call_count: {call_count}")
-                print(f"delta: {delta}")
                 if hasattr(delta, "content") and delta.content:
                     yield delta.content
         else:
@@ -224,7 +219,12 @@ def filter_for_openai(history: list) -> list:
     """
     # OpenAI API docs: role, content, name, function_call 등만 허용
     allowed_keys = {"role", "content", "name", "function_call"}
-    return [
+    openai_inputs = [
         {k: v for k, v in msg.items() if k in allowed_keys}
         for msg in history
     ]
+    for msg in openai_inputs:
+        if msg['role'] == "summary":
+            msg['role'] = "function"
+            msg["name"] = "chat_summarizer"
+    return openai_inputs
