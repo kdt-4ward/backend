@@ -1,4 +1,4 @@
-from core.db import get_engine
+from db.db import get_engine
 from fastapi import APIRouter
 from asyncio import Semaphore
 from core.settings import settings

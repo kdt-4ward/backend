@@ -1,6 +1,6 @@
 from models.db_models import Couple
 from core.redis import save_couple_mapping
-from core.db import SessionLocal
+from db.db import SessionLocal
 
 def ensure_couple_mapping(user_id: str, partner_id: str, couple_id: str):
     # 1. DB에 존재하는지 확인

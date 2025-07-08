@@ -1,4 +1,4 @@
-from core.db import SessionLocal
+from db.db import SessionLocal
 from db.crud import (
     get_all_couple_ids,
     get_users_by_couple_id,

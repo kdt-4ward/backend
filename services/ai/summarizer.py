@@ -1,6 +1,6 @@
 from services.openai_client import call_openai_completion
 from models.db_models import AIChatSummary, CoupleChatSummary
-from core.db import SessionLocal
+from db.db import SessionLocal
 from datetime import datetime
 
 async def summarize_ai_chat(prev_summary: str, target: list) -> str:

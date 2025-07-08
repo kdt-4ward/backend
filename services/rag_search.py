@@ -83,6 +83,8 @@ async def process_incremental_faiss_embedding(user_id, turns_per_chunk=4):
         # 없으면 전체 새로 빌드
         bot = PersonaChatBot(user_id)
         messages = bot.get_full_history()
+        if len(messages) < 8:
+            return
         await process_and_build_faiss_index(user_id, messages, turns_per_chunk)
         return
 
@@ -133,7 +135,7 @@ async def process_incremental_faiss_embedding(user_id, turns_per_chunk=4):
                 if msg:
                     msg.embed_index = prev_chunk_count + idx
                     db.commit()
-
+    
     # 5. Redis에 append 저장 (concat)
     all_chunks = chunks + new_chunks
     all_embeddings_np = np.concatenate([embeddings_np, np.array(new_embeddings).astype("float32")], axis=0)

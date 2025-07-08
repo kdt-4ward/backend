@@ -2,7 +2,7 @@ import json
 import redis
 from core.settings import settings
 from models.db_models import Couple, AIMessage, Message, AIChatSummary
-from core.db import SessionLocal
+from db.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
 import numpy as np
 
@@ -24,16 +24,7 @@ class RedisAIHistory:
         raw = redis_client.get(cls._key(user_id))
         if raw:
             return json.loads(raw)
-        # Redis에 없으면 DB에서 로드
-        history = cls._load_from_db(user_id)
-        cls.set_history(user_id, history)
-        return history
-
-    @classmethod
-    def _load_from_db(cls, user_id: str) -> list:
-        with SessionLocal() as db:
-            rows = db.query(AIMessage).filter_by(user_id=user_id).order_by(AIMessage.created_at).all()
-            return [{"role": row.role, "content": row.content} for row in rows]
+        return None
 
     @classmethod
     def set_history(cls, user_id: str, history: list):

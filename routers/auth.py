@@ -4,15 +4,13 @@ from services.google_auth import get_google_access_token, get_google_userinfo
 from config import router
 from models.schema import GoogleAuthCode
 from fastapi import Request
-from core.db import SessionLocal
+from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
 from models.db_models import User
 from sqlalchemy.orm import Session
 from utils.hash_utils import hash_email  
 from datetime import datetime
 from utils.jwt_utils import create_access_token, create_refresh_token
-
-router = APIRouter()
 
 class CodeBody(BaseModel):
     code: str
@@ -129,8 +127,8 @@ class CodeBody(BaseModel):
 #     }
 
 @router.post("/auth/google/code")
-async def google_login_code(body: CodeBody):
-    code = body.code
+async def google_login_code(request: Request):
+    code = request.query_params.get("code")
     if not code:
         raise HTTPException(status_code=400, detail="code missing")
     

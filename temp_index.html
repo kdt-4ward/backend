@@ -179,6 +179,7 @@
     }
 
     async function setBotName() {
+      const user_id = document.getElementById("myId").value;
       const couple_id = document.getElementById("coupleId").value;
       const persona_name = document.getElementById("botNameInput").value;
       const status = document.getElementById("botStatus");
@@ -191,7 +192,7 @@
       const res = await fetch("http://localhost:8000/chat/configure", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ couple_id, persona_name })
+        body: JSON.stringify({ user_id, persona_name })
       });
 
       const data = await res.json();

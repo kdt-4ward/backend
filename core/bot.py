@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from core.redis import PersonaChatBotHistoryManager, load_couple_mapping, redis_client
 from models.db_models import AIMessage, PersonaConfig, AIChatSummary
-from core.db import SessionLocal
+from db.db import SessionLocal
 from services.ai.summarizer import summarize_ai_chat
 from enum import Enum
 
@@ -77,9 +77,9 @@ class PersonaChatBot:
             config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
             if not config:
                 config = PersonaConfig(couple_id=self.couple_id)
-                db.add(config)
             config.persona_name = name
             config.updated_at = datetime.utcnow()
+            db.add(config)
             db.commit()
 
     def _load_config_from_db(self):
@@ -173,6 +173,7 @@ class PersonaChatBot:
 
         try:
             history = self.get_history()
+            print(history)
             # 'system', 'summary' 제외
             filtered = [h for h in history if h["role"] not in (Role.SYSTEM, Role.SUMMARY)]
 
