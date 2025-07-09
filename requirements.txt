@@ -14,3 +14,4 @@ pytest
 numpy
 faiss-cpu
 pyjwt
+celery

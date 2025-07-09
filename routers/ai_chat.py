@@ -10,6 +10,7 @@ from core.bot import PersonaChatBot
 from services.rag_search import search_past_chats, process_incremental_faiss_embedding
 from services.openai_client import openai_completion_with_function_call
 from core.dependencies import get_connection_manager
+from services.tasks_celery import run_check_and_summarize, run_embedding
 
 # TODO: 배포시 제거
 from core.utils import ensure_couple_mapping
@@ -80,6 +81,11 @@ async def chat_with_persona(req: ChatRequest):
         assistant_msg_id = bot.save_to_db(req.user_id, "assistant", response)
         history.append({"role": "assistant", "content": response, "id": assistant_msg_id})
         bot.save_history(history)
+
+        ## celery 사용 : 메인 프로세스 부하 줄여주기
+        # run_check_and_summarize.delay(req.user_id)
+        # run_embedding.delay(req.user_id)
+        
         asyncio.create_task(bot.check_and_summarize_if_needed())
         asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
         return PlainTextResponse(response)
