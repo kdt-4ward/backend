@@ -117,3 +117,4 @@ class CoupleChatSummary(Base):
     summary = Column(Text, nullable=False)
     emb_id = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
