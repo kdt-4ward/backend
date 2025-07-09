@@ -1,5 +1,6 @@
 from langchain.prompts import PromptTemplate
 
+
 DAILY_NLU_PROMPT = """
 너는 커플의 하루 대화를 읽고,  
 1) 애정표현  
@@ -61,26 +62,57 @@ DAILY_AI_NLU_PROMPT = """
 {messages}
 """
 
-WEEKLY_REPORT_PROMPT = """
-아래는 커플의 최근 1주일간 대화에서 LLM이 분석한 주간 통계 데이터야.
 
-- 항목별로 1주일 전체 합계와 대표 발화 샘플 리스트가 포함되어 있음.
-- 요약리스트에는 하루씩의 대화 요약이 순서대로 들어있음.
-
-이 데이터를 바탕으로
-1. 전체 주간 분위기를 10줄 이내로 분석,
-2. 가장 인상적이었던 긍정/부정 포인트(상황, 대화, 변곡점 등) 각각 2~3개,
-3. 최근 한 주에 어울릴 만한 음악/영화 한 가지(이유와 함께) 추천,
-
-아래 JSON으로 답변해.
-
-{{
-  "주간분위기분석": "...",
-  "긍정포인트": ["..."],
-  "부정포인트": ["..."],
-  "추천": {{ "type": "플레이리스트/영화", "제목": "...", "이유": "..." }}
-}}
-
-[주간 통계]
-{weekly_stats}
+COUPLE_WEEKLY_PROMPT = """
+너는 연애 분석 AI야.
+아래는 커플이 1주일간 나눈 대화의 감정별 통계(애정표현, 배려, 적극성, 격려, 갈등 등), 대표 문장, 일별 요약이야.
+이걸 바탕으로 이번 주 커플의 전반적 분위기, 긍정/부정 이슈, 성장/위험 변화 등 핵심만 7~10줄 요약해줘.
+JSON:
+{{ "커플_주간분석": "..." }}
+[주간커플통계]
+{couple_weekly}
 """
+
+# 2. AI 상담 주간 통계 분석(개인별)
+AI_WEEKLY_PROMPT = """
+아래는 한 사용자가 AI와 1주일간 상담한 감정/상담주제/발화통계/중요신호/요약 리스트야.
+이걸 바탕으로 심리 변화, 주된 고민, 성장/위험 신호를 5~8줄로 요약.
+JSON:
+{{ "AI_주간분석": "..." }}
+[주간AI상담통계]
+{ai_weekly}
+"""
+
+# 3. 커플 vs AI 감정/성향 비교분석
+COMPARE_PROMPT = """
+아래는 커플채팅 주간통계와 각자 AI 상담 주간통계야.
+두 정보의 감정/표현/성향 차이, 감정 불일치, 숨은 고민/위험 신호, 성장 신호 등을 비교 요약(5줄 이내).
+JSON:
+{{ "비교분석": "..." }}
+[커플]: {couple_weekly}
+[AI1]: {user1_ai_weekly}
+[AI2]: {user2_ai_weekly}
+"""
+
+# 4. 맞춤 솔루션/추천
+SOLUTION_PROMPT = """
+아래는 커플/AI 상담 주간분석 요약 결과야.
+이 정보를 바탕으로, 두 사람에게 꼭 맞는 따뜻한 솔루션/조언을 2~3줄로 제시하고,
+플레이리스트나 영화를 한 가지, 제목/추천이유와 함께 추천.
+JSON:
+{{ "조언": "...", "추천컨텐츠": {{ "type": "플레이리스트/영화", "제목": "...", "이유": "..." }} }}
+[주간분석]
+커플: {couple_report}
+AI1: {user1_ai_report}
+AI2: {user2_ai_report}
+"""
+
+
+PROMPT_REGISTRY = {
+    "daily_nlu": DAILY_NLU_PROMPT,
+    "daily_ai_nlu": DAILY_AI_NLU_PROMPT,
+    "couple_weekly_prompt": COUPLE_WEEKLY_PROMPT,
+    "ai_weekly_prompt": AI_WEEKLY_PROMPT,
+    "compare_prompt": COMPARE_PROMPT,
+    "solution_prompt": SOLUTION_PROMPT
+}
