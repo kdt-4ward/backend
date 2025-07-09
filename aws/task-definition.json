@@ -170,6 +170,5 @@
     },
     "registeredAt": "2025-07-07T10:06:37.865Z",
     "registeredBy": "arn:aws:iam::525127693055:user/leejd",
-    "enableFaultInjection": false,
     "tags": []
 }
