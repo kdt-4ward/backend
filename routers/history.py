@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from core.db import SessionLocal
+from db.db import SessionLocal
 from models.db_models import Message
 from config import router
 

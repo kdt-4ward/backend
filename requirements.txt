@@ -11,3 +11,7 @@ httpx
 tenacity
 redis
 pytest
+numpy
+faiss-cpu
+pyjwt
+celery

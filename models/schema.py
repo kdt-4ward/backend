@@ -2,6 +2,14 @@ from pydantic import BaseModel
 from typing import Optional
 
 
+# 메시지 스키마 정의
+class WSMessage(BaseModel):
+    type: str
+    message: Optional[str] = None
+    partner_id: Optional[str] = None
+    couple_id: Optional[str] = None
+    image_url: Optional[str] = None
+    
 class GoogleAuthCode(BaseModel):
     code: str
 

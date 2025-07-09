@@ -7,7 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 from core.settings import settings
 from openai import AsyncOpenAI
 from core.settings import settings
-from core.db import get_session
+from db.db import get_session
 
 # DB session
 def get_db_session():

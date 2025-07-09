@@ -2,15 +2,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import ai_chat, ws_chat, history, auth
 from models.db_models import Base
-from core.db import engine
+from db.db import engine
 from core.settings import settings
-from core.db_utils import create_database_if_not_exists
+from db.db_utils import create_database_if_not_exists
 
 app = FastAPI(
     title=settings.app_name,
     debug=settings.debug
 )
 
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
 
 def startup():
     create_database_if_not_exists()

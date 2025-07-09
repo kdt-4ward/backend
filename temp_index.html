@@ -10,6 +10,8 @@
       overflow-y: scroll; margin-top: 10px; white-space: pre-wrap;
     }
     input, textarea { margin: 5px 0; width: 100%; }
+    .my-message { color: blue; }
+    .partner-message { color: green; }
   </style>
 </head>
 <body>
@@ -74,12 +76,18 @@
 
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);
+          const myId = document.getElementById("myId").value;
           const log = document.getElementById("chatLog");
 
           if (data.type === "status") {
             log.innerHTML += `<p><em>🔔 ${data.user}님이 ${data.status}</em></p>`;
           } else if (data.type === "message") {
-            log.innerHTML += `<p><strong>${data.from}</strong>: ${data.message}</p>`;
+            // 💬 내 메시지는 파란색, 상대 메시지는 초록색 표시
+            if (data.from === myId) {
+              log.innerHTML += `<p><strong class="my-message">${data.from} (나)</strong>: ${data.message}</p>`;
+            } else {
+              log.innerHTML += `<p><strong class="partner-message">${data.from}</strong>: ${data.message}</p>`;
+            }
           } else if (data.type === "system") {
             log.innerHTML += `<p><em>📢 ${data.message}</em></p>`;
           } else if (data.type === "error") {
@@ -94,13 +102,19 @@
     }
 
     function sendMessage() {
+      const myId = document.getElementById("myId").value;
       const coupleId = document.getElementById("coupleId").value;
       const message = document.getElementById("messageInput").value;
+      const log = document.getElementById("chatLog");
 
       if (!socket || socket.readyState !== WebSocket.OPEN) {
         alert("WebSocket이 연결되지 않았습니다.");
         return;
       }
+
+      // 💬 내가 보낸 메시지 바로 채팅창에 추가 (카톡 스타일)
+      log.innerHTML += `<p><strong class="my-message">${myId} (나)</strong>: ${message}</p>`;
+      log.scrollTop = log.scrollHeight;
 
       socket.send(JSON.stringify({
         type: "message",
@@ -141,7 +155,7 @@
 
       aiLog.innerHTML += `👤 나: ${message}\n🤖 AI: `;
 
-      const res = await fetch("http://localhost:8000/chat/stream", {
+      const res = await fetch("http://localhost:8000/chat/completion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id, couple_id, message })
@@ -165,6 +179,7 @@
     }
 
     async function setBotName() {
+      const user_id = document.getElementById("myId").value;
       const couple_id = document.getElementById("coupleId").value;
       const persona_name = document.getElementById("botNameInput").value;
       const status = document.getElementById("botStatus");
@@ -177,7 +192,7 @@
       const res = await fetch("http://localhost:8000/chat/configure", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ couple_id, persona_name })
+        body: JSON.stringify({ user_id, persona_name })
       });
 
       const data = await res.json();
