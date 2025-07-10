@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
-
+import itertools
+import asyncio
 
 class Settings(BaseSettings):
     # === 앱 설정 ===
@@ -39,5 +40,14 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._api_key_list = [k.strip() for k in self.openai_api_key.split(",") if k.strip()]
+        self._key_iter = itertools.cycle(self._api_key_list)
+        self._key_lock = asyncio.Lock()
+
+    async def get_next_api_key(self):
+        async with self._key_lock:
+            return next(self._key_iter)
 # 싱글톤 객체
 settings = Settings()

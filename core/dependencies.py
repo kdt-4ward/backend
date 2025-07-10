@@ -20,9 +20,9 @@ def get_connection_manager() -> ConnectionManager:
     return _connection_manager
 
 
-def get_openai_client() -> AsyncOpenAI:
+async def get_openai_client() -> AsyncOpenAI:
     # api_key = get_user_api_key(user_id)
-    return AsyncOpenAI(api_key=settings.openai_api_key)
+    return AsyncOpenAI(api_key=await settings.get_next_api_key())
 
 
 # 2. Langchain LLM

@@ -1,90 +1,41 @@
-from db.db import SessionLocal
-from db.crud import (
-    get_all_couple_ids,
-    get_users_by_couple_id,
-    get_week_chat_logs_by_couple_id,
-    get_questionnaire,
-    get_daily_emotions,
-)
-from services.ai import analyzer
+from services.ai.analyzer_langchain import aggregate_weekly_stats, aggregate_weekly_ai_stats_by_day
+from services.ai.weekly_analysis_pipeline import WeeklyAnalysisPipeline
 
+async def run_all_weekly_analyses(couple_list, week_dates):
+    for couple in couple_list:
+        couple_id = couple['couple_id']
+        user1_id = couple['user_1']
+        user2_id = couple['user_2']
 
-def run_weekly_analysis_for_couple(couple_id: str):
-    db = SessionLocal()
+        # 1. 일간분석 결과 불러오기
+        daily_couple_stats = load_daily_couple_stats(couple_id, week_dates)
+        daily_user1_ai_stats = load_daily_ai_stats(user1_id, week_dates)
+        daily_user2_ai_stats = load_daily_ai_stats(user2_id, week_dates)
 
-    try:
-        users = get_users_by_couple_id(db, couple_id)  # returns list[User]
-        if not users or len(users) != 2:
-            print(f"[Couple {couple_id}] 유효하지 않은 유저 수 - 분석 생략")
-            return
+        if not daily_couple_stats or not daily_user1_ai_stats or not daily_user2_ai_stats:
+            # 로그 및 건너뛰기
+            continue
 
-        user_data = []
-        for user in users:
-            questionnaire = get_questionnaire(db, user.id)
-            daily_logs = get_daily_emotions(db, user.id)
+        # 2. 집계
+        couple_weekly = aggregate_weekly_stats(daily_couple_stats)
+        user1_ai_weekly = aggregate_weekly_ai_stats_by_day(daily_user1_ai_stats)
+        user2_ai_weekly = aggregate_weekly_ai_stats_by_day(daily_user2_ai_stats)
 
-            if not questionnaire and not daily_logs:
-                print(f"[User {user.id}] 분석 가능한 데이터 없음 - 생략")
+        # 3. LLM 주간분석
+        pipeline = WeeklyAnalysisPipeline()
+        result = await pipeline.analyze(couple_weekly, user1_ai_weekly, user2_ai_weekly)
 
-            # 일부 데이터가 없을 때 경고 로그 출력
-            if not questionnaire:
-                print(f"[User {user.id}] 설문 응답 없음")
-                questionnaire_traits = "설문 응답 없음 - 분석 생략"
-            else:
-                questionnaire_traits = (
-                analyzer.analyze_questionnaire(questionnaire.answers)
-                if questionnaire else None
-            )
-            if not daily_logs:
-                print(f"[User {user.id}] 감정 기록 없음")
-                emotions_summary = "감정 기록 없음 - 분석 생략"
-            else:
-                emotions_summary = (
-                    analyzer.analyze_daily_emotion("\n".join(log.summary for log in daily_logs))
-                    if daily_logs else None
-                )
+        # 4. 저장
+        save_weekly_analysis_result(couple_id, user1_id, user2_id, result)
 
-            user_data.append({
-                "user_id": user.id,
-                "questionnaire_traits": questionnaire_traits,
-                "emotions_summary": emotions_summary,
-            })
+def load_daily_couple_stats(couple_id, week_dates):
+    # DB에서 couple_id, week_dates에 해당하는 일간분석 결과를 리스트로 반환
+    pass
 
-        # 커플 채팅 기록 조회 (couple 단위)
-        chat_logs = get_week_chat_logs_by_couple_id(db, couple_id)
-        if not chat_logs:
-            print(f"[Couple {couple_id}] 채팅 기록 없음 - 분석 생략")
-            chat_traits = "채팅 기록 없음 - 분석 생략"
-        else:
-            chat_text = "\n".join(log.content for log in chat_logs) 
-            chat_traits = analyzer.analyze_chat(chat_text)
+def load_daily_ai_stats(user_id, week_dates):
+    # DB에서 user_id, week_dates에 해당하는 AI 일간분석 결과를 리스트로 반환
+    pass
 
-        user1_data, user2_data = user_data[0], user_data[1]
-
-        weekly_solution = analyzer.generate_weekly_solution(
-            chat_traits=chat_traits,
-            user1_data=user1_data,
-            user2_data=user2_data,
-        )
-
-        print(f"[Couple {couple_id}] 주간 커플 솔루션\n{weekly_solution}")
-        # 예시: 커플 기준 저장
-        # from models.db_models import WeeklySolution
-        # db.add(WeeklySolution(couple_id=couple_id, content=weekly_solution))
-        # db.commit()
-    finally:
-        db.close()
-
-
-def run_all_couples_weekly_analysis():
-    db = SessionLocal()
-    try:
-        couple_ids = get_all_couple_ids(db)  # returns list[str] of couple_id
-        for (couple_id,) in couple_ids:  # unpacking if query returns list of tuples
-            run_weekly_analysis_for_couple(couple_id)
-    finally:
-        db.close()
-
-
-if __name__ == "__main__":
-    run_all_couples_weekly_analysis()
+def save_weekly_analysis_result(couple_id, user1_id, user2_id, result):
+    # WeeklySolution, CoupleChatSummary 등 결과 저장
+    pass

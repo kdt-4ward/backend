@@ -67,7 +67,7 @@ class RedisCoupleHistory:
             rows = db.query(Message).filter_by(couple_id=couple_id).order_by(Message.created_at.desc()).limit(REDIS_CHAT_HISTORY_LIMIT).all()
             # 시간순 재정렬(오래된→최신)
             history = [
-                {"user_id": row.user_id, "content": row.content, "created_at": row.created_at.isoformat()} 
+                {"user_id": row.user_id, "content": row.content, "image_url": row.image_url, "created_at": row.created_at.isoformat()} 
                 for row in reversed(rows)
             ]
             return history
