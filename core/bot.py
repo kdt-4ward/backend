@@ -4,6 +4,7 @@ from core.redis import PersonaChatBotHistoryManager, load_couple_mapping, redis_
 from models.db_models import AIMessage, PersonaConfig, AIChatSummary
 from db.db import SessionLocal
 from services.ai.summarizer import summarize_ai_chat
+from services.ai.prompt_templates import CHATBOT_PROMPT
 from enum import Enum
 
 class Role(str, Enum):
@@ -13,23 +14,8 @@ class Role(str, Enum):
     SUMMARY = "summary"
     FUNCTION = "function"
 
-DEFAULT_SYSTEM_PROMPT = (
-    "You are a relationship assistant chatbot. "
-    "If the user's question is about relationships or dating, respond kindly and empathetically with helpful advice.\n"
-    "If the question is not about relationships or dating, answer briefly and simply. "
-    "Afterwards, gently encourage the user to share any relationship concerns or questions they might have. "
-    "For example, you can say things like, '혹시 연애나 커플 사이에서 궁금한 점이 있다면 언제든 말씀해 주세요.', "
-    "'연애 고민이 있으시면 편하게 이야기해 주세요.', or just naturally ask if there's anything related to relationships you'd like to talk about.\n"
-    "Always follow these rules:\n"
-    "1. For relationship topics, answer only based on what you know, real chat history, or function-call (search) results.\n"
-    "2. Use chat search (function-call) only when needed, and base your answer only on actual results.\n"
-    "3. If there are no search results or they are empty, kindly say: '관련 대화 기록을 찾을 수 없어요. 더 자세한 정보를 말씀해주시면 찾아볼게요.' and ask for more details.\n"
-    "4. Never make up people, events, or facts that do not exist.\n"
-    "5. Unless requested otherwise, keep your answers as brief and direct as possible.\n"
-    "6. If information is insufficient or the question is unclear, do not guess. Instead, reply: '해당 내용을 알 수 없어요.' or '정확한 정보를 찾지 못했습니다.'\n"
-    "7. Always answer in Korean.\n"
-)
 DEFAULT_NAME = "무민"
+USER_NAME = "사용자"
 
 class PersonaChatBot:
     def __init__(self, user_id: str):
@@ -48,11 +34,21 @@ class PersonaChatBot:
     
     def get_system_prompt(self):
         config = self.get_config()
+        
         persona_name = config.get('persona_name', DEFAULT_NAME)
-        system_prompt = config.get('system_prompt', DEFAULT_SYSTEM_PROMPT)
+        user_name = config.get('user_name', USER_NAME)  # 예: "민지"
+        user_personality = config.get('user_personality', 'gentle and thoughtful')
+
+        # 템플릿 프롬프트에서 사용자 정보 반영
+        formatted_prompt = CHATBOT_PROMPT.format(
+            bot_name=persona_name,
+            user_name=user_name,
+            user_personality=user_personality
+        )
+
         return {
             "role": "system",
-            "content": f"반드시 아래 설정에 맞게 응답해줘.\n\n설정\n이름: {persona_name}\n\n역할: {system_prompt}"
+            "content": formatted_prompt
         }
     
     def get_config(self):
@@ -62,7 +58,7 @@ class PersonaChatBot:
         else:
             config = self._load_config_from_db()
             redis_client.set(self.config_key, json.dumps(config), ex=3600)
-        config.setdefault("system_prompt", DEFAULT_SYSTEM_PROMPT)
+        config.setdefault("system_prompt", CHATBOT_PROMPT)
         return config
 
     def set_persona_name(self, name: str):
@@ -173,7 +169,6 @@ class PersonaChatBot:
 
         try:
             history = self.get_history()
-            print(history)
             # 'system', 'summary' 제외
             filtered = [h for h in history if h["role"] not in (Role.SYSTEM, Role.SUMMARY)]
 
