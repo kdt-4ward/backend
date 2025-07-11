@@ -1,0 +1,174 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:525127693055:task-definition/fastapi-task-def:8",
+    "containerDefinitions": [
+        {
+            "name": "luvtune-fastapi-container",
+            "image": "<IMAGE_PLACEHOLDER>",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "luvtune-fastapi-container-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "secrets": [
+                {
+                    "name": "OPENAI_API_KEY",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/OPENAI_API_KEY"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "REDIS_DB",
+                    "value": "0"
+                },
+                {
+                    "name": "REDIS_HOST",
+                    "value": "127.0.0.1"
+                },
+                {
+                    "name": "GOOGLE_CLIENT_SECRET",
+                    "value": "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"
+                },
+                {
+                    "name": "ACCESS_TOKEN_EXPIRE_MINUTES",
+                    "value": "60"
+                },
+                {
+                    "name": "DB_USER",
+                    "value": "admin"
+                },
+                {
+                    "name": "GOOGLE_CLIENT_ID",
+                    "value": "20389543951-lp415huk9beqdqainbb9u15iam327qha.apps.googleusercontent.com"
+                },
+                {
+                    "name": "ALGORITHM",
+                    "value": "HS256"
+                },
+                {
+                    "name": "ENVIRONMENT",
+                    "value": "production"
+                },
+                {
+                    "name": "APP_NAME",
+                    "value": "LoveTune"
+                },
+                {
+                    "name": "SECRET_KEY",
+                    "value": "4ward-luvtune"
+                },
+                {
+                    "name": "REFRESH_TOKEN_EXPIRE_DAYS",
+                    "value": "1"
+                },
+                {
+                    "name": "DEBUG",
+                    "value": "false"
+                },
+                {
+                    "name": "REDIS_PORT",
+                    "value": "6379"
+                },
+                {
+                    "name": "DB_ENDPOINT",
+                    "value": "database-2.cvgqs06qk6hf.ap-northeast-2.rds.amazonaws.com"
+                },
+                {
+                    "name": "APP_HOST",
+                    "value": "0.0.0.0"
+                },
+                {
+                    "name": "APP_PORT",
+                    "value": "80"
+                },
+                {
+                    "name": "DB_PASSWORD",
+                    "value": "4ward-luvtune"
+                },
+                {
+                    "name": "GOOGLE_REDIRECT_URI",
+                    "value": "https://auth.expo.io/@soso12321/frontend"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/fastapi-task-def",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "ap-northeast-2",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "fastapi-task-def",
+    "taskRoleArn": "arn:aws:iam::525127693055:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::525127693055:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 8,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "ecs.capability.extensible-ephemeral-storage"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "ephemeralStorage": {
+        "sizeInGiB": 30
+    },
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2025-07-07T10:06:37.865Z",
+    "registeredBy": "arn:aws:iam::525127693055:user/leejd",
+    "tags": []
+}

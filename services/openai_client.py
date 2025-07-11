@@ -16,7 +16,7 @@ async def call_openai_stream_async(
     functions: Optional[list] = None,
     function_call: str = "auto"
 ):
-    client = get_openai_client()
+    client = await get_openai_client()
     params = {
         "model": "gpt-4o",
         "messages": history,
@@ -31,7 +31,7 @@ async def call_openai_stream_async(
 # 2. 일반 OpenAI 완료형 호출
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(1))
 async def call_openai_completion(history: list, functions=None, function_call="auto"):
-    client = get_openai_client()
+    client = await get_openai_client()
     params = {
         "model": "gpt-4o",
         "messages": history,
@@ -63,7 +63,7 @@ async def openai_completion_with_function_call(
     bot=None,
     max_func_calls=5
 ):
-    client = get_openai_client()
+    client = await get_openai_client()
     params = {
         "model": "gpt-4o", # 실시간 응답 속도를 위해 mini 사용
         "messages": filter_for_openai(history),
@@ -79,7 +79,12 @@ async def openai_completion_with_function_call(
             response = await client.chat.completions.create(**params)
         except BadRequestError as e:
             print(e)
-        msg = response.choices[0].message
+        
+        if not response.choices:
+            raise ValueError("GPT 응답에 choices가 없습니다.")
+        msg = getattr(response.choices[0], "message", None)
+        if msg is None:
+            raise AttributeError("choices[0]에 message가 없습니다.")
 
         # 1. function_call 여부 판단
         function_call = getattr(msg, "function_call", None)
@@ -137,7 +142,7 @@ async def openai_completion_with_function_call(
 @retry(stop=stop_after_attempt(5), wait=wait_fixed(1))
 async def get_openai_embedding(text: str):
     # OpenAI text-embedding-3-small 추천 (짧은 텍스트)
-    client = get_openai_client()
+    client = await get_openai_client()
     resp = await client.embeddings.create(
         input=text,
         model="text-embedding-3-small"
@@ -162,4 +167,6 @@ def filter_for_openai(history: list) -> list:
         if msg['role'] == "summary":
             msg['role'] = "function"
             msg["name"] = "chat_summarizer"
+        assert msg.get("role") in ("system", "user", "assistant", "function"), msg
+        assert isinstance(msg.get("content", ""), str), msg
     return openai_inputs

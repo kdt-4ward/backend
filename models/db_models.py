@@ -126,6 +126,36 @@ class CoupleChatSummary(Base):
     emb_id = Column(Integer, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+
+# ========================설문 DB ============================
+
+class SurveyQuestion(Base):
+    __tablename__ = "survey_questions"
+
+    id = Column(Integer, primary_key=True)
+    code = Column(String(255), unique=True)  # ex) relationship_value
+    text = Column(String(255), nullable=False)
+    order = Column(Integer)
+
+class SurveyChoice(Base):
+    __tablename__ = "survey_choices"
+
+    id = Column(Integer, primary_key=True)
+    question_id = Column(Integer, ForeignKey("survey_questions.id"))
+    text = Column(String(255), nullable=False)
+    tag = Column(String(255))  # 예: "trust_first", "quality_time"
+
+class UserSurveyResponse(Base):
+    __tablename__ = "user_survey_responses"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    question_id = Column(Integer, ForeignKey("survey_questions.id"))
+    choice_id = Column(Integer, ForeignKey("survey_choices.id"), nullable=True)  # 객관식 선택 시
+    custom_input = Column(Text, nullable=True)  # 기타 입력 시
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+
+
 # 게시글
 class Post(Base):
     __tablename__ = "posts"

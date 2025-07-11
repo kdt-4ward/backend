@@ -5,6 +5,19 @@ from models.db_models import Base
 from db.db import engine
 from core.settings import settings
 from db.db_utils import create_database_if_not_exists
+import logging
+import sys
+
+log_format = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
+date_format = "%Y-%m-%d %H:%M:%S"
+
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(logging.Formatter(fmt=log_format, datefmt=date_format))
+
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[console_handler]
+)
 
 # 임시 테스트용 staticfiles
 from fastapi.staticfiles import StaticFiles
