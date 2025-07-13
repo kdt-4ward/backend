@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import ai_chat, ws_chat, history, auth
-from models.db_models import Base
+from models.db_tables import Base
 from db.db import engine
 from core.settings import settings
 from db.db_utils import create_database_if_not_exists
+from test_data.seed_data import insert_test_data_to_db
 import logging
 import sys
 
@@ -30,6 +31,10 @@ def health_check():
 
 def startup():
     create_database_if_not_exists()
+
+    ## test data 삽입 / 배포시 삭제
+    insert_test_data_to_db()
+
     # 추가로 테이블 생성, 마이그레이션 등
 
 startup()
@@ -50,7 +55,3 @@ app.include_router(ai_chat.router)
 app.include_router(ws_chat.router)
 app.include_router(history.router)  # 선택
 app.include_router(auth.router)
-
-
-# from tests.data.preprocessed.insert_db import insert_data
-# insert_data()

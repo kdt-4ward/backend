@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from db.db import SessionLocal
-from models.db_models import Message
+from models.db_tables import Message
 from config import router
 
 @router.get("/history/{couple_id}")

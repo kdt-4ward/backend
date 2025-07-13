@@ -1,7 +1,10 @@
 from services.openai_client import call_openai_completion
-from models.db_models import AIChatSummary, CoupleChatSummary
+from models.db_tables import AIChatSummary, CoupleChatSummary
 from db.db import SessionLocal
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 async def summarize_ai_chat(prev_summary: str, target: list) -> str:
     """
@@ -14,20 +17,22 @@ async def summarize_ai_chat(prev_summary: str, target: list) -> str:
     target_text = "\n".join([f"{h['role']}: {h['content']}" for h in target])
 
     prompt = f"""
-지금까지의 누적 요약:
+[Previous Summary]
 {prev_summary_text}
 
-아직 요약되지 않은 최근 대화들:
+[Recent Conversation]
 {target_text}
 
-이 내용을 종합해서, 최신까지의 전체 누적 요약을 다시 작성해 주세요.
+Based on both of these,
+1) Update the cumulative summary in no more than 7 sentences.
+3) Always summarize in the same language user uses.
 """
 
     messages = [
-        {"role": "system", "content": "너는 사용자와 대화를 지속적으로 하기 위해 누적요약을 해주는 시스템이야. 대화의 맥락을 유지하기 위해 누적 요약본을 보고 최근 대화를 요약해줘."},
+        {"role": "system", "content": "Below is a record of actual conversation between a user and you. 'user:' is the user's message, 'assistant:' is your reply."},
         {"role": "user", "content": prompt.strip()}
     ]
-
+    logger.info(f"[aichat_summarize] input: {messages}")
     summary, _ = await call_openai_completion(messages)
 
     return summary

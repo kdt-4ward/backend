@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from core.redis import PersonaChatBotHistoryManager, load_couple_mapping, redis_client
-from models.db_models import AIMessage, PersonaConfig, AIChatSummary
+from models.db_tables import AIMessage, PersonaConfig, AIChatSummary, User
 from db.db import SessionLocal
 from services.ai.summarizer import summarize_ai_chat
 from services.ai.prompt_templates import CHATBOT_PROMPT
@@ -23,7 +23,7 @@ class PersonaChatBot:
         self.couple_id = self.get_couple_id()
         self.history_key = f"chat_history:{self.user_id}"
         self.summary_key = f"chat_summary:{self.user_id}"
-        self.config_key = f"chat_config:{self.couple_id}"
+        self.config_key = f"chat_config:{self.user_id}"
 
         self.history_manager = PersonaChatBotHistoryManager(
             self.user_id,
@@ -81,9 +81,16 @@ class PersonaChatBot:
     def _load_config_from_db(self):
         with SessionLocal() as db:
             config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
+            user = db.query(User).filter_by(user_id=self.user_id).first()
+            if user:
+                user_name = user.name
+            else:
+                user_name = DEFAULT_NAME
             if config:
-                return {"persona_name": config.persona_name}
-        return {"persona_name": DEFAULT_NAME}
+                return {"persona_name": config.persona_name,
+                        "user_name": user_name}
+        return {"persona_name": DEFAULT_NAME,
+                "user_name": user_name}
 
     def get_history(self):
         return self.history_manager.load()
