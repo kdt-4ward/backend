@@ -31,7 +31,7 @@ _langchain_llm: BaseChatModel = ChatOpenAI(
     temperature=0.7,
     streaming=False,
     verbose=True,
-    max_tokens=1024,
+    max_tokens=4096,
     api_key=settings.openai_api_key
 )
 def get_langchain_llm() -> BaseChatModel:

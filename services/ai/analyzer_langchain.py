@@ -1,9 +1,5 @@
-from core.dependencies import get_langchain_llm
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from services.ai.prompt_templates import PROMPT_REGISTRY
 from typing import List
-import json
 import logging
 from utils.langchain_helpers import run_langchain_prompt
 

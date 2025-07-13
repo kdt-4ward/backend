@@ -12,6 +12,7 @@ from services.rag_search import search_past_chats, process_incremental_faiss_emb
 from services.openai_client import openai_completion_with_function_call
 from core.dependencies import get_connection_manager
 from services.tasks_celery import run_check_and_summarize, run_embedding
+from utils.language import detect_language
 
 # TODO: 배포시 제거
 from core.utils import ensure_couple_mapping
@@ -25,7 +26,8 @@ async def chat_with_persona(req: ChatRequest):
     logger.info(f"[chat_with_persona] 요청: user_id={req.user_id}, couple_id={req.couple_id}")
     async with semaphore:
         bot = PersonaChatBot(user_id=req.user_id)
-
+        lang = detect_language(req.message)
+        
         functions = [
             {
                 "name": "search_past_chats",
@@ -70,7 +72,7 @@ async def chat_with_persona(req: ChatRequest):
         history = bot.get_history()
         history.append({"role": "user", "content": req.message, "id": user_msg_id})
         bot.save_history(history)
-
+        
         try:
             logger.info(f"[chat_with_persona] OpenAI 호출 시작: user_id={req.user_id}, history_len={len(history)}")
             response = await openai_completion_with_function_call(

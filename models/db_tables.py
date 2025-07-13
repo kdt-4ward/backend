@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import declarative_base
 from datetime import datetime
 import enum
@@ -80,7 +80,7 @@ class EmotionLog(Base):
     date = Column(DateTime, default=datetime.utcnow)
     memo = Column(Text)
 
-# ================ WeeklySolution ================
+# ================ Analysis & Solution ================
 class WeeklySolution(Base):
     __tablename__ = "weekly_solutions"
 
@@ -89,6 +89,35 @@ class WeeklySolution(Base):
     content = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+class AIDailyAnalysisResult(Base):
+    __tablename__ = "aidaily_analysis_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String(255), ForeignKey("users.user_id"), nullable=False)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=True)
+    date = Column(DateTime, nullable=False)  # 분석 기준 날짜 (date only, 시간 X)
+    result = Column(Text, nullable=False)  # JSON string or summary
+    created_at = Column(DateTime, default=datetime.utcnow)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class CoupleDailyAnalysisResult(Base):
+    __tablename__ = "couple_daily_analysis_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+    date = Column(DateTime, nullable=False)  # 분석 기준 날짜 (date only)
+    result = Column(Text, nullable=False)  # JSON string
+    created_at = Column(DateTime, default=datetime.utcnow)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class UserTraitSummary(Base):
+    __tablename__ = "user_trait_summaries"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String(255), ForeignKey("users.user_id"), nullable=False, unique=True)  # user_id 단일 unique
+    summary = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+# =============== 누적 요약 용 =====================
 class AIChatSummary(Base):
     __tablename__ = "ai_chat_summaries"
 
