@@ -1,10 +1,10 @@
 import json
 from datetime import datetime
 from core.redis import PersonaChatBotHistoryManager, load_couple_mapping, redis_client
-from models.db_tables import AIMessage, PersonaConfig, AIChatSummary, User
+from models.db_tables import AIMessage, PersonaConfig, AIChatSummary, User, UserTraitSummary
 from db.db import SessionLocal
 from services.ai.summarizer import summarize_ai_chat
-from services.ai.prompt_templates import CHATBOT_PROMPT
+from services.ai.prompt_templates import PROMPT_REGISTRY
 from enum import Enum
 
 class Role(str, Enum):
@@ -16,6 +16,7 @@ class Role(str, Enum):
 
 DEFAULT_NAME = "무민"
 USER_NAME = "사용자"
+PERSONALITY = 'gentle and thoughtful'
 
 class PersonaChatBot:
     def __init__(self, user_id: str):
@@ -37,10 +38,10 @@ class PersonaChatBot:
         
         persona_name = config.get('persona_name', DEFAULT_NAME)
         user_name = config.get('user_name', USER_NAME)  # 예: "민지"
-        user_personality = config.get('user_personality', 'gentle and thoughtful')
+        user_personality = config.get('user_personality', PERSONALITY)
 
         # 템플릿 프롬프트에서 사용자 정보 반영
-        formatted_prompt = CHATBOT_PROMPT.format(
+        formatted_prompt = PROMPT_REGISTRY["chatbot_prompt_ko"].format(
             bot_name=persona_name,
             user_name=user_name,
             user_personality=user_personality
@@ -58,7 +59,7 @@ class PersonaChatBot:
         else:
             config = self._load_config_from_db()
             redis_client.set(self.config_key, json.dumps(config), ex=3600)
-        config.setdefault("system_prompt", CHATBOT_PROMPT)
+        config.setdefault("system_prompt", PROMPT_REGISTRY["chatbot_prompt_ko"])
         return config
 
     def set_persona_name(self, name: str):
@@ -82,15 +83,17 @@ class PersonaChatBot:
         with SessionLocal() as db:
             config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
             user = db.query(User).filter_by(user_id=self.user_id).first()
-            if user:
-                user_name = user.name
-            else:
-                user_name = DEFAULT_NAME
+            trait = db.query(UserTraitSummary).filter_by(user_id=self.user_id).first()
+            user_name = user.name if user else DEFAULT_NAME
+            personality = trait.summary if trait else PERSONALITY
+
             if config:
                 return {"persona_name": config.persona_name,
-                        "user_name": user_name}
+                        "user_name": user_name,
+                        "personality": personality}
         return {"persona_name": DEFAULT_NAME,
-                "user_name": user_name}
+                "user_name": user_name,
+                "personality": personality}
 
     def get_history(self):
         return self.history_manager.load()

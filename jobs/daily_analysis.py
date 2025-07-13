@@ -1,4 +1,3 @@
-# services/ai/daily_analysis_runner.py
 import asyncio
 import logging
 import datetime
@@ -11,7 +10,7 @@ from db.crud import (
     save_daily_ai_analysis_result,
 )
 from services.ai.analyzer_langchain import analyze_daily
-
+from db.db import get_session
 logger = logging.getLogger(__name__)
 
 async def run_daily_analysis_for_target(
@@ -23,7 +22,7 @@ async def run_daily_analysis_for_target(
     save_func,
     log_prefix: str = ""
 ):
-    chat_logs = log_fetch_func(target_id, date)
+    chat_logs = log_fetch_func(get_session(), target_id, date)
     if not chat_logs or len(chat_logs) == 0:
         logger.warning(f"[{log_prefix}] {target_id}의 {date} 대화 없음")
         return
@@ -32,7 +31,7 @@ async def run_daily_analysis_for_target(
 
     try:
         result = await analyze_func(messages, prompt_name=prompt_name)
-        save_func(target_id, date, result)
+        save_func(get_session(), target_id, date, result)
         logger.info(f"[{log_prefix}] {target_id}의 {date} 분석 저장 완료")
     except Exception as e:
         logger.error(f"[{log_prefix}] {target_id} 분석 실패: {e}")
@@ -48,7 +47,7 @@ async def run_all_targets_daily_analysis(
 ):
     if date is None:
         date = datetime.date.today()
-    target_ids = get_target_ids_func()
+    target_ids = get_target_ids_func(get_session())
     logger.info(f"[{log_prefix}] 전체 {len(target_ids)}명 분석 시작 ({date})")
     tasks = [
         run_daily_analysis_for_target(
