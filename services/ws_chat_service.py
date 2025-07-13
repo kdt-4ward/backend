@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from models.db_models import Message
+from models.db_tables import Message
 from pydantic import BaseModel, ValidationError
 from models.schema import WSMessage
 from core.redis import RedisCoupleHistory

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.db_models import Post
+from models.db_tables import Post
 from models.schema import PostRequest
 from core.dependencies import get_db_session
 from core.redis import redis_client, load_couple_mapping

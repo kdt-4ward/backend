@@ -43,6 +43,10 @@
                     "value": "admin"
                 },
                 {
+                    "name": "DB_NAME",
+                    "value": "test_db"
+                },
+                {
                     "name": "GOOGLE_CLIENT_ID",
                     "value": "20389543951-lp415huk9beqdqainbb9u15iam327qha.apps.googleusercontent.com"
                 },

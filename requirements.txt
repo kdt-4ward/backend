@@ -16,3 +16,4 @@ faiss-cpu
 pyjwt
 celery
 tiktoken
+websockets

@@ -1,0 +1,49 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "name": "지민",
+      "gender": "남성",
+      "age": 30,
+      "mbti": "ENFP",
+      "created_at": "2025-07-10"
+    },
+    {
+      "user_id": 2,
+      "name": "수아",
+      "gender": "여성",
+      "age": 29,
+      "mbti": "INFJ",
+      "created_at": "2025-07-10"
+    }
+  ],
+  "couple": {
+    "couple_id": 1,
+    "user1_id": 1,
+    "user2_id": 2,
+    "started_dating": "2023-11-03",
+    "nickname": "지민♥수아"
+  },
+  "trait_responses": [
+    {
+      "user_id": 1,
+      "responses": {
+        "relationship_value": "communication",
+        "conflict_response": "cool_then_talk",
+        "affection_style": "words",
+        "contact_frequency": "frequent",
+        "ideal_relationship": "deep_connection"
+      }
+    },
+    {
+      "user_id": 2,
+      "responses": {
+        "relationship_value": "trust",
+        "conflict_response": "wait_it_out",
+        "affection_style": "quality_time",
+        "contact_frequency": "moderate",
+        "ideal_relationship": "balanced_independence"
+      }
+    }
+  ]
+}

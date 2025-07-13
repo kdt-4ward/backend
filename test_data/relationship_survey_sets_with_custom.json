@@ -1,0 +1,589 @@
+[
+  {
+    "set": "START",
+    "title": "연애 성향 핵심 질문",
+    "questions": [
+      {
+        "code": "relationship_value",
+        "question": "연애에서 내가 가장 중요하게 생각하는 가치는 무엇인가요? (가장 가까운 걸 골라주세요)",
+        "choices": [
+          {
+            "label": "1",
+            "text": "신뢰와 믿음",
+            "value": "trust"
+          },
+          {
+            "label": "2",
+            "text": "대화와 소통",
+            "value": "communication"
+          },
+          {
+            "label": "3",
+            "text": "각자의 자유와 독립성",
+            "value": "independence"
+          },
+          {
+            "label": "4",
+            "text": "애정 표현과 스킨십",
+            "value": "affection"
+          },
+          {
+            "label": "5",
+            "text": "유머와 함께하는 즐거움",
+            "value": "humor"
+          },
+          {
+            "label": "6",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "conflict_response",
+        "question": "연인과 다툼이 생겼을 때 나는 어떻게 대처하나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "내가 먼저 사과하고 푼다",
+            "value": "apologize_first"
+          },
+          {
+            "label": "2",
+            "text": "감정을 정리한 뒤 대화한다",
+            "value": "cool_then_talk"
+          },
+          {
+            "label": "3",
+            "text": "시간이 해결해 주길 기다린다",
+            "value": "wait_it_out"
+          },
+          {
+            "label": "4",
+            "text": "그냥 넘어간다, 굳이 언급하지 않는다",
+            "value": "ignore_conflict"
+          },
+          {
+            "label": "5",
+            "text": "상대가 먼저 말 꺼낼 때까지 기다린다",
+            "value": "wait_for_partner"
+          },
+          {
+            "label": "6",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "affection_style",
+        "question": "애정 표현은 어떤 방식이 편한가요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "따뜻한 말로 표현하는 걸 좋아해요",
+            "value": "words"
+          },
+          {
+            "label": "2",
+            "text": "스킨십이나 신체 접촉으로 표현해요",
+            "value": "touch"
+          },
+          {
+            "label": "3",
+            "text": "선물이나 이벤트로 마음을 보여줘요",
+            "value": "gifts"
+          },
+          {
+            "label": "4",
+            "text": "함께 시간 보내며 자연스럽게 표현해요",
+            "value": "quality_time"
+          },
+          {
+            "label": "5",
+            "text": "표현을 자주 하진 않지만 행동으로 보여줘요",
+            "value": "actions"
+          },
+          {
+            "label": "6",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "contact_frequency",
+        "question": "연인과의 연락 빈도는 어느 정도가 좋다고 생각하나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "하루에 한두 번 정도면 충분해요",
+            "value": "low"
+          },
+          {
+            "label": "2",
+            "text": "자주 연락하며 소소한 일상도 나누고 싶어요",
+            "value": "moderate"
+          },
+          {
+            "label": "3",
+            "text": "틈날 때마다 메시지하거나 통화해요",
+            "value": "frequent"
+          },
+          {
+            "label": "4",
+            "text": "거의 실시간으로 대화하는 편이에요",
+            "value": "very_frequent"
+          },
+          {
+            "label": "5",
+            "text": "연락이 너무 잦으면 부담스러워요",
+            "value": "minimal"
+          },
+          {
+            "label": "6",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "ideal_relationship",
+        "question": "내가 바라는 이상적인 연애는 어떤 모습인가요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "각자의 생활을 존중하며 안정적으로 이어가는 관계",
+            "value": "balanced_independence"
+          },
+          {
+            "label": "2",
+            "text": "자주 만나고 대화하며 깊이 연결되는 관계",
+            "value": "deep_connection"
+          },
+          {
+            "label": "3",
+            "text": "감정 표현이 활발하고 애정 넘치는 연애",
+            "value": "affectionate"
+          },
+          {
+            "label": "4",
+            "text": "함께 성장하고 서로에게 좋은 영향 주는 연애",
+            "value": "growth_oriented"
+          },
+          {
+            "label": "5",
+            "text": "매일 함께 있고 싶은 불붙는 연애",
+            "value": "passionate"
+          },
+          {
+            "label": "6",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "set": "A",
+    "title": "감정 표현 & 소통 성향",
+    "questions": [
+      {
+        "code": "mood_when_down",
+        "question": "기분이 안 좋을 때 나는 어떻게 행동하나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "말이 없어지고 혼자 있으려고 한다",
+            "value": "shuts_down"
+          },
+          {
+            "label": "2",
+            "text": "티는 안 내지만 마음이 불편하다",
+            "value": "holds_in"
+          },
+          {
+            "label": "3",
+            "text": "상대에게 바로 말한다",
+            "value": "expresses_directly"
+          },
+          {
+            "label": "4",
+            "text": "짜증을 낸다",
+            "value": "shows_irritation"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "expressing_emotions",
+        "question": "연인에게 감정을 표현할 때 어떤 방식이 편한가요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "있는 그대로 말한다",
+            "value": "honest_expression"
+          },
+          {
+            "label": "2",
+            "text": "조심스럽게 돌려 말한다",
+            "value": "indirect_expression"
+          },
+          {
+            "label": "3",
+            "text": "글로 적거나 메시지로 보낸다",
+            "value": "text_based"
+          },
+          {
+            "label": "4",
+            "text": "말로 표현하는 게 어려운 편이다",
+            "value": "difficulty_expressing"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "when_resentful",
+        "question": "서운하거나 불편한 일이 생기면 어떻게 하나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "바로 이야기한다",
+            "value": "confronts_immediately"
+          },
+          {
+            "label": "2",
+            "text": "참다가 한 번에 터뜨린다",
+            "value": "builds_up_then_bursts"
+          },
+          {
+            "label": "3",
+            "text": "시간이 지나면 괜찮아진다",
+            "value": "lets_go_naturally"
+          },
+          {
+            "label": "4",
+            "text": "상대가 먼저 알아주길 바란다",
+            "value": "expects_empathy"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "set": "B",
+    "title": "라이프스타일 & 독립성",
+    "questions": [
+      {
+        "code": "weekday_evening",
+        "question": "평일 저녁은 보통 어떻게 보내시나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "집에서 혼자 쉬거나 취미를 즐긴다",
+            "value": "relaxed_homebody"
+          },
+          {
+            "label": "2",
+            "text": "친구를 만나거나 외출한다",
+            "value": "social_evenings"
+          },
+          {
+            "label": "3",
+            "text": "연인과 시간을 보낸다",
+            "value": "spends_time_with_partner"
+          },
+          {
+            "label": "4",
+            "text": "운동/자기계발을 한다",
+            "value": "self_improvement_focus"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "need_me_time",
+        "question": "혼자만의 시간은 연애 중에도 꼭 필요하다고 생각하나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "네, 자주 필요하다",
+            "value": "needs_frequent_alone_time"
+          },
+          {
+            "label": "2",
+            "text": "어느 정도는 필요하다",
+            "value": "needs_some_alone_time"
+          },
+          {
+            "label": "3",
+            "text": "없어도 괜찮다",
+            "value": "okay_without_alone_time"
+          },
+          {
+            "label": "4",
+            "text": "연인과 항상 함께 있는 게 좋다",
+            "value": "prefers_constant_togetherness"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "weekend_date_style",
+        "question": "주말엔 보통 어떤 데이트를 선호하시나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "카페/산책/전시 등 잔잔한 시간",
+            "value": "calm_dates"
+          },
+          {
+            "label": "2",
+            "text": "활동적인 체험 데이트",
+            "value": "active_dates"
+          },
+          {
+            "label": "3",
+            "text": "집에서 넷플릭스 같은 편안한 데이트",
+            "value": "cozy_home_dates"
+          },
+          {
+            "label": "4",
+            "text": "친구들과 함께하는 시간 포함",
+            "value": "social_group_dates"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "set": "C",
+    "title": "과거 연애 경험 & 성찰",
+    "questions": [
+      {
+        "code": "past_hardship",
+        "question": "이전 연애에서 내가 가장 힘들었던 점은 무엇인가요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "소통 부족",
+            "value": "communication_lack"
+          },
+          {
+            "label": "2",
+            "text": "나만 노력하는 느낌",
+            "value": "one_sided_effort"
+          },
+          {
+            "label": "3",
+            "text": "애정 표현의 차이",
+            "value": "affection_gap"
+          },
+          {
+            "label": "4",
+            "text": "자유가 없는 관계",
+            "value": "restricted_freedom"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "past_strength",
+        "question": "이전 연애에서 내가 가장 잘했다고 생각하는 점은?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "항상 배려하려고 노력함",
+            "value": "considerate"
+          },
+          {
+            "label": "2",
+            "text": "솔직하게 감정을 표현함",
+            "value": "emotionally_honest"
+          },
+          {
+            "label": "3",
+            "text": "상대의 삶에 관심을 많이 가짐",
+            "value": "attentive_partner"
+          },
+          {
+            "label": "4",
+            "text": "함께 성장하려는 태도",
+            "value": "growth_mindset"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "learned_from_love",
+        "question": "연애를 통해 내가 바뀌거나 배운 점이 있다면?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "감정을 잘 표현하게 됐다",
+            "value": "improved_expression"
+          },
+          {
+            "label": "2",
+            "text": "내 기준을 알게 됐다",
+            "value": "found_my_boundaries"
+          },
+          {
+            "label": "3",
+            "text": "더 많이 이해하게 됐다",
+            "value": "gained_understanding"
+          },
+          {
+            "label": "4",
+            "text": "상처를 덜 받는 법을 알게 됐다",
+            "value": "became_resilient"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "set": "D",
+    "title": "연애에 대한 가치관 & 우선순위",
+    "questions": [
+      {
+        "code": "most_important_in_love",
+        "question": "연애에서 가장 중요한 건 무엇이라고 생각하나요?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "신뢰",
+            "value": "trust"
+          },
+          {
+            "label": "2",
+            "text": "존중",
+            "value": "respect"
+          },
+          {
+            "label": "3",
+            "text": "유머와 즐거움",
+            "value": "humor"
+          },
+          {
+            "label": "4",
+            "text": "안정감",
+            "value": "stability"
+          },
+          {
+            "label": "5",
+            "text": "감정의 교류",
+            "value": "emotional_exchange"
+          },
+          {
+            "label": "6",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "love_vs_life",
+        "question": "연애와 개인의 삶 중 우선순위는?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "연애가 삶의 중심",
+            "value": "relationship_focused"
+          },
+          {
+            "label": "2",
+            "text": "연애와 개인 삶이 균형을 이루어야 함",
+            "value": "balanced_love_life"
+          },
+          {
+            "label": "3",
+            "text": "개인의 삶이 더 중요함",
+            "value": "life_focused"
+          },
+          {
+            "label": "4",
+            "text": "연애는 보조적인 역할",
+            "value": "love_as_secondary"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      },
+      {
+        "code": "different_values_response",
+        "question": "연애 중, 상대방이 나와 다른 가치관을 가졌을 때 나는?",
+        "choices": [
+          {
+            "label": "1",
+            "text": "대화를 통해 맞춰가려 한다",
+            "value": "compromise_through_talk"
+          },
+          {
+            "label": "2",
+            "text": "상대의 생각을 우선 이해하려 한다",
+            "value": "seeks_understanding"
+          },
+          {
+            "label": "3",
+            "text": "나의 기준을 고수하는 편이다",
+            "value": "sticks_to_values"
+          },
+          {
+            "label": "4",
+            "text": "피곤할 것 같으면 그냥 거리를 둔다",
+            "value": "distances_when_difficult"
+          },
+          {
+            "label": "5",
+            "text": "기타 (직접 입력)",
+            "value": "custom"
+          }
+        ]
+      }
+    ]
+  }
+]

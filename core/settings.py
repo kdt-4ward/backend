@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     db_password: str = Field(..., env="DB_PASSWORD")
     db_endpoint: str = Field(..., env="DB_ENDPOINT")
     db_port: int = Field(default=3306, env="DB_PORT")
+    db_name: str = Field(..., env="DB_NAME")
 
     # === Redis ===
     redis_host: str = Field(default="localhost", env="REDIS_HOST")

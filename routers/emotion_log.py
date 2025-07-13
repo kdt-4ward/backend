@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.db_models import EmotionLog
+from models.db_tables import EmotionLog
 from models.schema import EmotionLogRequest
 from core.dependencies import get_db_session
 from core.redis import redis_client

@@ -1,0 +1,212 @@
+[
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "잘 잤어? 오늘도 힘내자! 😊",
+    "created_at": "2025-07-01T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "응 고마워~ 오늘 일정 좀 많아서 바쁠 듯해.",
+    "created_at": "2025-07-01T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "나도 회의 두 개 있어서 정신 없을 듯… 이따 끝나고 연락하자~",
+    "created_at": "2025-07-01T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "좋아! 우리 저녁엔 통화하자 :)",
+    "created_at": "2025-07-01T19:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "어제 약속했는데 통화 못했네 😕",
+    "created_at": "2025-07-02T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "미안… 회의 끝나고 뻗어버렸어 ㅠ",
+    "created_at": "2025-07-02T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "기다렸는데 연락 없어서 속상했어",
+    "created_at": "2025-07-02T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "진짜 미안해. 오늘은 꼭 먼저 연락할게!",
+    "created_at": "2025-07-02T19:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "좋은 아침 🌞 오늘은 기분 좀 어때?",
+    "created_at": "2025-07-03T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "괜찮아! 나도 어제 너무 예민했나봐~",
+    "created_at": "2025-07-03T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "그럴 수 있지~ 나도 더 신경 쓸게",
+    "created_at": "2025-07-03T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "우리 오늘 저녁에 산책 어때?",
+    "created_at": "2025-07-03T19:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "완전 좋지! 기다릴게 ❤️",
+    "created_at": "2025-07-03T19:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "점심 뭐 먹었어? 난 제육덮밥 ㅎㅎ",
+    "created_at": "2025-07-04T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "헉 나도 고기 땡겨서 삼겹살 먹었는데 😆",
+    "created_at": "2025-07-04T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "맛잘알 역시~",
+    "created_at": "2025-07-04T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "우리 입맛 잘 맞아 그치? ㅋㅋ",
+    "created_at": "2025-07-04T19:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "오늘 카톡 답 너무 느렸던 거 알아?",
+    "created_at": "2025-07-05T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "미안… 진짜 바빴어 ㅠㅠ 일부러 그런 거 아냐",
+    "created_at": "2025-07-05T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "그래도 너무 무신경하게 느껴졌어",
+    "created_at": "2025-07-05T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "앞으론 짧게라도 꼭 답할게!",
+    "created_at": "2025-07-05T19:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "알겠어… 나도 예민했나봐",
+    "created_at": "2025-07-05T19:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "오늘 영화 예매했어~ 7시 타임!",
+    "created_at": "2025-07-06T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "오오 고마워! 오늘은 너한테 집중할게 ❤️",
+    "created_at": "2025-07-06T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "너랑 시간 보내는 거 제일 좋아",
+    "created_at": "2025-07-06T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "나도야~ 🥰",
+    "created_at": "2025-07-06T19:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "일주일 진짜 빠르다",
+    "created_at": "2025-07-07T17:00:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "그러게~ 우리 이번 주도 잘 버텼다",
+    "created_at": "2025-07-07T17:40:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "1",
+    "content": "너 있어서 든든했어",
+    "created_at": "2025-07-07T18:20:00",
+    "is_delivered": true
+  },
+  {
+    "couple_id": 1,
+    "user_id": "2",
+    "content": "다음 주도 잘 지내보자! 사랑해 😘",
+    "created_at": "2025-07-07T19:00:00",
+    "is_delivered": true
+  }
+]
