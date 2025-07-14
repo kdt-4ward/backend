@@ -6,6 +6,7 @@ from db.db import engine
 from core.settings import settings
 from db.db_utils import create_database_if_not_exists
 from test_data.seed_data import insert_test_data_to_db
+from jobs.daily_analysis import test_weekly_couplechat_analysis_from_start_date
 import logging
 import sys
 
@@ -29,6 +30,8 @@ app = FastAPI(
 def health_check():
     return {"status": "ok"}
 
+
+create_database_if_not_exists()
 @app.on_event("startup")
 async def on_startup():
     create_database_if_not_exists()
@@ -44,6 +47,19 @@ async def on_startup():
         logging.info("유저 성향 분석/요약 완료")
     except Exception as e:
         logging.error(f"유저 성향 분석 실패: {e}")
+    try:
+        await test_weekly_couplechat_analysis_from_start_date()
+        logging.info("유저 couple chat 분석 완료")
+    except Exception as e:
+        logging.error(f"유저 couple chat 분석 실패: {e}")
+
+    from jobs.weekly_analysis import run_seven_weeks_analysis
+    try:
+        await run_seven_weeks_analysis()
+        logging.info("주간 분석 완료")
+    except Exception as e:
+        logging.error(f"주간 분석 실패: {e}")
+    
 
 # DB 테이블 생성
 Base.metadata.create_all(bind=engine)

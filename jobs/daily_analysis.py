@@ -22,17 +22,19 @@ async def run_daily_analysis_for_target(
     save_func,
     log_prefix: str = ""
 ):
+    print(f"target_id: {target_id}")
+    print(f"target_id type: {type(target_id)}")
     chat_logs = log_fetch_func(get_session(), target_id, date)
     if not chat_logs or len(chat_logs) == 0:
         logger.warning(f"[{log_prefix}] {target_id}의 {date} 대화 없음")
         return
 
-    messages = [c['content'] if isinstance(c, dict) else c for c in chat_logs]
+    messages = [f"{c['user_id']} :{c['content']} [{c['created_at']}]" if isinstance(c, dict) else c for c in chat_logs]
 
     try:
         result = await analyze_func(messages, prompt_name=prompt_name)
-        save_func(get_session(), target_id, date, result)
-        logger.info(f"[{log_prefix}] {target_id}의 {date} 분석 저장 완료")
+        save_func(get_session(), target_id, (date - datetime.timedelta(days=1)).date(), result)
+        logger.info(f"[{log_prefix}] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 분석 저장 완료")
     except Exception as e:
         logger.error(f"[{log_prefix}] {target_id} 분석 실패: {e}")
 
@@ -48,7 +50,7 @@ async def run_all_targets_daily_analysis(
     if date is None:
         date = datetime.date.today()
     target_ids = get_target_ids_func(get_session())
-    logger.info(f"[{log_prefix}] 전체 {len(target_ids)}명 분석 시작 ({date})")
+    logger.info(f"[{log_prefix}] 전체 {len(target_ids)} 커플 분석 시작 ({date})")
     tasks = [
         run_daily_analysis_for_target(
             target_id,
@@ -88,3 +90,22 @@ def daily_aichat_analysis_for_all_users():
             log_prefix="AI상담 일간분석"
         )
     )
+
+
+
+async def test_weekly_couplechat_analysis_from_start_date():
+    start_date = datetime.datetime(2025, 7, 2, 4, 0, 0)
+
+    for i in range(7):
+        target_date = start_date + datetime.timedelta(days=i)
+        print(f"[테스트] {target_date} 분석 시작")
+
+        await run_all_targets_daily_analysis(
+            get_target_ids_func=get_all_couple_ids,
+            log_fetch_func=get_daily_chat_logs_by_couple_id,
+            analyze_func=analyze_daily,
+            prompt_name="daily_nlu",
+            save_func=save_daily_couple_analysis_result,
+            log_prefix=f"커플 일간분석 (테스트: {target_date})",
+            date=target_date
+        )
