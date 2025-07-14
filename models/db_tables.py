@@ -110,6 +110,48 @@ class CoupleDailyAnalysisResult(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+class CoupleWeeklyAnalysisResult(Base):
+    __tablename__ = "couple_weekly_analysis_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+    
+    week_start_date = Column(DateTime, nullable=False)  # 주 시작 날짜 (월요일 등)
+    week_end_date = Column(DateTime, nullable=False)    # 주 종료 날짜 (일요일 등)
+    
+    result = Column(Text, nullable=False)  # JSON string (주간 요약, 통계 등)
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class CoupleWeeklyComparisonResult(Base):
+    __tablename__ = "couple_weekly_comparison_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+
+    week_start_date = Column(DateTime, nullable=False)
+    week_end_date = Column(DateTime, nullable=False)
+
+    comparison = Column(Text, nullable=False)  # LLM 비교 분석 결과
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class CoupleWeeklyRecommendation(Base):
+    __tablename__ = "couple_weekly_recommendations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+
+    week_start_date = Column(DateTime, nullable=False)
+    week_end_date = Column(DateTime, nullable=False)
+
+    advice = Column(Text, nullable=False)  # 조언
+    content_type = Column(String(50))      # 예: "영화", "플레이리스트"
+    content_title = Column(String(255))
+    content_reason = Column(Text)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
 class UserTraitSummary(Base):
     __tablename__ = "user_trait_summaries"
     id = Column(Integer, primary_key=True, autoincrement=True)

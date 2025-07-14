@@ -19,7 +19,7 @@ USER_NAME = "사용자"
 PERSONALITY = 'gentle and thoughtful'
 
 class PersonaChatBot:
-    def __init__(self, user_id: str):
+    def __init__(self, user_id: str, lang: str = None):
         self.user_id = user_id
         self.couple_id = self.get_couple_id()
         self.history_key = f"chat_history:{self.user_id}"
@@ -32,7 +32,8 @@ class PersonaChatBot:
             self.get_system_prompt,
             self.get_summary
         )
-    
+        self.lang = lang if lang is not None else "ko"
+
     def get_system_prompt(self):
         config = self.get_config()
         
@@ -41,7 +42,7 @@ class PersonaChatBot:
         user_personality = config.get('user_personality', PERSONALITY)
 
         # 템플릿 프롬프트에서 사용자 정보 반영
-        formatted_prompt = PROMPT_REGISTRY["chatbot_prompt_ko"].format(
+        formatted_prompt = PROMPT_REGISTRY[f"chatbot_prompt_{self.lang}"].format(
             bot_name=persona_name,
             user_name=user_name,
             user_personality=user_personality

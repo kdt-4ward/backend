@@ -8,6 +8,6 @@ def detect_language(text):
         elif lang == "en":
             return "en"
         else:
-            return lang  # 필요한 경우 "ja", "zh" 등 반환
+            return "en"  # default "en"
     except LangDetectException:
-        return "unknown"
+        return "en"

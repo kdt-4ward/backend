@@ -25,8 +25,8 @@ async def chat_with_persona(req: ChatRequest):
 
     logger.info(f"[chat_with_persona] 요청: user_id={req.user_id}, couple_id={req.couple_id}")
     async with semaphore:
-        bot = PersonaChatBot(user_id=req.user_id)
         lang = detect_language(req.message)
+        bot = PersonaChatBot(user_id=req.user_id, lang=lang)
         
         functions = [
             {

@@ -63,7 +63,7 @@ def get_week_chat_logs_by_couple_id(db: Session, couple_id: str):
     ).all()
 
 def get_all_couple_ids(db) -> list[str]:
-    return db.query(Couple.couple_id).distinct().all()
+    return [row[0] for row in db.query(Couple.couple_id).distinct().all()]
 
 def get_all_user_ids(db):
     """전체 user_id 리스트 반환"""
@@ -96,19 +96,26 @@ def get_daily_emotions(db, user_id):
     ).order_by(EmotionLog.date).all()
 
 # 1. 커플 일간 채팅 로그 조회
-def get_daily_chat_logs_by_couple_id(db: Session, couple_id: str, date: datetime.date):
-    start = datetime.combine(date, datetime.min.time())
-    end = datetime.combine(date, datetime.max.time())
+def get_daily_chat_logs_by_couple_id(db: Session, couple_id: str, date: datetime):
+    # date는 datetime 객체라고 가정 (date.date() 아님!)
+    end = date
+    start = end - timedelta(hours=24)
+
     rows = db.query(Message).filter(
         Message.couple_id == couple_id,
         Message.created_at >= start,
-        Message.created_at <= end
+        Message.created_at < end
     ).order_by(Message.created_at).all()
+
+    print("=====================dialy chat log==============")
+    print(f"couple_id: {couple_id}")
+    print("rows")
+    print(rows)
+    print("=================================================")
     return [
         {"user_id": row.user_id, "content": row.content, "created_at": row.created_at}
         for row in rows
     ]
-
 # 2. 커플 일간 분석 결과 저장
 def save_daily_couple_analysis_result(db: Session, couple_id: str, date: datetime.date, result: dict):
     date_start = datetime.combine(date, datetime.min.time())
