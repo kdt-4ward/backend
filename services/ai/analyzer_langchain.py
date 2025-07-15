@@ -1,9 +1,9 @@
 from services.ai.prompt_templates import PROMPT_REGISTRY
 from typing import List
-import logging
 from utils.langchain_helpers import run_langchain_prompt
+from utils.log_utils import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 async def analyze_daily(messages: List[str], prompt_name: str) -> dict:
     text = "\n".join(messages)

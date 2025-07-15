@@ -1,96 +1,53 @@
 import asyncio
-import logging
 import datetime
+import logging
 from db.crud import (
     get_all_couple_ids,
     get_all_user_ids,
     get_daily_chat_logs_by_couple_id,
-    save_daily_couple_analysis_result,
     get_daily_ai_chat_logs_by_user_id,
-    save_daily_ai_analysis_result,
+    save_daily_couple_analysis_result,
+    save_daily_ai_analysis_result
 )
 from services.ai.analyzer_langchain import analyze_daily
+from services.ai.analyzer import DailyAnalyzer
 from db.db import get_session
+
 logger = logging.getLogger(__name__)
 
-async def run_daily_analysis_for_target(
-    target_id: str,
-    date: datetime.date,
-    log_fetch_func,
-    analyze_func,
-    prompt_name: str,
-    save_func,
-    log_prefix: str = ""
-):
-    print(f"target_id: {target_id}")
-    print(f"target_id type: {type(target_id)}")
-    chat_logs = log_fetch_func(get_session(), target_id, date)
-    if not chat_logs or len(chat_logs) == 0:
-        logger.warning(f"[{log_prefix}] {target_id}의 {date} 대화 없음")
-        return
-
-    messages = [f"{c['user_id']} :{c['content']} [{c['created_at']}]" if isinstance(c, dict) else c for c in chat_logs]
-
-    try:
-        result = await analyze_func(messages, prompt_name=prompt_name)
-        save_func(get_session(), target_id, (date - datetime.timedelta(days=1)).date(), result)
-        logger.info(f"[{log_prefix}] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 분석 저장 완료")
-    except Exception as e:
-        logger.error(f"[{log_prefix}] {target_id} 분석 실패: {e}")
-
-async def run_all_targets_daily_analysis(
-    get_target_ids_func,
-    log_fetch_func,
-    analyze_func,
-    prompt_name: str,
-    save_func,
-    log_prefix: str,
-    date: datetime.date = None,
-):
-    if date is None:
-        date = datetime.date.today()
-    target_ids = get_target_ids_func(get_session())
-    logger.info(f"[{log_prefix}] 전체 {len(target_ids)} 커플 분석 시작 ({date})")
-    tasks = [
-        run_daily_analysis_for_target(
-            target_id,
-            date,
-            log_fetch_func,
-            analyze_func,
-            prompt_name,
-            save_func,
-            log_prefix
-        )
-        for target_id in target_ids
-    ]
+async def run_daily_for_all(target_ids: list[str], analyzer: DailyAnalyzer, date: datetime.date):
+    tasks = [analyzer.run(tid, date) for tid in target_ids]
     await asyncio.gather(*tasks)
-    logger.info(f"[{log_prefix}] 전체 분석 완료")
 
+async def daily_couplechat_analysis_for_all_couples(target_date=None):
+    db = get_session()
+    couple_ids = get_all_couple_ids(db)
+    if target_date is None:
+        target_date = datetime.date.today()
 
-def daily_couplechat_analysis_for_all_couples():
-    asyncio.run(
-        run_all_targets_daily_analysis(
-            get_target_ids_func=get_all_couple_ids,
-            log_fetch_func=get_daily_chat_logs_by_couple_id,
-            analyze_func=analyze_daily,
-            prompt_name="daily_nlu",
-            save_func=save_daily_couple_analysis_result,
-            log_prefix="커플 일간분석"
-        )
+    analyzer = DailyAnalyzer(
+        db=db,
+        fetch_func=get_daily_chat_logs_by_couple_id,
+        analyze_func=analyze_daily,
+        save_func=save_daily_couple_analysis_result,
+        prompt_name="daily_nlu"
     )
+    await run_daily_for_all(couple_ids, analyzer, target_date)
+    # asyncio.run(run_daily_for_all(couple_ids, analyzer, target_date))
 
-def daily_aichat_analysis_for_all_users():
-    asyncio.run(
-        run_all_targets_daily_analysis(
-            get_target_ids_func=get_all_user_ids,
-            log_fetch_func=get_daily_ai_chat_logs_by_user_id,
-            analyze_func=analyze_daily,
-            prompt_name="daily_ai_nlu",
-            save_func=save_daily_ai_analysis_result,
-            log_prefix="AI상담 일간분석"
-        )
+async def daily_aichat_analysis_for_all_users():
+    user_ids = get_all_user_ids()
+    today = datetime.date.today()
+
+    analyzer = DailyAnalyzer(
+        db=get_session(),
+        fetch_func=get_daily_ai_chat_logs_by_user_id,
+        analyze_func=analyze_daily,
+        save_func=save_daily_ai_analysis_result,
+        prompt_name="daily_ai_nlu"
     )
-
+    await run_daily_for_all(user_ids, analyzer, today)
+    # asyncio.run(run_daily_for_all(user_ids, analyzer, today))
 
 
 async def test_weekly_couplechat_analysis_from_start_date():
@@ -100,12 +57,4 @@ async def test_weekly_couplechat_analysis_from_start_date():
         target_date = start_date + datetime.timedelta(days=i)
         print(f"[테스트] {target_date} 분석 시작")
 
-        await run_all_targets_daily_analysis(
-            get_target_ids_func=get_all_couple_ids,
-            log_fetch_func=get_daily_chat_logs_by_couple_id,
-            analyze_func=analyze_daily,
-            prompt_name="daily_nlu",
-            save_func=save_daily_couple_analysis_result,
-            log_prefix=f"커플 일간분석 (테스트: {target_date})",
-            date=target_date
-        )
+        await daily_couplechat_analysis_for_all_couples(target_date)

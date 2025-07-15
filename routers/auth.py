@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from services.google_auth import get_google_access_token, get_google_userinfo
-from config import router
 from models.schema import GoogleAuthCode
 from fastapi import Request
 from db.db import SessionLocal
@@ -11,6 +10,8 @@ from sqlalchemy.orm import Session
 from utils.hash_utils import hash_email  
 from datetime import datetime
 from utils.jwt_utils import create_access_token, create_refresh_token
+
+router = APIRouter()
 
 class CodeBody(BaseModel):
     code: str

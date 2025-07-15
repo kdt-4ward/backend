@@ -18,3 +18,4 @@ celery
 tiktoken
 websockets
 langdetect
+python-multipart

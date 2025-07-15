@@ -1,9 +1,10 @@
 import json
 from services.ai.prompt_templates import PROMPT_REGISTRY
 from utils.langchain_helpers import run_langchain_prompt
-import logging
+from utils.log_utils import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
+
 
 class WeeklyAnalysisPipeline:
     def log_failure(self, result, input_data, mode):

@@ -1,5 +1,5 @@
 from fastapi import WebSocket, WebSocketDisconnect, Depends
-from config import router
+from fastapi import APIRouter
 from core.dependencies import get_connection_manager, get_db_session
 from services.ws_chat_service import (
     process_ws_connect,
@@ -7,7 +7,9 @@ from services.ws_chat_service import (
     process_ws_disconnect
 )
 
-@router.websocket("/ws/{user_id}")
+router = APIRouter()
+
+@router.websocket("/{user_id}")
 async def websocket_endpoint(
     websocket: WebSocket,
     user_id: str,

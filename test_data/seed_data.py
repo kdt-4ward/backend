@@ -115,9 +115,13 @@ def insert_test_data_to_db():
     emotion_logs = [
         EmotionLog(
             user_id=str(entry["user_id"]),
+            couple_id=str(entry["couple_id"]) if entry.get("couple_id") else None,
             emotion=entry["emotion"],
-            date=datetime.fromisoformat(entry["date"]),
-            memo=entry["memo"]
+            detail_emotions=json.dumps(entry["detail_emotions"]) if entry.get("detail_emotions") else None,
+            memo=entry.get("memo"),
+            recorded_at=datetime.fromisoformat(entry["recorded_at"]),
+            updated_at=datetime.fromisoformat(entry["updated_at"]) if entry.get("updated_at") else datetime.utcnow(),
+            deleted_at=datetime.fromisoformat(entry["deleted_at"]) if entry.get("deleted_at") else None,
         )
         for entry in emotion_data
     ]
