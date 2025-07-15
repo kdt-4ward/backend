@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import ai_chat, ws_chat, history, auth
+from routers import router as api_router
 from models.db_tables import Base
 from db.db import engine
 from core.settings import settings
@@ -39,26 +39,26 @@ async def on_startup():
     ## test data 삽입
     insert_test_data_to_db()
 
-    # 유저 성향 분석 (비동기)
-    from jobs.analysis_personality import run_trait_summary_for_all_users
-    import asyncio
-    try:
-        await run_trait_summary_for_all_users()
-        logging.info("유저 성향 분석/요약 완료")
-    except Exception as e:
-        logging.error(f"유저 성향 분석 실패: {e}")
-    try:
-        await test_weekly_couplechat_analysis_from_start_date()
-        logging.info("유저 couple chat 분석 완료")
-    except Exception as e:
-        logging.error(f"유저 couple chat 분석 실패: {e}")
+    # # 유저 성향 분석 (비동기)
+    # from jobs.analysis_personality import run_trait_summary_for_all_users
+    # import asyncio
+    # try:
+    #     await run_trait_summary_for_all_users()
+    #     logging.info("유저 성향 분석/요약 완료")
+    # except Exception as e:
+    #     logging.error(f"유저 성향 분석 실패: {e}")
+    # try:
+    #     await test_weekly_couplechat_analysis_from_start_date()
+    #     logging.info("유저 couple chat 분석 완료")
+    # except Exception as e:
+    #     logging.error(f"유저 couple chat 분석 실패: {e}")
 
-    from jobs.weekly_analysis import run_seven_weeks_analysis
-    try:
-        await run_seven_weeks_analysis()
-        logging.info("주간 분석 완료")
-    except Exception as e:
-        logging.error(f"주간 분석 실패: {e}")
+    # from jobs.weekly_analysis import test_run_seven_days_analysis
+    # try:
+    #     await test_run_seven_days_analysis()
+    #     logging.info("주간 분석 완료")
+    # except Exception as e:
+    #     logging.error(f"주간 분석 실패: {e}")
     
 
 # DB 테이블 생성
@@ -73,7 +73,10 @@ app.add_middleware(
 )
 
 # 라우터 등록
-app.include_router(ai_chat.router)
-app.include_router(ws_chat.router)
-app.include_router(history.router)  # 선택
-app.include_router(auth.router)
+app.include_router(api_router)
+
+# 임시 테스트용 로컬 파일 등록
+# AWS S3에 연결 시 삭제
+from fastapi.staticfiles import StaticFiles
+from routers import upload  
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")  # 정적 파일 서빙

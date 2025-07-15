@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 from db.db import SessionLocal
 from models.db_tables import Message
-from config import router
+
+router = APIRouter()
 
 @router.get("/history/{couple_id}")
 async def get_history(couple_id: str):

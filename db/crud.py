@@ -183,3 +183,19 @@ def save_daily_ai_analysis_result(db: Session, user_id: str, couple_id: str, dat
         )
         db.add(obj)
     db.commit()
+
+def load_daily_couple_stats(db: Session, couple_id: str, week_dates: list[datetime.date]) -> list[dict]:
+    summaries = db.query(CoupleDailyAnalysisResult).filter(
+        CoupleDailyAnalysisResult.couple_id == couple_id,
+        CoupleDailyAnalysisResult.date >= week_dates[0],
+        CoupleDailyAnalysisResult.date <= week_dates[-1]
+    ).order_by(CoupleDailyAnalysisResult.created_at).all()
+    return [json.loads(row.result) for row in summaries]
+
+def load_daily_ai_stats(db: Session, user_id: str, week_dates: list[datetime.date]) -> list[dict]:
+    summaries = db.query(AIChatSummary).filter(
+        AIChatSummary.user_id == user_id,
+        AIChatSummary.created_at >= week_dates[0],
+        AIChatSummary.created_at <= week_dates[-1]
+    ).order_by(AIChatSummary.created_at).all()
+    return [json.loads(row.summary) for row in summaries]

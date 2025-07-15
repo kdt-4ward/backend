@@ -1,9 +1,9 @@
 from services.openai_client import call_openai_completion
 from db.db import SessionLocal
 from datetime import datetime
-import logging
+from utils.log_utils import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 async def summarize_ai_chat(prev_summary: str, target: list) -> str:
     """
