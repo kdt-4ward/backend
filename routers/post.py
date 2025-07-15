@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from models.db_tables import Post, Comment, PostImage
 from models.schema import PostRequest, PostResponse, ImageRequest
 from core.dependencies import get_db_session
-from core.redis_v2.redis import redis_client, load_couple_mapping
 from datetime import datetime
 import json
 
@@ -40,8 +39,6 @@ def save_post(req: PostRequest, db: Session = Depends(get_db_session)):
             image_order=img.image_order,
         ))
     db.commit()
-    # 캐시 무효화
-    redis_client.delete(f"posts:couple:{couple_id}") 
 
     return {
         "message": "게시글 저장 완료",
@@ -51,10 +48,6 @@ def save_post(req: PostRequest, db: Session = Depends(get_db_session)):
 
 @router.get("/couple/{couple_id}")
 def get_couple_posts(couple_id: str, db: Session = Depends(get_db_session)):
-    cache_key = f"posts:couple:{couple_id}"
-    cached = redis_client.get(cache_key)
-    if cached:
-        return json.loads(cached)
 
     posts = db.query(Post)\
         .filter(Post.couple_id == couple_id, Post.deleted_at == None)\
@@ -78,7 +71,6 @@ def get_couple_posts(couple_id: str, db: Session = Depends(get_db_session)):
             "images": [first_image.image_url] if first_image else []  # ✅ 썸네일용
         })
 
-    redis_client.set(cache_key, json.dumps(result, ensure_ascii=False), ex=1800)
     return result
 
 # 게시글 단건 조회
@@ -116,7 +108,6 @@ def delete_post(post_id: int, db: Session = Depends(get_db_session)):
         c.deleted_at = datetime.utcnow()
     db.commit()
 
-    redis_client.delete(f"posts:couple:{post.couple_id}")
     return {"message": "게시글 삭제 완료"}
 
 @router.put("/{post_id}")
@@ -140,7 +131,5 @@ def update_post(post_id: int, req: PostRequest, db: Session = Depends(get_db_ses
             image_order=img.image_order,
         ))
     db.commit()
-
-    redis_client.delete(f"posts:couple:{post.couple_id}")  # 캐시 무효화
 
     return {"message": "게시글 수정 완료"}

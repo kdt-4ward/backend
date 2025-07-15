@@ -55,6 +55,13 @@ class WeeklySolutionInput(BaseModel):
     questionnaire_traits: str
     daily_emotions: str
 
+########### USER SURVEY ################
+class SurveyResponseInput(BaseModel):
+    user_id: str
+    question_id: int
+    choice_id: Optional[int] = None
+    custom_input: Optional[str] = None
+
 ################# Post #######################
 
 class ImageRequest(BaseModel):
