@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from models.db_tables import EmotionLog
 from models.schema import EmotionLogRequest, EmotionLogResponse
 from core.dependencies import get_db_session
-from core.redis_v2.redis import redis_client
 from datetime import datetime
 from typing import List
 import json
@@ -25,7 +24,6 @@ def save_emotion_log(req: EmotionLogRequest, db: Session = Depends(get_db_sessio
         db.add(log)
         db.commit()
         db.refresh(log)
-        redis_client.delete(f"emotion_logs:{req.user_id}")
         return {"message": "감정 기록 저장 완료", "log_id": log.emotion_id}
     except Exception as e:
         print("ERROR:", e)
@@ -34,10 +32,6 @@ def save_emotion_log(req: EmotionLogRequest, db: Session = Depends(get_db_sessio
 # GET: 사용자 감정 기록 전체 조회
 @router.get("/log/{user_id}", response_model=List[EmotionLogResponse])
 def get_emotion_logs(user_id: str, db: Session = Depends(get_db_session)):
-    cache_key = f"emotion_logs:{user_id}"
-    cached = redis_client.get(cache_key)
-    if cached:
-        return json.loads(cached)
 
     logs = db.query(EmotionLog).filter_by(user_id=user_id).order_by(EmotionLog.recorded_at.desc()).all()
 
@@ -54,5 +48,4 @@ def get_emotion_logs(user_id: str, db: Session = Depends(get_db_session)):
             "updated_at": log.updated_at.isoformat() if log.updated_at else None,       # <-- 수정!
         })
 
-    redis_client.set(cache_key, json.dumps(result, ensure_ascii=False), ex=1800)
     return result
