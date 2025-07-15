@@ -6,6 +6,7 @@ from typing import AsyncGenerator
 
 from models.schema import ChatRequest, BotConfigRequest
 from core.cocurrency import semaphore
+# from core.bot import PersonaChatBot
 from core.bot import PersonaChatBot
 from services.rag_search import process_incremental_faiss_embedding
 from services.openai_client import openai_completion_with_function_call, openai_stream_with_function_call
@@ -113,14 +114,14 @@ async def chat_with_persona_streaming(req: ChatRequest):
         return StreamingResponse(stream_response(), media_type="text/plain")
 
 
-@router.post("/chat/reset")
+@router.post("/reset")
 async def reset_ai_chat_session(req: ChatRequest):
     logger.info(f"[reset_ai_chat_session] user_id={req.user_id}")
     bot = PersonaChatBot(user_id=req.user_id)
     bot.reset()
     return {"message": f"{req.user_id} 님의 AI 세션이 초기화되었습니다."}
 
-@router.post("/chat/configure")
+@router.post("/configure")
 async def set_ai_bot_config(req: BotConfigRequest):
     logger.info(f"[set_ai_bot_config] user_id={req.user_id}, persona_name={req.persona_name}")
     partner_id = get_connection_manager().get_partner(req.user_id)

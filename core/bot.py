@@ -1,125 +1,56 @@
-import json
-from datetime import datetime
-from core.redis import PersonaChatBotHistoryManager, load_couple_mapping, redis_client
-from models.db_tables import AIMessage, PersonaConfig, AIChatSummary, User, UserTraitSummary
-from db.db import SessionLocal
+from core.redis_v2.persona_config_service import PersonaConfigService
+from core.redis_v2.persona_config_service import PersonaPromptProvider
+from core.redis_v2.ai_summary_provider import AISummaryProvider
+from core.redis_v2.ai_chat_manager import AIChatHistoryManager
+from core.redis_v2.redis import load_couple_mapping, redis_client
+from core.redis_v2.utils import acquire_lock, release_lock
+from models.db_tables import AIMessage, AIChatSummary
 from services.ai.summarizer import summarize_ai_chat
-from services.ai.prompt_templates import PROMPT_REGISTRY
-from enum import Enum
-
-class Role(str, Enum):
-    SYSTEM = "system"
-    USER = "user"
-    ASSISTANT = "assistant"
-    SUMMARY = "summary"
-    FUNCTION = "function"
-
-DEFAULT_NAME = "무민"
-USER_NAME = "사용자"
-PERSONALITY = 'gentle and thoughtful'
+from db.db import SessionLocal
+from datetime import datetime
+from models.schema import Role
 
 class PersonaChatBot:
     def __init__(self, user_id: str, lang: str = None):
         self.user_id = user_id
         self.couple_id = self.get_couple_id()
-        self.history_key = f"chat_history:{self.user_id}"
-        self.summary_key = f"chat_summary:{self.user_id}"
-        self.config_key = f"chat_config:{self.user_id}"
+        self.lang = lang or "ko"
 
-        self.history_manager = PersonaChatBotHistoryManager(
-            self.user_id,
-            self.couple_id,
-            self.get_system_prompt,
-            self.get_summary
+        self.config_service = PersonaConfigService(self.user_id, self.couple_id)
+        self.prompt_provider = PersonaPromptProvider(self.config_service, self.lang)
+        self.summary_provider = AISummaryProvider(self.user_id)
+
+        self.history_manager = AIChatHistoryManager(
+            user_id=self.user_id,
+            couple_id=self.couple_id,
+            prompt_provider=self.prompt_provider.get,
+            summary_provider=self.summary_provider.get
         )
-        self.lang = lang if lang is not None else "ko"
-
-    def get_system_prompt(self):
-        config = self.get_config()
-        
-        persona_name = config.get('persona_name', DEFAULT_NAME)
-        user_name = config.get('user_name', USER_NAME)  # 예: "민지"
-        user_personality = config.get('user_personality', PERSONALITY)
-
-        # 템플릿 프롬프트에서 사용자 정보 반영
-        formatted_prompt = PROMPT_REGISTRY[f"chatbot_prompt_{self.lang}"].format(
-            bot_name=persona_name,
-            user_name=user_name,
-            user_personality=user_personality
-        )
-
-        return {
-            "role": "system",
-            "content": formatted_prompt
-        }
-    
-    def get_config(self):
-        raw = redis_client.get(self.config_key)
-        if raw:
-            config = json.loads(raw)
-        else:
-            config = self._load_config_from_db()
-            redis_client.set(self.config_key, json.dumps(config), ex=3600)
-        config.setdefault("system_prompt", PROMPT_REGISTRY["chatbot_prompt_ko"])
-        return config
-
-    def set_persona_name(self, name: str):
-        config = self.get_config()
-        config["persona_name"] = name
-        redis_client.set(self.config_key, json.dumps(config), ex=3600)
-        self._save_config_to_db(name)
-        # (옵션) 두 명 유저 history 모두 system prompt update 가능
-
-    def _save_config_to_db(self, name: str):
-        with SessionLocal() as db:
-            config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
-            if not config:
-                config = PersonaConfig(couple_id=self.couple_id)
-            config.persona_name = name
-            config.updated_at = datetime.utcnow()
-            db.add(config)
-            db.commit()
-
-    def _load_config_from_db(self):
-        with SessionLocal() as db:
-            config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
-            user = db.query(User).filter_by(user_id=self.user_id).first()
-            trait = db.query(UserTraitSummary).filter_by(user_id=self.user_id).first()
-            user_name = user.name if user else DEFAULT_NAME
-            personality = trait.summary if trait else PERSONALITY
-
-            if config:
-                return {"persona_name": config.persona_name,
-                        "user_name": user_name,
-                        "personality": personality}
-        return {"persona_name": DEFAULT_NAME,
-                "user_name": user_name,
-                "personality": personality}
 
     def get_history(self):
         return self.history_manager.load()
 
-    def ensure_single_system_prompt(self, history):
-        """히스토리에 시스템 프롬프트가 하나만 존재하도록 보정."""
-        system_prompt = self.get_system_prompt()
-        # 기존 system 프롬프트 제거
-        history = [h for h in history if h["role"] != "system"]
-        # 맨 앞에만 system 프롬프트 추가
-        return [system_prompt] + history
-    
-    def get_full_history(self):
-        with SessionLocal() as db:
-            messages = db.query(AIMessage).filter_by(user_id=self.user_id)\
-                        .order_by(AIMessage.created_at).all()
-            origin_history = [{"role": msg.role, "content": msg.content, "id": msg.id, "created_at": msg.created_at} for msg in messages]
-        return origin_history
-    
     def save_history(self, history):
         self.history_manager.save(history)
 
     def reset(self):
         self.history_manager.clear()
-        redis_client.delete(self.summary_key)  #
+
+    def get_system_prompt(self):
+        return self.prompt_provider.get()
+
+    def get_summary(self):
+        return self.summary_provider.get()
+
+    def set_persona_name(self, name: str):
+        self.config_service.set_persona_name(name)
+    
+    def get_couple_id(self):
+        # Redis나 DB에서 사용자 기반 couple_id 조회 (예: Redis에 user_id → couple_id 맵핑 저장되어 있다면)
+        couple_id, _ = load_couple_mapping(self.user_id)
+        if not couple_id:
+            raise ValueError(f"[PersonaChatBot] user_id={self.user_id}로 couple_id를 찾을 수 없습니다. 커플 매핑이 필요합니다.")
+        return couple_id
 
     def save_to_db(self, user_id, role, content):
         with SessionLocal() as db:
@@ -134,33 +65,8 @@ class PersonaChatBot:
             db.commit()
             db.refresh(ai_msg)
         return ai_msg.id
-
-    def get_summary(self):
-        raw = redis_client.get(self.summary_key)
-        if raw:
-            val = raw.decode("utf-8") if hasattr(raw, "decode") else raw
-            return val if val else ""
-
-        # 🔁 DB fallback
-        with SessionLocal() as db:
-            latest = db.query(AIChatSummary)\
-                .filter_by(user_id=self.user_id)\
-                .order_by(AIChatSummary.created_at.desc())\
-                .first()
-            if latest:
-                redis_client.set(self.summary_key, latest.summary, ex=3600 * 6)
-                return latest.summary
-        return ""
-
-    def get_couple_id(self):
-        # Redis나 DB에서 사용자 기반 couple_id 조회 (예: Redis에 user_id → couple_id 맵핑 저장되어 있다면)
-        couple_id, _ = load_couple_mapping(self.user_id)
-        if not couple_id:
-            raise ValueError(f"[PersonaChatBot] user_id={self.user_id}로 couple_id를 찾을 수 없습니다. 커플 매핑이 필요합니다.")
-        return couple_id
-
+    
     def save_summary_and_history_atomic(self, summary: str, new_history: list, last_msg_id: int):
-        # DB/Redis 동시 반영 (DB 기준 atomic, Redis는 최대한 맞춰줌)
         with SessionLocal() as db:
             db.add(AIChatSummary(
                 user_id=self.user_id,
@@ -169,15 +75,13 @@ class PersonaChatBot:
                 created_at=datetime.utcnow(),
                 last_msg_id=last_msg_id,
             ))
-            db.commit()   # summary DB에 확정
-        # Redis는 보조 저장소이므로, DB 성공 후에 저장(최소 once)
+            db.commit()
         self.history_manager.save(new_history)
-        redis_client.set(self.summary_key, summary, ex=3600 * 6)
-
+        self.summary_provider.set(summary)
+    
     async def check_and_summarize_if_needed(self):
-        if not acquire_summary_lock(self.user_id):
+        if not acquire_lock(f"lock:summarize:{self.user_id}"):
             return
-
         try:
             history = self.get_history()
             # 'system', 'summary' 제외
@@ -235,15 +139,7 @@ class PersonaChatBot:
                 ] + remaining_msgs
                 self.save_summary_and_history_atomic(summary, new_history, last_msg_id)
         finally:
-            release_summary_lock(self.user_id)
-
-
-def acquire_summary_lock(user_id, expire=30):
-    # True면 락 획득 성공, False면 이미 누군가 잡고 있음
-    return redis_client.set(f"lock:summarize:{user_id}", "1", nx=True, ex=expire)
-
-def release_summary_lock(user_id):
-    redis_client.delete(f"lock:summarize:{user_id}")
+            release_lock(f"lock:summarize:{self.user_id}")
 
 def get_last_msg_id(msgs):
     for msg in reversed(msgs):

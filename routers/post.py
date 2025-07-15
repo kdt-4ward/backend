@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from models.db_tables import Post, Comment, PostImage
 from models.schema import PostRequest, PostResponse, ImageRequest
 from core.dependencies import get_db_session
-from core.redis import redis_client, load_couple_mapping
+from core.redis_v2.redis import redis_client, load_couple_mapping
 from datetime import datetime
 import json
 

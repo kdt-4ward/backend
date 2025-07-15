@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from models.db_tables import EmotionLog
 from models.schema import EmotionLogRequest, EmotionLogResponse
 from core.dependencies import get_db_session
-from core.redis import redis_client
+from core.redis_v2.redis import redis_client
 from datetime import datetime
 from typing import List
 import json

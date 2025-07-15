@@ -16,6 +16,8 @@ __pycache__/
 *.log
 .cache/
 *.db
+uploads/
+log/
 
 # OS별 무시 파일
 .DS_Store

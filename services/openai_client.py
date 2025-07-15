@@ -161,6 +161,7 @@ async def openai_stream_with_function_call(
 
     call_count = 0
     while call_count < max_func_calls:
+        logger.info(f"[GPT INPUT]: {current_history}")
         response = await client.chat.completions.create(
             model="gpt-4o",
             messages=current_history,
