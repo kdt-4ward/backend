@@ -20,3 +20,5 @@ __pycache__/
 # OS별 무시 파일
 .DS_Store
 Thumbs.db
+
+venv/
