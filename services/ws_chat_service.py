@@ -3,7 +3,7 @@ from datetime import datetime
 from models.db_tables import Message
 from pydantic import BaseModel, ValidationError
 from models.schema import WSMessage
-from core.redis import RedisCoupleHistory
+from core.redis_v2.redis import RedisCoupleHistory
 
 async def process_ws_connect(db, manager, user_id, websocket):
     await manager.connect(user_id, websocket)
@@ -65,6 +65,7 @@ async def handle_register_couple(db, manager, user_id, websocket, data):
         await manager.send_personal_json({"type": "system", "message": f"{user_id}와 연결되었습니다."}, partner_id)
 
 async def handle_send_message(db, manager, user_id, websocket, data):
+    redis_couple_history = RedisCoupleHistory()
     couple_id = data.couple_id
     message = data.message
     image_url = data.image_url
@@ -84,7 +85,7 @@ async def handle_send_message(db, manager, user_id, websocket, data):
         db.commit()
         # Redis에 append (DB 성공 이후에만)
         
-        RedisCoupleHistory.append(
+        redis_couple_history.append(
             couple_id,
             {
                 "user_id": user_id,

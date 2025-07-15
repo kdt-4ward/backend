@@ -1,6 +1,15 @@
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
+from enum import Enum
+
+class Role(str, Enum):
+    SYSTEM = "system"
+    USER = "user"
+    ASSISTANT = "assistant"
+    SUMMARY = "summary"
+    FUNCTION = "function"
+
 
 # 메시지 스키마 정의
 class WSMessage(BaseModel):
