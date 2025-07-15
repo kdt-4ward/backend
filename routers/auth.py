@@ -3,7 +3,6 @@ import httpx
 import jwt
 from pydantic import BaseModel
 from services.google_auth import get_google_access_token, get_google_userinfo
-from config import router
 from models.schema import GoogleAuthCode
 from fastapi import Request
 from db.db import SessionLocal

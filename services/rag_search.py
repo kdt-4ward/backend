@@ -2,7 +2,7 @@ from core.bot import PersonaChatBot
 from services.openai_client import get_openai_embedding
 from core.dependencies import get_db_session
 from models.db_tables import AIMessage
-from core.redis import RedisFaissChunkCache
+from core.redis_v2.redis import RedisFaissChunkCache
 import faiss
 import numpy as np
 
@@ -70,6 +70,8 @@ async def process_and_build_faiss_index(user_id, messages, turns_per_chunk=4):
                     msg.embed_index = idx
                     db.commit()
     embeddings_np = np.array(embeddings).astype("float32")
+    if not embeddings_np.size > 0:
+        return None, None, []
     index = faiss.IndexFlatL2(embeddings_np.shape[1])
     index.add(embeddings_np)
     # 캐싱
@@ -153,7 +155,7 @@ async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_
         index = faiss.IndexFlatL2(embeddings_np.shape[1])
         index.add(embeddings_np)
     if not chunks or len(chunks) == 0:
-        return "검색할 대화 chunk가 없습니다."
+        return "관련있는 대화 기록이 없습니다."
     # 2. 쿼리 임베딩
     query_emb = await get_openai_embedding(query)
     query_emb = np.array([query_emb]).astype("float32")
@@ -166,6 +168,6 @@ async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_
         if dist <= threshold:   # 거리값이 threshold 이하인 것만
             selected.append(chunks[idx]["text"])
     if not selected:
-        return "관련성 높은 대화 chunk가 없습니다."
+        return "관련있는 대화 기록이 없습니다."
     
     return "\n\n".join(selected)

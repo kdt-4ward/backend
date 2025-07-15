@@ -6,8 +6,10 @@ from core.dependencies import (
 from langchain_core.messages import HumanMessage, SystemMessage
 from typing import List, Optional
 from openai import BadRequestError
-
+from utils.log_utils import get_logger
 import json
+
+logger = get_logger(__name__)
 
 # 1. 일반 OpenAI 스트리밍 호출
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(1))
@@ -101,12 +103,12 @@ async def openai_completion_with_function_call(
                 try:
                     args = json.loads(arguments)
                 except Exception as e:
-                    print(f"[WARN] arguments json decode error: {arguments} | {e}")
+                    logger.warning(f"[WARN] arguments json decode error: {arguments} | {e}")
                     args = {}
 
             if "query" not in args:
-                print(f"[WARN] function_call arguments 누락: {args}")
-                args["query"] = ""
+                logger.warning(f"[function_call] 'query' 인자가 없음 → 사용자 입력으로 대체")
+                args["query"] = history[-1]["content"]
 
             # 실제 function 실행
             result = await function_map[func_name](**args)
@@ -138,6 +140,95 @@ async def openai_completion_with_function_call(
 
     # 함수 호출 최대치 초과
     raise RuntimeError("Function-call 반복 한도를 초과했습니다.")
+
+# services/openai_client.py
+from typing import AsyncGenerator
+from openai.types.chat import ChatCompletionChunk
+
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(1))
+async def openai_stream_with_function_call(
+    history: list,
+    functions: list,
+    function_map: dict,
+    bot=None,
+    max_func_calls=3
+) -> AsyncGenerator[str, None]:
+    """
+    function_call + streaming 가능한 GPT 응답 생성기
+    """
+    client = await get_openai_client()
+    current_history = filter_for_openai(history)
+
+    call_count = 0
+    while call_count < max_func_calls:
+        logger.info(f"[GPT INPUT]: {current_history}")
+        response = await client.chat.completions.create(
+            model="gpt-4o",
+            messages=current_history,
+            stream=True,
+            functions=functions,
+            function_call="auto"
+        )
+
+        collected = ""
+        func_call_detected = False
+        arguments_collected = ""
+        function_name = None
+        async for chunk in response:
+            delta = chunk.choices[0].delta
+            finish_reason = chunk.choices[0].finish_reason
+
+            # ✅ function_call 감지
+            if delta.function_call:
+                func_call_detected = True
+                if delta.function_call.name:
+                    function_name = delta.function_call.name
+                if delta.function_call.arguments:
+                    arguments_collected += delta.function_call.arguments
+                continue  # 여기서 break 하면 안 됨 ❗
+
+            if delta.content:
+                collected += delta.content
+                yield delta.content  # 즉시 응답 반환
+
+        if func_call_detected:
+            call_count += 1
+            try:
+                args = json.loads(arguments_collected) if arguments_collected.strip() else {}
+                logger.info(f"[function_call] arguments raw: {arguments_collected}")
+            except Exception as e:
+                logger.warning(f"[WARN] function_call arguments 파싱 실패: {arguments_collected} | {e}")
+                args = {}
+
+            if "query" not in args:
+                logger.warning(f"[function_call] 'query' 인자가 없음 → 사용자 입력으로 대체")
+                args["query"] = history[-1]["content"]
+            # 🔧 function 실행
+            result = await function_map[function_name](**args)
+            function_msg_id = bot.save_to_db(bot.user_id, "function", json.dumps(result, ensure_ascii=False)) if bot else len(history)
+
+            history.append({
+                "role": "function",
+                "name": function_name,
+                "content": json.dumps(result, ensure_ascii=False),
+                "id": function_msg_id
+            })
+            current_history = filter_for_openai(history)
+            if bot:
+                bot.save_history(history)
+            continue  # GPT 재호출
+
+        # function_call 없이 정상 종료 → 저장
+        if bot:
+            assistant_msg_id = bot.save_to_db(bot.user_id, "assistant", collected)
+            history.append({"role": "assistant", "content": collected, "id": assistant_msg_id})
+            bot.save_history(history)
+
+        break  # 종료
+
+    if call_count >= max_func_calls:
+        raise RuntimeError("Function-call 반복 한도를 초과했습니다.")
+
 
 @retry(stop=stop_after_attempt(5), wait=wait_fixed(1))
 async def get_openai_embedding(text: str):

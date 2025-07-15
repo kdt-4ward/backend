@@ -1,42 +1,63 @@
 from services.ai.prompt_templates import PROMPT_REGISTRY
 from typing import List
-import logging
 from utils.langchain_helpers import run_langchain_prompt
+from utils.log_utils import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 async def analyze_daily(messages: List[str], prompt_name: str) -> dict:
     text = "\n".join(messages)
+    print("============== analyze_daily- text ================")
+    print(text)
+    print("===========================================")
     return await run_langchain_prompt(PROMPT_REGISTRY[prompt_name], {"messages": text})
 
 def aggregate_weekly_stats(daily_stats: list) -> dict:
     """ 일간 채팅 분석 결과 리스트를 항목별로 7일 시계열 리스트로 변환"""
     agg = {
-        "애정표현_횟수": [],
-        "애정표현_전체샘플": [],
-        "배려_횟수": [],
-        "배려_전체샘플": [],
-        "적극_횟수": [],
-        "적극_전체샘플": [],
-        "격려_횟수": [],
-        "격려_전체샘플": [],
-        "갈등_횟수": [],
-        "갈등_전체샘플": [],
+        "user_stats": {
+            "user_1":  {
+                "애정표현_횟수": [],
+                "애정표현_전체샘플": [],
+                "배려_횟수": [],
+                "배려_전체샘플": [],
+                "적극_횟수": [],
+                "적극_전체샘플": [],
+                "격려_횟수": [],
+                "격려_전체샘플": [],
+                "갈등_횟수": [],
+                "갈등_전체샘플": [],
+            },
+            "user_2":  {
+                "애정표현_횟수": [],
+                "애정표현_전체샘플": [],
+                "배려_횟수": [],
+                "배려_전체샘플": [],
+                "적극_횟수": [],
+                "적극_전체샘플": [],
+                "격려_횟수": [],
+                "격려_전체샘플": [],
+                "갈등_횟수": [],
+                "갈등_전체샘플": [],
+            }
+        },
         "요약리스트": []
     }
     try:
         for day in daily_stats:
-            agg["애정표현_횟수"].append(int(day.get("애정표현_횟수", 0)))
-            agg["애정표현_전체샘플"].append(day.get("애정표현_샘플", []))
-            agg["배려_횟수"].append(int(day.get("배려_횟수", 0)))
-            agg["배려_전체샘플"].append(day.get("배려_샘플", []))
-            agg["적극_횟수"].append(int(day.get("적극_횟수", 0)))
-            agg["적극_전체샘플"].append(day.get("적극_샘플", []))
-            agg["격려_횟수"].append(int(day.get("격려_횟수", 0)))
-            agg["격려_전체샘플"].append(day.get("격려_샘플", []))
-            agg["갈등_횟수"].append(int(day.get("갈등_횟수", 0)))
-            agg["갈등_전체샘플"].append(day.get("갈등_샘플", []))
-            agg["요약리스트"].append(day.get("요약", ""))
+            day_result = day["result"]
+            for user_id, values in day_result["user_stats"].items():
+                agg["user_stats"][user_id]["애정표현_횟수"].append(int(values.get("애정표현_횟수", 0)))
+                agg["user_stats"][user_id]["애정표현_전체샘플"].append(values.get("애정표현_샘플", []))
+                agg["user_stats"][user_id]["배려_횟수"].append(int(values.get("배려_횟수", 0)))
+                agg["user_stats"][user_id]["배려_전체샘플"].append(values.get("배려_샘플", []))
+                agg["user_stats"][user_id]["적극_횟수"].append(int(values.get("적극_횟수", 0)))
+                agg["user_stats"][user_id]["적극_전체샘플"].append(values.get("적극_샘플", []))
+                agg["user_stats"][user_id]["격려_횟수"].append(int(values.get("격려_횟수", 0)))
+                agg["user_stats"][user_id]["격려_전체샘플"].append(values.get("격려_샘플", []))
+                agg["user_stats"][user_id]["갈등_횟수"].append(int(values.get("갈등_횟수", 0)))
+                agg["user_stats"][user_id]["갈등_전체샘플"].append(values.get("갈등_샘플", []))
+            agg["요약리스트"].append(day_result.get("요약", ""))
         return agg
     except Exception as e:
         logger.error(f"[aggregate_weekly_stats] 집계 에러: {e} | daily_stats={daily_stats}")

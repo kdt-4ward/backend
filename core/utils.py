@@ -1,5 +1,5 @@
 from models.db_tables import Couple
-from core.redis import save_couple_mapping
+from core.redis_v2.redis import save_couple_mapping
 from db.db import SessionLocal
 
 def ensure_couple_mapping(user_id: str, partner_id: str, couple_id: str):

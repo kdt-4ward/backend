@@ -1,41 +1,51 @@
-from services.ai.analyzer_langchain import aggregate_weekly_stats, aggregate_weekly_ai_stats_by_day
-from services.ai.weekly_analysis_pipeline import WeeklyAnalysisPipeline
+import asyncio
+from datetime import datetime, timedelta
+from db.crud import get_all_couple_ids, get_users_by_couple_id, load_daily_couple_stats, load_daily_ai_stats
+from services.ai.analyzer import WeeklyAnalyzer
+from db.result_saver import WeeklyResultSaver
+from db.db import get_session
 
-async def run_all_weekly_analyses(couple_list, week_dates):
-    for couple in couple_list:
-        couple_id = couple['couple_id']
-        user1_id = couple['user_1']
-        user2_id = couple['user_2']
+def get_week_dates(start_date: datetime.date) -> list[datetime.date]:
+    return [start_date + timedelta(days=i) for i in range(7)]
 
-        # 1. 일간분석 결과 불러오기
-        daily_couple_stats = load_daily_couple_stats(couple_id, week_dates)
-        daily_user1_ai_stats = load_daily_ai_stats(user1_id, week_dates)
-        daily_user2_ai_stats = load_daily_ai_stats(user2_id, week_dates)
+async def run_all_weekly_analyses(start_date=None):
+    session = get_session()
 
-        if not daily_couple_stats or not daily_user1_ai_stats or not daily_user2_ai_stats:
-            # 로그 및 건너뛰기
-            continue
+    # 커플 정보 로드
+    couple_list = []
+    couple_ids = get_all_couple_ids(session)
+    for couple_id in couple_ids:
+        user1_id, user2_id = get_users_by_couple_id(session, couple_id)
+        couple_list.append((couple_id, user1_id, user2_id))
 
-        # 2. 집계
-        couple_weekly = aggregate_weekly_stats(daily_couple_stats)
-        user1_ai_weekly = aggregate_weekly_ai_stats_by_day(daily_user1_ai_stats)
-        user2_ai_weekly = aggregate_weekly_ai_stats_by_day(daily_user2_ai_stats)
+    # 주간 날짜 정의
+    if start_date is None:
+        start_date = datetime.today().date() - timedelta(days=7)
+    week_dates = get_week_dates(start_date)
 
-        # 3. LLM 주간분석
-        pipeline = WeeklyAnalysisPipeline()
-        result = await pipeline.analyze(couple_weekly, user1_ai_weekly, user2_ai_weekly)
+    # 분석기 생성
+    saver = WeeklyResultSaver(db_session=session, week_dates=week_dates)
+    analyzer = WeeklyAnalyzer(
+        db=session,
+        load_daily_couple_stats_func=load_daily_couple_stats,
+        load_daily_ai_stats_func=load_daily_ai_stats,
+        save_func=lambda c_id, u1, u2, result: saver.save(
+            c_id, u1, u2, result
+        )
+    )
 
-        # 4. 저장
-        save_weekly_analysis_result(couple_id, user1_id, user2_id, result)
+    # 모든 커플에 대해 실행
+    for couple_id, user1_id, user2_id in couple_list:
+        await analyzer.run(couple_id, user1_id, user2_id, week_dates)
 
-def load_daily_couple_stats(couple_id, week_dates):
-    # DB에서 couple_id, week_dates에 해당하는 일간분석 결과를 리스트로 반환
-    pass
+async def test_run_seven_days_analysis():
+    start_date = datetime(2025, 7, 1).date()  # 시작일
+    
+    week_start = start_date
+    week_dates = [week_start + timedelta(days=i) for i in range(7)]
 
-def load_daily_ai_stats(user_id, week_dates):
-    # DB에서 user_id, week_dates에 해당하는 AI 일간분석 결과를 리스트로 반환
-    pass
+    print(f"\n📅 [WEEK 1] 주간 분석 기간: {week_start} ~ {week_dates[-1]}")
+    await run_all_weekly_analyses(start_date)
 
-def save_weekly_analysis_result(couple_id, user1_id, user2_id, result):
-    # WeeklySolution, CoupleChatSummary 등 결과 저장
-    pass
+if __name__ == "__main__":
+    asyncio.run(run_all_weekly_analyses())

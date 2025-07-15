@@ -74,11 +74,17 @@ class PersonaConfig(Base):
 class EmotionLog(Base):
     __tablename__ = "emotion_logs"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    emotion_id = Column(Integer, primary_key=True, autoincrement=True)  # PK
     user_id = Column(String(255), ForeignKey("users.user_id"), nullable=False)
-    emotion = Column(Text)
-    date = Column(DateTime, default=datetime.utcnow)
-    memo = Column(Text)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=True)
+
+    emotion = Column(String(100), nullable=False)                       # 기본 감정 (캐릭터 ID 등)
+    detail_emotions = Column(Text, nullable=True)                       # 세부 감정들 (JSON 문자열 형태)
+    memo = Column(Text, nullable=True)   # <-- ✅ 메모 추가!
+
+    recorded_at = Column(DateTime, nullable=False, default=datetime.utcnow)  # 기록 날짜
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)  # 수정 날짜
+    deleted_at = Column(DateTime, nullable=True)
 
 # ================ Analysis & Solution ================
 class WeeklySolution(Base):
@@ -110,6 +116,48 @@ class CoupleDailyAnalysisResult(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+class CoupleWeeklyAnalysisResult(Base):
+    __tablename__ = "couple_weekly_analysis_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+    
+    week_start_date = Column(DateTime, nullable=False)  # 주 시작 날짜 (월요일 등)
+    week_end_date = Column(DateTime, nullable=False)    # 주 종료 날짜 (일요일 등)
+    
+    result = Column(Text, nullable=False)  # JSON string (주간 요약, 통계 등)
+    
+    created_at = Column(DateTime, default=datetime.utcnow)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class CoupleWeeklyComparisonResult(Base):
+    __tablename__ = "couple_weekly_comparison_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+
+    week_start_date = Column(DateTime, nullable=False)
+    week_end_date = Column(DateTime, nullable=False)
+
+    comparison = Column(Text, nullable=False)  # LLM 비교 분석 결과
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class CoupleWeeklyRecommendation(Base):
+    __tablename__ = "couple_weekly_recommendations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+
+    week_start_date = Column(DateTime, nullable=False)
+    week_end_date = Column(DateTime, nullable=False)
+
+    advice = Column(Text, nullable=False)  # 조언
+    content_type = Column(String(50))      # 예: "영화", "플레이리스트"
+    content_title = Column(String(255))
+    content_reason = Column(Text)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
 class UserTraitSummary(Base):
     __tablename__ = "user_trait_summaries"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -164,3 +212,37 @@ class UserSurveyResponse(Base):
     choice_id = Column(Integer, ForeignKey("survey_choices.id"), nullable=True)
     custom_input = Column(Text, nullable=True)
     submitted_at = Column(DateTime, default=datetime.utcnow)
+# 게시글
+class Post(Base):
+    __tablename__ = "posts"
+
+    post_id = Column(Integer, primary_key=True, autoincrement=True)   # 게시글 ID (PK)
+    user_id = Column(String(255), nullable=False)                     # 작성자
+    couple_id = Column(String(255), nullable=False)                   # 커플 ID
+    content = Column(Text, nullable=True)                             # 게시글 내용
+
+    created_at = Column(DateTime, default=datetime.utcnow)            # 생성일
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)  # 수정일
+    deleted_at = Column(DateTime, nullable=True)                      # 삭제일 (소프트 삭제용)
+
+class Comment(Base):
+    __tablename__ = "Post_comments"
+
+    comment_id = Column(Integer, primary_key=True, index=True)
+    post_id = Column(Integer, ForeignKey("posts.post_id"))
+    user_id = Column(String(255), nullable=False)
+    comment = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    deleted_at = Column(DateTime, nullable=True)
+
+class PostImage(Base):
+    __tablename__ = "post_images"
+
+    image_id = Column(Integer, primary_key=True, autoincrement=True)
+    post_id = Column(Integer, ForeignKey("posts.post_id"), nullable=False)
+    image_url = Column(String(500), nullable=False)
+    image_order = Column(Integer, nullable=False)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    deleted_at = Column(DateTime, nullable=True)
