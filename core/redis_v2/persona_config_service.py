@@ -1,6 +1,6 @@
 import json
 from core.settings import settings
-from models.db_tables import PersonaConfig, User, UserTraitSummary
+from db.db_tables import PersonaConfig, User, UserTraitSummary
 from db.db import SessionLocal
 from services.ai.prompt_templates import PROMPT_REGISTRY
 

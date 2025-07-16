@@ -1,5 +1,5 @@
 from core.redis_v2.redis import RedisAIHistory
-from models.db_tables import AIMessage, AIChatSummary
+from db.db_tables import AIMessage, AIChatSummary
 from db.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
 

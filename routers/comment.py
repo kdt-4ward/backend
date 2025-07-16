@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.db_tables import Comment
+from db.db_tables import Comment
 from models.schema import CommentRequest, CommentResponse
 from core.dependencies import get_db_session
 from datetime import datetime

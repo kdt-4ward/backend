@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from models.db_tables import *  # 실제 모델 경로/명에 맞게 조정
+from db.db_tables import *  # 실제 모델 경로/명에 맞게 조정
 from sqlalchemy.orm import Session
 import json
 

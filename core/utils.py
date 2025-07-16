@@ -1,4 +1,4 @@
-from models.db_tables import Couple
+from db.db_tables import Couple
 from core.redis_v2.redis import save_couple_mapping
 from db.db import SessionLocal
 
