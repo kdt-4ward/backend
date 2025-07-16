@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from db.db import SessionLocal
-from models.db_tables import Message
+from db.db_tables import Message
 
 router = APIRouter()
 

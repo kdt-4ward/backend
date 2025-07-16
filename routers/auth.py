@@ -5,7 +5,7 @@ from models.schema import GoogleAuthCode
 from fastapi import Request
 from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
-from models.db_tables import User
+from db.db_tables import User
 from sqlalchemy.orm import Session
 from utils.hash_utils import hash_email  
 from datetime import datetime

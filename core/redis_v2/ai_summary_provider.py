@@ -1,5 +1,5 @@
 from core.settings import settings
-from models.db_tables import AIChatSummary
+from db.db_tables import AIChatSummary
 from db.db import SessionLocal
 import redis
 

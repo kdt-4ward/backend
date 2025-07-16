@@ -1,7 +1,7 @@
 from core.bot import PersonaChatBot
 from services.openai_client import get_openai_embedding
 from core.dependencies import get_db_session
-from models.db_tables import AIMessage
+from db.db_tables import AIMessage
 from core.redis_v2.redis import RedisFaissChunkCache
 import faiss
 import numpy as np
