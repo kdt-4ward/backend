@@ -1,5 +1,5 @@
 from datetime import datetime
-from models.db_tables import User, Couple, SurveyQuestion, SurveyChoice, UserSurveyResponse, EmotionLog, Message, Base
+from db.db_tables import User, Couple, SurveyQuestion, SurveyChoice, UserSurveyResponse, EmotionLog, Message, Base
 from db.db import SessionLocal
 from db.db_utils import create_database_if_not_exists, drop_database
 from db.db import engine

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from models.db_tables import Post, Comment, PostImage
+from db.db_tables import Post, Comment, PostImage
 from models.schema import PostRequest, PostResponse, ImageRequest
 from core.dependencies import get_db_session
 from datetime import datetime

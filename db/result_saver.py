@@ -1,6 +1,6 @@
 # db/result_saver.py
 import json
-from models.db_tables import (
+from db.db_tables import (
     WeeklySolution, CoupleWeeklyAnalysisResult,
     CoupleWeeklyComparisonResult, CoupleWeeklyRecommendation
 )

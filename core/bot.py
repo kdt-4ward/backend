@@ -4,11 +4,12 @@ from core.redis_v2.ai_summary_provider import AISummaryProvider
 from core.redis_v2.ai_chat_manager import AIChatHistoryManager
 from core.redis_v2.redis import load_couple_mapping, redis_client
 from core.redis_v2.utils import acquire_lock, release_lock
-from models.db_tables import AIMessage, AIChatSummary
+from db.db_tables import AIMessage, AIChatSummary
 from services.ai.summarizer import summarize_ai_chat
 from db.db import SessionLocal
 from datetime import datetime
 from models.schema import Role
+from utils.token_truncate import count_tokens
 
 class PersonaChatBot:
     def __init__(self, user_id: str, lang: str = None):
@@ -108,15 +109,16 @@ class PersonaChatBot:
             if current_turn:
                 turns.append(current_turn)
 
-            WINDOW_SIZE = 10
-            MIN_REMAINING_SIZE = 5
-            assert WINDOW_SIZE > MIN_REMAINING_SIZE, f"WINDOW_SIZE: {WINDOW_SIZE}, MIN_REMAINING_SIZE: {MIN_REMAINING_SIZE}"
+            turn_threshold = 10
+            remaining_size = 5
+            assert turn_threshold > remaining_size, f"turn_threshold: {turn_threshold}, MIN_REMAINING_SIZE: {remaining_size}"
+            summary_trigger_tokens = 2500
 
             prev_summary = self.get_summary()
 
-            if len(turns) >= WINDOW_SIZE:
+            if should_trigger_summary(turns, token_threshold=summary_trigger_tokens, turn_threshold=turn_threshold):
                 # 요약 대상: 최근 WINDOW_SIZE - MIN_REMAINING_SIZE 턴
-                target_turns = turns[:WINDOW_SIZE - MIN_REMAINING_SIZE]
+                target_turns = turns[:turn_threshold - remaining_size]
 
                 # 요약 input으로 합치기 (user/function/assistant 순서대로 join)
                 target_msgs = [msg for turn in target_turns for msg in turn]
@@ -127,7 +129,7 @@ class PersonaChatBot:
                 )
                 last_msg_id = get_last_msg_id(target_msgs)
                 # 남기는 부분: 최근 MIN_REMAINING_SIZE 턴
-                remaining_turns = turns[WINDOW_SIZE - MIN_REMAINING_SIZE:]
+                remaining_turns = turns[turn_threshold - remaining_size:]
                 remaining_msgs = [msg for turn in remaining_turns for msg in turn]
 
                 new_history = [
@@ -146,3 +148,9 @@ def get_last_msg_id(msgs):
         if msg.get("id") is not None:
             return msg["id"]
     return None
+
+def should_trigger_summary(turns: list[list[dict]], token_threshold: int = 2500, turn_threshold: int = 8) -> bool:
+    total_tokens = sum(
+        count_tokens(msg["content"]) for turn in turns for msg in turn
+    )
+    return len(turns) >= turn_threshold and total_tokens >= token_threshold

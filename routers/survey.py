@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db.db import get_session  # DB 세션 의존성 주입
-from models.db_tables import UserSurveyResponse, SurveyQuestion, SurveyChoice
+from core.dependencies import get_db_session  # DB 세션 의존성 주입
+from db.db_tables import UserSurveyResponse, SurveyQuestion, SurveyChoice
 from models.schema import SurveyResponseInput
 from datetime import datetime
 
 router = APIRouter()
 
 @router.post("/survey/response")
-def submit_survey_response(data: SurveyResponseInput, db: Session = Depends(get_session)):
+def submit_survey_response(data: SurveyResponseInput, db: Session = Depends(get_db_session)):
     # 1. 질문 존재 여부 확인
     question = db.query(SurveyQuestion).filter_by(id=data.question_id).first()
     if not question:
@@ -16,6 +16,14 @@ def submit_survey_response(data: SurveyResponseInput, db: Session = Depends(get_
 
     # 2. 선택지가 있다면 유효성 확인
     if data.choice_id:
+        ## choice_id 맞춰 주기
+        ### 처음 5개 질문은 5지선다 + 기타
+        if question.id < 6:
+            data.choice_id -= (question.id - 1) * 6
+        else:
+            ### 이후론 4지선다 + 기타
+            data.choice_id -= (question.id - 6) * 5 + 30
+        
         choice = db.query(SurveyChoice).filter_by(id=data.choice_id, question_id=data.question_id).first()
         if not choice:
             raise HTTPException(status_code=400, detail="선택한 choice_id가 유효하지 않습니다.")

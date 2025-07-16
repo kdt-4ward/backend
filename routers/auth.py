@@ -8,7 +8,7 @@ from models.schema import GoogleAuthCode, UserLoginRequest, UserSignupRequest
 from fastapi import Request
 from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
-from models.db_tables import User
+from db.db_tables import User
 from sqlalchemy.orm import Session
 from datetime import datetime, time
 from utils.jwt_utils import create_access_token, create_refresh_token, verify_token
