@@ -4,14 +4,14 @@ from sqlalchemy import and_
 from sqlalchemy.orm import Session
 import random, string
 from datetime import datetime, timedelta
-from models.db_tables import CoupleInvite, Couple, User
+from db.db_tables import Couple, User, CoupleInvite
+from core.dependencies import get_db_session  # DB 세션 의존성 주입
 from models.schema import CoupleInviteCreate, CoupleInviteJoin, CoupleInviteResponse
-from db.db import get_session  # DB 세션 의존성 주입
 
 router = APIRouter()
 
 @router.post("/invite", response_model=CoupleInviteResponse)
-def create_invite(data: CoupleInviteCreate, db: Session = Depends(get_session)):
+def create_invite(data: CoupleInviteCreate, db: Session = Depends(get_db_session)):
     # 1. 이미 커플 연결된 유저는 초대 금지
     inviter = db.query(User).filter_by(user_id=data.inviter_user_id).first()
     if inviter.couple_id:
@@ -28,7 +28,7 @@ def create_invite(data: CoupleInviteCreate, db: Session = Depends(get_session)):
     ).first()
     if existing:
         return existing  # 이미 유효한 초대코드 반환
-      
+    
     code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
     expired_at = now + timedelta(hours=24)
     invite = CoupleInvite(
@@ -44,7 +44,7 @@ def create_invite(data: CoupleInviteCreate, db: Session = Depends(get_session)):
     return invite
 
 @router.post("/join", response_model=CoupleInviteResponse)
-def join_invite(data: CoupleInviteJoin, db: Session = Depends(get_session)):
+def join_invite(data: CoupleInviteJoin, db: Session = Depends(get_db_session)):
     # 1. 이미 커플 연결된 유저는 참여 불가
     invited = db.query(User).filter_by(user_id=data.invited_user_id).first()
     if invited.couple_id:
@@ -89,7 +89,7 @@ def join_invite(data: CoupleInviteJoin, db: Session = Depends(get_session)):
     return invite
 
 @router.post("/breakup")
-def breakup(user_id: str, db: Session = Depends(get_session)):
+def breakup(user_id: str, db: Session = Depends(get_db_session)):
     # 1. 본인 couple_id 조회
     user = db.query(User).filter_by(user_id=user_id).first()
     if not user or not user.couple_id:
@@ -110,13 +110,13 @@ def breakup(user_id: str, db: Session = Depends(get_session)):
     return {"detail": "커플이 해제되었습니다."}
 
 @router.get("/invites/{user_id}", response_model=List[CoupleInviteResponse])
-def list_invites(user_id: str, db: Session = Depends(get_session)):
+def list_invites(user_id: str, db: Session = Depends(get_db_session)):
     invites = db.query(CoupleInvite).filter_by(inviter_user_id=user_id).order_by(CoupleInvite.created_at.desc()).all()
     return invites
 
 # 커플 정보 조회
 @router.get("/info/{couple_id}")
-def get_couple_info(couple_id: str, db: Session = Depends(get_session)):
+def get_couple_info(couple_id: str, db: Session = Depends(get_db_session)):
     couple = db.query(Couple).filter_by(couple_id=couple_id).first()
     if not couple:
         raise HTTPException(status_code=404, detail="Couple not found")
