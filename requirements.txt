@@ -19,3 +19,5 @@ tiktoken
 websockets
 langdetect
 python-multipart
+bcrypt
+email-validator

@@ -17,12 +17,15 @@ class User(Base):
 
     user_id = Column(String(255), primary_key=True)
     name = Column(String(255), nullable=False)
-    email = Column(String(255), unique=True, nullable=False)
+    email = Column(String(255), unique=True, nullable=True)
+    password = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     deleted_at = Column(DateTime, nullable=True)
     modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     birth = Column(DateTime, nullable=True)
     gender = Column(Enum(GenderEnum), nullable=True)
+    profile_image = Column(String(500), nullable=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=True)
 
 # ==================== Couple table =======================
 class Couple(Base):
@@ -246,3 +249,15 @@ class PostImage(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     deleted_at = Column(DateTime, nullable=True)
+
+class CoupleInvite(Base):
+    __tablename__ = "couple_invites"
+
+    invite_code = Column(String(16), primary_key=True)  # 랜덤 초대 코드, 8~16자
+    inviter_user_id = Column(String(255), ForeignKey("users.user_id"), nullable=False)
+    status = Column(String(32), default="pending")       # pending, accepted, expired 등
+    invited_user_id = Column(String(255), ForeignKey("users.user_id"), nullable=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    accepted_at = Column(DateTime, nullable=True)
+    expired_at = Column(DateTime, nullable=True)

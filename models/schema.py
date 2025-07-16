@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from datetime import datetime
 from enum import Enum
@@ -130,3 +130,45 @@ class EmotionLogResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+################# Couple Invite ########################
+class CoupleInviteCreate(BaseModel):
+    inviter_user_id: str
+
+class CoupleInviteJoin(BaseModel):
+    invite_code: str
+    invited_user_id: str
+
+class CoupleInviteResponse(BaseModel):
+    invite_code: str
+    inviter_user_id: str
+    status: str
+    invited_user_id: Optional[str]
+    couple_id: Optional[str]
+    created_at: datetime
+    accepted_at: Optional[datetime]
+    expired_at: Optional[datetime]
+
+################# User ########################
+class UserResponse(BaseModel):
+    user_id: str
+    name: str
+    profile_image: Optional[str] = None
+    couple_id: Optional[str] = None
+    birth: Optional[datetime] = None
+    gender: Optional[str] = None
+    created_at: Optional[datetime] = None
+    deleted_at: Optional[datetime] = None
+    modified_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+class UserSignupRequest(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+
+class UserLoginRequest(BaseModel):
+    email: EmailStr
+    password: str

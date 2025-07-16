@@ -1,18 +1,19 @@
+from uuid import uuid4
+import bcrypt
 from fastapi import APIRouter, Depends, HTTPException, Header
 import httpx
 import jwt
 from pydantic import BaseModel
-from services.google_auth import get_google_access_token, get_google_userinfo
-from models.schema import GoogleAuthCode
+from models.schema import GoogleAuthCode, UserLoginRequest, UserSignupRequest
 from fastapi import Request
 from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
 from models.db_tables import User
 from sqlalchemy.orm import Session
-from utils.hash_utils import hash_email  
 from datetime import datetime, time
 from utils.jwt_utils import create_access_token, create_refresh_token, verify_token
 from core.settings import settings
+from db.db import get_session  # DB 세션 의존성 주입
 
 router = APIRouter()
 
@@ -24,8 +25,8 @@ class KakaoLoginRequest(BaseModel):
 
 class RefreshRequest(BaseModel):
     refresh_token: str
-    
-@router.post("/auth/kakao-login")
+
+@router.post("/kakao-login")
 async def kakao_login(body: KakaoLoginRequest):
     print("카카오 로그인 요청:", body)
     kakao_api_url = "https://kapi.kakao.com/v2/user/me"
@@ -38,11 +39,35 @@ async def kakao_login(body: KakaoLoginRequest):
 
     user_id = str(userinfo["id"])
     nickname = userinfo["properties"]['nickname']
+    profile_image = userinfo["properties"].get("profile_image", None)
     
-    # TODO: DB에 user_id로 user 생성/조회
+    # ✅ DB에 user_id로 user 생성/조회
+    db = SessionLocal()
+    try:
+        user = db.query(User).filter_by(user_id=user_id).first()
+        if not user:
+            user = User(
+                user_id=user_id,
+                name=nickname,
+                profile_image=profile_image,
+                created_at=datetime.utcnow(),
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            print(f"✅ 새 사용자 저장: {user_id}")
+        else:
+            # 기존 유저 정보 최신화(닉네임, 프로필 등)
+            user.name = nickname
+            if profile_image:
+                user.profile_image = profile_image
+            db.commit()
+            print(f"🔁 기존 사용자: {user_id}")
+    finally:
+        db.close()
 
     # JWT 발급
-    access_token = create_access_token({"sub": str(user_id), "nickname": nickname})
+    access_token = create_access_token({"sub": str(user_id), "nickname": nickname, "profile_image": profile_image})
     refresh_token = create_refresh_token({"sub": str(user_id)})
     return {"access_token": access_token, "refresh_token": refresh_token}
 
@@ -57,10 +82,20 @@ def get_current_user(authorization: str = Header(...)):
     return payload
 
 @router.get("/me")
-def get_me(user=Depends(get_current_user)):
-    return {"user_id": user.get("id"), "nickname": user.get('nickname'), "profile_image": user.get('profileImageUrl')}
+def get_me(user=Depends(get_current_user), db: Session = Depends(get_session)):
+    user_id = user.get("sub")
+    db_user = db.query(User).filter_by(user_id=user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {
+        "user_id": db_user.user_id,
+        "nickname": db_user.name,
+        "profile_image": db_user.profile_image,
+        "couple_id": db_user.couple_id,
+        "email": db_user.email,
+    }
 
-@router.post("/auth/refresh")
+@router.post("/refresh")
 def refresh_token(req: RefreshRequest):
     payload = verify_token(req.refresh_token)
     if not payload or "sub" not in payload:
@@ -71,6 +106,44 @@ def refresh_token(req: RefreshRequest):
     # 필요하다면 refresh token도 새로 발급 (권장)
     new_refresh_token = create_refresh_token({"sub": user_id})
     return {"access_token": new_access_token, "refresh_token": new_refresh_token}
+
+################ 일반 로그인/회원가입 #################
+@router.post("/signup")
+def signup(data: UserSignupRequest, db: Session = Depends(get_session)):
+    # 이메일 중복 확인
+    if db.query(User).filter_by(email=data.email).first():
+        raise HTTPException(status_code=400, detail="이미 존재하는 이메일입니다.")
+    # 패스워드 해시
+    pw_hash = bcrypt.hashpw(data.password.encode(), bcrypt.gensalt()).decode()
+    user = User(
+        user_id=str(uuid4()),
+        name=data.name,
+        email=data.email,
+        password=pw_hash,
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return {"detail": "회원가입 성공", "user_id": user.user_id}
+
+@router.post("/login")
+def login(data: UserLoginRequest, db: Session = Depends(get_session)):
+    user = db.query(User).filter_by(email=data.email).first()
+    if not user or not user.password:
+        raise HTTPException(status_code=400, detail="유효하지 않은 계정입니다.")
+    # 비밀번호 비교
+    if not bcrypt.checkpw(data.password.encode(), user.password.encode()):
+        raise HTTPException(status_code=400, detail="비밀번호가 일치하지 않습니다.")
+    # JWT 발급
+    access_token = create_access_token({"sub": user.user_id, "nickname": user.name})
+    refresh_token = create_refresh_token({"sub": user.user_id})
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "user_id": user.user_id,
+        "nickname": user.name,
+        "couple_id": user.couple_id
+    }
 
 # @router.get("/auth/google/callback")
 # async def google_callback_get(request: Request):

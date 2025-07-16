@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db.db import get_db  # DB 세션 의존성 주입
+from db.db import get_session  # DB 세션 의존성 주입
 from models.db_tables import UserSurveyResponse, SurveyQuestion, SurveyChoice
 from models.schema import SurveyResponseInput
 from datetime import datetime
@@ -8,7 +8,7 @@ from datetime import datetime
 router = APIRouter()
 
 @router.post("/survey/response")
-def submit_survey_response(data: SurveyResponseInput, db: Session = Depends(get_db)):
+def submit_survey_response(data: SurveyResponseInput, db: Session = Depends(get_session)):
     # 1. 질문 존재 여부 확인
     question = db.query(SurveyQuestion).filter_by(id=data.question_id).first()
     if not question:

@@ -18,10 +18,11 @@ def insert_test_data_to_db():
         User(
             user_id=str(u["user_id"]),
             name=u["name"],
-            email=f"user{u['user_id']}@test.com",  # email은 유일해야 하므로 예시
+            # email=f"user{u['user_id']}@test.com",  # email은 유일해야 하므로 예시
             gender="male" if u["gender"] == "남성" else "female",
             # birth=datetime.now().replace(year=datetime.now().year - u["age"]),
-            created_at=datetime.fromisoformat(u["created_at"])
+            created_at=datetime.fromisoformat(u["created_at"]),
+            profile_image=u.get("profile_image")  # 프로필 이미지가 있다면 추가
         )
         for u in user_data["users"]
     ]
