@@ -25,6 +25,18 @@ class CoupleDailyAnalysisResult(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+########## 일간 비교 분석 결과 ##############
+class DailyComparisonAnalysisResult(Base):
+    __tablename__ = "daily_comparison_analysis_results"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    couple_id = Column(String(255), ForeignKey("couples.couple_id"), nullable=False)
+    date = Column(DateTime, nullable=False)  # 분석 기준 날짜 (date only)
+    result = Column(Text, nullable=False)  # JSON string (비교 분석 결과)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    modified_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
 ########### 커플 chat 주간 분석 ################
 class CoupleWeeklyAnalysisResult(Base):
     __tablename__ = "couple_weekly_analysis_results"
