@@ -17,13 +17,10 @@ async def run_langchain_prompt(prompt_template: str, input_vars: dict, expected_
         for k, v in input_vars.items()
     }
     try:
-        print("=================safe_input_vars======")
-        print(safe_input_vars)
-        print("========================================")
+        logger.info(f"[run_langchain_prompt][{log_prefix}] input_vars: {safe_input_vars}")
         result = await chain.ainvoke(safe_input_vars)
-        print("========================result===============================")
-        print(result)
-        print("==========================================================")
+        logger.info(f"[run_langchain_prompt][{log_prefix}] result: {result}")
+
         # 예: run_langchain_prompt 결과에서 꺼내기
         if isinstance(result, str):
             data = json.loads(result)

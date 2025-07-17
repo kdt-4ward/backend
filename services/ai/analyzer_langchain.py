@@ -5,12 +5,19 @@ from utils.log_utils import get_logger
 
 logger = get_logger(__name__)
 
-async def analyze_daily(messages: List[str], prompt_name: str) -> dict:
-    text = "\n".join(messages)
-    print("============== analyze_daily- text ================")
-    print(text)
-    print("===========================================")
-    return await run_langchain_prompt(PROMPT_REGISTRY[prompt_name], {"messages": text})
+async def analyze_daily(messages: List[str], emotions: List[str] = None, prompt_name: str = "daily_nlu") -> dict:
+    
+    logger.info(f"[analyze_daily][{prompt_name}] messages: {messages}")
+    input_vars = {"messages": messages}
+    
+    if emotions is not None:
+        logger.info(f"[analyze_daily][{prompt_name}] emotions: {emotions}")
+        input_vars["emotions"] = emotions
+
+    return await run_langchain_prompt(
+        PROMPT_REGISTRY[prompt_name], 
+        input_vars
+    )
 
 def aggregate_weekly_stats(daily_stats: list) -> dict:
     """ 일간 채팅 분석 결과 리스트를 항목별로 7일 시계열 리스트로 변환"""

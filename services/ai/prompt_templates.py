@@ -1,6 +1,6 @@
 # Import from separated prompt files
 from .prompts.chatbot.persona import CHATBOT_PROMPT_EN, CHATBOT_PROMPT_KO
-from .prompts.analysis.daily import DAILY_NLU_PROMPT, DAILY_AI_NLU_PROMPT
+from .prompts.analysis.daily import DAILY_NLU_PROMPT, DAILY_AI_NLU_PROMPT, DAILY_COMPARISON_PROMPT
 from .prompts.analysis.weekly import (
     COUPLE_WEEKLY_PROMPT, 
     AI_WEEKLY_PROMPT, 
@@ -19,5 +19,6 @@ PROMPT_REGISTRY = {
     "solution_prompt": SOLUTION_PROMPT,
     "user_trait_summary_prompt": USER_TRAIT_SUMMARY_PROMPT,
     "chatbot_prompt_en": CHATBOT_PROMPT_EN,
-    "chatbot_prompt_ko": CHATBOT_PROMPT_KO
+    "chatbot_prompt_ko": CHATBOT_PROMPT_KO,
+    "daily_comparison_prompt": DAILY_COMPARISON_PROMPT
 }
