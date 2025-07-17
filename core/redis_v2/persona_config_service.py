@@ -1,6 +1,6 @@
 import json
 from core.settings import settings
-from db.db_tables import PersonaConfig, User, UserTraitSummary
+from db.db_tables import PersonaConfig, User, UserTraitSummary, Couple
 from db.db import SessionLocal
 from services.ai.prompt_templates import PROMPT_REGISTRY
 
@@ -16,7 +16,7 @@ redis_client = redis.StrictRedis(
 
 DEFAULT_NAME = "무민"
 USER_NAME = "사용자"
-DEFAULT_PERSONALITY = "gentle and thoughtful"
+DEFAULT_PERSONALITY = "Not given"
 
 
 class PersonaConfigService:
@@ -39,10 +39,24 @@ class PersonaConfigService:
             config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
             user = db.query(User).filter_by(user_id=self.user_id).first()
             trait = db.query(UserTraitSummary).filter_by(user_id=self.user_id).first()
+            
+            # 상대방 정보 가져오기
+            couple = db.query(Couple).filter_by(couple_id=self.couple_id).first()
+            if self.user_id == couple.user_1:
+                partner_id = couple.user_2
+            else:
+                partner_id = couple.user_1
+                
+            # 상대방 정보 조회
+            partner = db.query(User).filter_by(user_id=partner_id).first()
+            partner_trait = db.query(UserTraitSummary).filter_by(user_id=partner_id).first()
+            
+
             return {
                 "persona_name": config.persona_name if config else DEFAULT_NAME,
                 "user_name": user.name if user else USER_NAME,
-                "user_personality": trait.summary if trait else DEFAULT_PERSONALITY
+                "user_personality": trait.summary if trait else DEFAULT_PERSONALITY,
+                "partner_personality": partner_trait.summary if partner_trait else DEFAULT_PERSONALITY
             }
 
     def set_persona_name(self, name: str):
@@ -73,6 +87,7 @@ class PersonaPromptProvider:
             "content": prompt_template.format(
                 bot_name=config["persona_name"],
                 user_name=config["user_name"],
-                user_personality=config["user_personality"]
+                user_personality=config["user_personality"],
+                partner_personality=config["partner_personality"]
             )
         }
