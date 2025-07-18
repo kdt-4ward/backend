@@ -1,7 +1,7 @@
 import json
 import redis
 from core.settings import settings
-from models.db_tables import Couple, AIMessage, Message, AIChatSummary
+from db.db_tables import Couple, AIMessage, Message, AIChatSummary
 from db.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
 import numpy as np
