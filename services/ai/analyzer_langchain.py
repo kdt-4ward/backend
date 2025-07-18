@@ -22,49 +22,32 @@ async def analyze_daily(messages: List[str], emotions: List[str] = None, prompt_
 def aggregate_weekly_stats(daily_stats: list) -> dict:
     """ 일간 채팅 분석 결과 리스트를 항목별로 7일 시계열 리스트로 변환"""
     agg = {
-        "user_stats": {
-            "user_1":  {
-                "애정표현_횟수": [],
-                "애정표현_전체샘플": [],
-                "배려_횟수": [],
-                "배려_전체샘플": [],
-                "적극_횟수": [],
-                "적극_전체샘플": [],
-                "격려_횟수": [],
-                "격려_전체샘플": [],
-                "갈등_횟수": [],
-                "갈등_전체샘플": [],
-            },
-            "user_2":  {
-                "애정표현_횟수": [],
-                "애정표현_전체샘플": [],
-                "배려_횟수": [],
-                "배려_전체샘플": [],
-                "적극_횟수": [],
-                "적극_전체샘플": [],
-                "격려_횟수": [],
-                "격려_전체샘플": [],
-                "갈등_횟수": [],
-                "갈등_전체샘플": [],
-            }
-        },
-        "요약리스트": []
+        "user_stats": {},
+        "summary": []
     }
     try:
         for day in daily_stats:
             day_result = day["result"]
             for user_id, values in day_result["user_stats"].items():
-                agg["user_stats"][user_id]["애정표현_횟수"].append(int(values.get("애정표현_횟수", 0)))
-                agg["user_stats"][user_id]["애정표현_전체샘플"].append(values.get("애정표현_샘플", []))
-                agg["user_stats"][user_id]["배려_횟수"].append(int(values.get("배려_횟수", 0)))
-                agg["user_stats"][user_id]["배려_전체샘플"].append(values.get("배려_샘플", []))
-                agg["user_stats"][user_id]["적극_횟수"].append(int(values.get("적극_횟수", 0)))
-                agg["user_stats"][user_id]["적극_전체샘플"].append(values.get("적극_샘플", []))
-                agg["user_stats"][user_id]["격려_횟수"].append(int(values.get("격려_횟수", 0)))
-                agg["user_stats"][user_id]["격려_전체샘플"].append(values.get("격려_샘플", []))
-                agg["user_stats"][user_id]["갈등_횟수"].append(int(values.get("갈등_횟수", 0)))
-                agg["user_stats"][user_id]["갈등_전체샘플"].append(values.get("갈등_샘플", []))
-            agg["요약리스트"].append(day_result.get("요약", ""))
+                if user_id not in agg["user_stats"]:
+                    agg["user_stats"][user_id] = {
+                        "affection": {"count": [], "samples": []},
+                        "empathy": {"count": [], "samples": []},
+                        "initiative": {"count": [], "samples": []},
+                        "encouragement": {"count": [], "samples": []},
+                        "conflict": {"count": [], "samples": []}
+                    }
+                agg["user_stats"][user_id]["affection"]["count"].append(int(values.get("affection", {}).get("count", 0)))
+                agg["user_stats"][user_id]["affection"]["samples"].append(values.get("affection", {}).get("samples", []))
+                agg["user_stats"][user_id]["empathy"]["count"].append(int(values.get("empathy", {}).get("count", 0)))
+                agg["user_stats"][user_id]["empathy"]["samples"].append(values.get("empathy", {}).get("samples", []))
+                agg["user_stats"][user_id]["initiative"]["count"].append(int(values.get("initiative", {}).get("count", 0)))
+                agg["user_stats"][user_id]["initiative"]["samples"].append(values.get("initiative", {}).get("samples", []))
+                agg["user_stats"][user_id]["encouragement"]["count"].append(int(values.get("encouragement", {}).get("count", 0)))
+                agg["user_stats"][user_id]["encouragement"]["samples"].append(values.get("encouragement", {}).get("samples", []))
+                agg["user_stats"][user_id]["conflict"]["count"].append(int(values.get("conflict", {}).get("count", 0)))
+                agg["user_stats"][user_id]["conflict"]["samples"].append(values.get("conflict", {}).get("samples", []))
+            agg["summary"].append(day_result.get("summary", ""))
         return agg
     except Exception as e:
         logger.error(f"[aggregate_weekly_stats] 집계 에러: {e} | daily_stats={daily_stats}")
@@ -77,25 +60,23 @@ def aggregate_weekly_ai_stats_by_day(daily_ai_stats: list) -> dict:
     - 예: "대표감정": [["불안", "외로움"], ["희망"], ...], "긍정발화_횟수": [2, 1, ...]
     """
     agg = {
-        "대표감정": [],
-        "상담주제": [],
-        "긍정발화_횟수": [],
-        "긍정발화_샘플": [],
-        "부정발화_횟수": [],
-        "부정발화_샘플": [],
-        "중요신호": [],
-        "요약리스트": []
+        "emotion": [],
+        "topic": [],
+        "positive": {"count": [], "samples": []},
+        "negative": {"count": [], "samples": []},
+        "important_signal": [],
+        "summary": []
     }
     try:
         for day in daily_ai_stats:
-            agg["대표감정"].append(day.get("대표감정", []))
-            agg["상담주제"].append(day.get("상담주제", []))
-            agg["긍정발화_횟수"].append(int(day.get("긍정발화_횟수", 0)))
-            agg["긍정발화_샘플"].append(day.get("긍정발화_샘플", []))
-            agg["부정발화_횟수"].append(int(day.get("부정발화_횟수", 0)))
-            agg["부정발화_샘플"].append(day.get("부정발화_샘플", []))
-            agg["중요신호"].append(day.get("중요신호", ""))
-            agg["요약리스트"].append(day.get("요약", ""))
+            agg["emotion"].append(day.get("emotion", []))
+            agg["topic"].append(day.get("topic", []))
+            agg["positive"]["count"].append(int(day.get("positive", {}).get("count", 0)))
+            agg["positive"]["samples"].append(day.get("positive", {}).get("samples", []))
+            agg["negative"]["count"].append(int(day.get("negative", {}).get("count", 0)))
+            agg["negative"]["samples"].append(day.get("negative", {}).get("samples", []))
+            agg["important_signal"].append(day.get("important_signal", ""))
+            agg["summary"].append(day.get("summary", ""))
         return agg
     except Exception as e:
         logger.error(f"[aggregate_weekly_ai_stats_by_day] 집계 에러: {e} | daily_ai_stats={daily_ai_stats}")

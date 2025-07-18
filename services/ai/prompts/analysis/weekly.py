@@ -57,4 +57,4 @@ JSON:
 커플: {couple_report}
 AI1: {user1_ai_report}
 AI2: {user2_ai_report}
-""" 
+"""

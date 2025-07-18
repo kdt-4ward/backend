@@ -1,11 +1,11 @@
 import json
 from core.settings import settings
-from db.db_tables import PersonaConfig, User, UserTraitSummary, Couple
+from db.db_tables import PersonaConfig, User, UserTraitSummary, Couple, EmotionLog
 from db.db import SessionLocal
 from services.ai.prompt_templates import PROMPT_REGISTRY
 
 import redis
-from datetime import datetime
+from datetime import datetime, timedelta
 
 redis_client = redis.StrictRedis(
     host=settings.redis_host,
@@ -14,7 +14,7 @@ redis_client = redis.StrictRedis(
     decode_responses=True
 )
 
-DEFAULT_NAME = "무민"
+DEFAULT_NAME = "러비"
 USER_NAME = "사용자"
 DEFAULT_PERSONALITY = "Not given"
 
@@ -39,7 +39,16 @@ class PersonaConfigService:
             config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
             user = db.query(User).filter_by(user_id=self.user_id).first()
             trait = db.query(UserTraitSummary).filter_by(user_id=self.user_id).first()
-            
+
+            # 감정 기록: 현재 시각 기준 12시간 이내의 기록만 가져오고, 없으면 None
+            now = datetime.utcnow()
+            twelve_hours_ago = now - timedelta(hours=12)
+            emotion_log = db.query(EmotionLog).filter(
+                EmotionLog.user_id == self.user_id,
+                EmotionLog.recorded_at >= twelve_hours_ago,
+                EmotionLog.recorded_at <= now
+            ).order_by(EmotionLog.recorded_at.desc()).first()
+
             # 상대방 정보 가져오기
             couple = db.query(Couple).filter_by(couple_id=self.couple_id).first()
             if self.user_id == couple.user_1:
@@ -50,13 +59,13 @@ class PersonaConfigService:
             # 상대방 정보 조회
             partner = db.query(User).filter_by(user_id=partner_id).first()
             partner_trait = db.query(UserTraitSummary).filter_by(user_id=partner_id).first()
-            
 
             return {
                 "persona_name": config.persona_name if config else DEFAULT_NAME,
                 "user_name": user.name if user else USER_NAME,
                 "user_personality": trait.summary if trait else DEFAULT_PERSONALITY,
-                "partner_personality": partner_trait.summary if partner_trait else DEFAULT_PERSONALITY
+                "partner_personality": partner_trait.summary if partner_trait else DEFAULT_PERSONALITY,
+                "emotion": emotion_log.emotion if emotion_log else "Not Given"
             }
 
     def set_persona_name(self, name: str):
@@ -72,7 +81,6 @@ class PersonaConfigService:
             db.add(obj)
             db.commit()
 
-
 class PersonaPromptProvider:
     def __init__(self, config_service: PersonaConfigService, lang: str = "ko"):
         self.config_service = config_service
@@ -87,7 +95,8 @@ class PersonaPromptProvider:
             "content": prompt_template.format(
                 bot_name=config["persona_name"],
                 user_name=config["user_name"],
-                user_personality=config["user_personality"],
-                partner_personality=config["partner_personality"]
+                user_personality=config.get("user_personality", DEFAULT_PERSONALITY),
+                partner_personality=config.get("partner_personality", DEFAULT_PERSONALITY),
+                emotion=config.get("emotion", "Not Given")
             )
         }
