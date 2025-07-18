@@ -71,7 +71,7 @@ async def chat_with_persona(req: ChatRequest):
 
 @router.post("/stream", response_class=StreamingResponse)
 async def chat_with_persona_streaming(req: ChatRequest):
-    ensure_couple_mapping(req.user_id, "테스트파트너", req.couple_id)  # 필요시 제거 가능
+    # ensure_couple_mapping(req.user_id, "테스트파트너", req.couple_id)  # 필요시 제거 가능
 
     logger.info(f"[chat_with_persona] 요청: user_id={req.user_id}, couple_id={req.couple_id}")
     async with semaphore:
@@ -79,7 +79,7 @@ async def chat_with_persona_streaming(req: ChatRequest):
         bot = PersonaChatBot(user_id=req.user_id, lang=lang)
 
         functions = build_functions()
-        function_map = build_function_map(req.user_id, bot.couple_id)
+        function_map = build_function_map(req.user_id, req.couple_id)
 
         user_msg_id = bot.save_to_db(req.user_id, "user", req.message)
         history = bot.get_history()

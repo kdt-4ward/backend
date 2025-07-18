@@ -26,7 +26,7 @@ def build_multi_turn_chunks(messages, turns_per_chunk=4):
             # user 메시지
             if messages[i]["role"] == "user":
                 if start_time is None:
-                    start_time = messages[i]["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+                    start_time = messages[i]["created_at"]
                 chunk_lines.append(f'user: {messages[i]["content"]}')
                 msg_ids.append(messages[i].get("id"))
                 i += 1
@@ -34,7 +34,7 @@ def build_multi_turn_chunks(messages, turns_per_chunk=4):
                 if i < n and messages[i]["role"] == "assistant":
                     chunk_lines.append(f'assistant: {messages[i]["content"]}')
                     msg_ids.append(messages[i].get("id"))
-                    end_time = messages[i]["created_at"].strftime("%Y-%m-%d %H:%M:%S")
+                    end_time = messages[i]["created_at"]
                     i += 1
                 else:
                     # 짝이 없으면 끝
@@ -84,7 +84,7 @@ async def process_incremental_faiss_embedding(user_id, turns_per_chunk=4):
     if chunks is None or embeddings_np is None:
         # 없으면 전체 새로 빌드
         bot = PersonaChatBot(user_id)
-        messages = bot.get_full_history()
+        messages = bot.get_history()
         if len(messages) < 8:
             return
         await process_and_build_faiss_index(user_id, messages, turns_per_chunk)
@@ -149,7 +149,7 @@ async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_
     # 1. 캐시 우선 사용, 없으면 새로 생성
     if chunks is None or embeddings_np is None:
         bot = PersonaChatBot(user_id)
-        messages = bot.get_full_history()
+        messages = bot.get_history()
         index, embeddings_np, chunks = await process_and_build_faiss_index(user_id, messages, turns_per_chunk)
     else:
         index = faiss.IndexFlatL2(embeddings_np.shape[1])

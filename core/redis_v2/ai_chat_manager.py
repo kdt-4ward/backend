@@ -1,7 +1,9 @@
+from datetime import datetime
 from core.redis_v2.redis import RedisAIHistory
 from db.db_tables import AIMessage, AIChatSummary
 from db.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
+import copy
 
 class AIChatHistoryManager:
     def __init__(self, user_id: str, couple_id: str,
@@ -27,7 +29,15 @@ class AIChatHistoryManager:
                     AIMessage.id > last_msg_id if last_msg_id else True
                 ).order_by(AIMessage.created_at).all()
 
-                chat_msgs = [{"role": m.role, "content": m.content, "id": m.id} for m in messages]
+                chat_msgs = [
+                    {
+                        "role": m.role,
+                        "content": m.content,
+                        "id": m.id,
+                        "created_at": m.created_at  # 추가!
+                    }
+                    for m in messages
+                ]
                 return summary, chat_msgs
         except SQLAlchemyError as e:
             print(f"[DB fallback error] {e}")
@@ -46,8 +56,23 @@ class AIChatHistoryManager:
             history = self.ensure_prompt_summary(history)
         return history
 
+    def serialize_history(self, history: list[dict]):
+        import copy
+        from datetime import datetime
+
+        serializable = []
+        for h in history:
+            h = copy.deepcopy(h)
+            for k, v in h.items():
+                if isinstance(v, datetime):
+                    h[k] = v.isoformat()
+            serializable.append(h)
+        return serializable
+
+
     def save(self, history: list[dict]):
         history = self.ensure_prompt_summary(history)
+        history = self.serialize_history(history)
         self.redis.set(self.user_id, history)
 
     def append(self, message: dict):
@@ -59,9 +84,16 @@ class AIChatHistoryManager:
         self.redis.clear(self.user_id)
 
     def ensure_prompt_summary(self, history: list[dict]) -> list[dict]:
-        others = [h for h in history if h["role"] not in ("system", "summary")]
-        result = [self.prompt_provider()]
-        summary = self.summary_provider()
+        others = []
+        for h in history:
+            # system, summary는 created_at 필요 없음
+            if h["role"] not in ("system", "summary"):
+                # created_at 없으면 강제로 추가
+                if "created_at" not in h:
+                    h["created_at"] = datetime.utcnow()
+            others = [h for h in history if h["role"] not in ("system", "summary")]
+            result = [self.prompt_provider()]
+            summary = self.summary_provider()
         if summary:
             result.append({"role": "summary", "content": summary})
         result.extend(others)
