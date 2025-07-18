@@ -4,7 +4,7 @@ from db.db_tables import Message
 
 router = APIRouter()
 
-@router.get("/history/{couple_id}")
+@router.get("/{couple_id}")
 async def get_history(couple_id: str):
     db = SessionLocal()
     msgs = db.query(Message).filter_by(couple_id=couple_id).order_by(Message.created_at).all()

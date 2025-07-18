@@ -3,7 +3,6 @@ from .prompts.chatbot.persona import CHATBOT_PROMPT_EN, CHATBOT_PROMPT_KO
 from .prompts.analysis.daily import DAILY_NLU_PROMPT, DAILY_AI_NLU_PROMPT, DAILY_COMPARISON_PROMPT
 from .prompts.analysis.weekly import (
     COUPLE_WEEKLY_PROMPT, 
-    AI_WEEKLY_PROMPT, 
     COMPARE_PROMPT, 
     SOLUTION_PROMPT
 )
@@ -14,7 +13,6 @@ PROMPT_REGISTRY = {
     "daily_nlu": DAILY_NLU_PROMPT,
     "daily_ai_nlu": DAILY_AI_NLU_PROMPT,
     "couple_weekly_prompt": COUPLE_WEEKLY_PROMPT,
-    "ai_weekly_prompt": AI_WEEKLY_PROMPT,
     "compare_prompt": COMPARE_PROMPT,
     "solution_prompt": SOLUTION_PROMPT,
     "user_trait_summary_prompt": USER_TRAIT_SUMMARY_PROMPT,
