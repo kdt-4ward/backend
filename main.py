@@ -61,6 +61,12 @@ async def on_startup():
     #     logging.info("주간 분석 완료")
     # except Exception as e:
     #     logging.error(f"주간 분석 실패: {e}")
+    # from jobs.weekly_analysis import test_run_seven_days_analysis
+    # try:
+    #     await test_run_seven_days_analysis()
+    #     logging.info("주간 분석 완료")
+    # except Exception as e:
+    #     logging.error(f"주간 분석 실패: {e}")
     
 
 # DB 테이블 생성

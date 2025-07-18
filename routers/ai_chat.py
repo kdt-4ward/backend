@@ -1,12 +1,17 @@
 import asyncio
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse, StreamingResponse, PlainTextResponse
 from tenacity import RetryError
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Optional
+from datetime import datetime, timedelta
+from sqlalchemy.orm import Session
+
+from db.db_tables import AIMessage
+from db.db import get_session
 
 from models.schema import ChatRequest, BotConfigRequest
 from core.cocurrency import semaphore
-# from core.bot import PersonaChatBot
+
 from core.bot import PersonaChatBot
 from services.rag_search import process_incremental_faiss_embedding
 from services.openai_client import openai_completion_with_function_call, openai_stream_with_function_call
@@ -112,6 +117,56 @@ async def chat_with_persona_streaming(req: ChatRequest):
                 yield "[ERROR] 서버 내부 오류"
 
         return StreamingResponse(stream_response(), media_type="text/plain")
+
+# GET /chat/history/recent?user_id=user_123&end_date=2024-01-15T14:30:00&limit=50
+@router.get("/history/recent")
+async def get_recent_ai_chat_history(
+    user_id: str = Query(..., description="유저 ID"),
+    end_date: Optional[str] = Query(None, description="조회 종료 날짜 (YYYY-MM-DDTHH:MM:SS)"),
+    limit: Optional[int] = Query(20, description="최대 조회 개수", ge=1, le=500),
+    db: Session = Depends(get_session)
+):
+    """사용자의 최근 AI 채팅 히스토리 조회 (user_id, end_date를 프론트에서 입력받음)"""
+    try:
+        if not end_date:
+            end_date = datetime.now().isoformat()
+        logger.info(f"[get_recent_ai_chat_history] 요청: user_id={user_id}, end_date={end_date}")
+        # 메시지 조회
+        messages = db.query(AIMessage).filter(
+            AIMessage.user_id == user_id,
+            AIMessage.created_at <= end_date
+        ).order_by(AIMessage.created_at.desc()).limit(limit).all()
+        
+        # role이 'assistant' 또는 'user'인 메시지만 반환
+        filtered_messages = [
+            msg for msg in reversed(messages)
+            if msg.role in ("assistant", "user")
+        ]
+
+        response_data = {
+            "success": True,
+            "data": {
+                "user_id": user_id,
+                "total_messages": len(filtered_messages),
+                "messages": [
+                    {
+                        "id": msg.id,
+                        "role": msg.role,
+                        "content": msg.content,
+                        "created_at": msg.created_at.isoformat(),
+                        "couple_id": msg.couple_id
+                    }
+                    for msg in filtered_messages  # 시간순으로 정렬
+                ]
+            }
+        }
+        
+        logger.info(f"[get_recent_ai_chat_history] 조회 완료: user_id={user_id}, message_count={len(filtered_messages)}")
+        return response_data
+        
+    except Exception as e:
+        logger.error(f"[get_recent_ai_chat_history] 조회 실패: user_id={user_id}, error={e}")
+        raise HTTPException(status_code=500, detail=f"최근 AI 채팅 히스토리 조회 실패: {str(e)}")
 
 
 @router.post("/reset")

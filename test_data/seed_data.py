@@ -3,9 +3,46 @@ from db.db_tables import User, Couple, SurveyQuestion, SurveyChoice, UserSurveyR
 from db.db import SessionLocal
 from db.db_utils import create_database_if_not_exists, drop_database
 from db.db import engine
+from sqlalchemy import text
 import json
+from utils.log_utils import get_logger
+
+logger = get_logger(__name__)
+
+
+def init_database():
+    """데이터베이스 초기화 및 테이블 생성"""
+    try:
+        logger.info("데이터베이스 초기화 시작...")
+        
+        # 1. 데이터베이스 삭제 후 재생성
+        logger.info("기존 데이터베이스 삭제 중...")
+        drop_database()
+        
+        logger.info("새 데이터베이스 생성 중...")
+        create_database_if_not_exists()
+        
+        # 2. 데이터베이스 연결
+        from db.db import engine
+        
+        # 3. 테이블 생성
+        logger.info("테이블 생성 중...")
+        Base.metadata.create_all(bind=engine)
+        
+        logger.info("✅ 데이터베이스 초기화 완료!")
+        
+        # 4. 테이블 존재 확인
+        with engine.connect() as conn:
+            result = conn.execute(text("SHOW TABLES"))
+            tables = [row[0] for row in result]
+            logger.info(f"생성된 테이블: {tables}")
+            
+    except Exception as e:
+        logger.error(f"데이터베이스 초기화 실패: {e}")
+        raise
 
 def insert_test_data_to_db():
+    init_database()
     # ======== 1. 원본 JSON 파일 로딩 =========
     with open("test_data/couple_user_seed_data.json", "r", encoding="utf-8") as f:
         user_data = json.load(f)
@@ -86,8 +123,6 @@ def insert_test_data_to_db():
             )
 
     # ======== 6. DB 세션에 삽입 =========
-    drop_database()
-    create_database_if_not_exists()
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
 

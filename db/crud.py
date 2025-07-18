@@ -199,3 +199,85 @@ def load_daily_ai_stats(db: Session, user_id: str, week_dates: list[datetime.dat
         AIChatSummary.created_at <= week_dates[-1]
     ).order_by(AIChatSummary.created_at).all()
     return [json.loads(row.summary) for row in summaries]
+
+def get_daily_emotion_logs_by_couple_id(db: Session, couple_id: str, date: datetime):
+    """커플의 일간 감정 기록을 조회합니다."""
+    end = date
+    start = end - timedelta(hours=24)
+    
+    # 해당 커플의 두 사용자 ID 조회
+    couple = db.query(Couple).filter_by(couple_id=couple_id).first()
+    if not couple:
+        return []
+    
+    user1_id, user2_id = couple.user_1, couple.user_2
+    
+    # 두 사용자의 감정 기록 조회
+    emotion_logs = db.query(EmotionLog).filter(
+        EmotionLog.user_id.in_([user1_id, user2_id]),
+        EmotionLog.recorded_at >= start,
+        EmotionLog.recorded_at < end
+    ).order_by(EmotionLog.recorded_at).all()
+    
+    return [
+        {
+            "user_id": log.user_id,
+            "emotion": log.emotion,
+            "detail_emotions": json.loads(log.detail_emotions) if log.detail_emotions else [],
+            "memo": log.memo,
+            "recorded_at": log.recorded_at
+        }
+        for log in emotion_logs
+    ]
+
+def get_daily_emotion_logs_by_user_id(db: Session, user_id: str, date: datetime):
+    """사용자의 일간 감정 기록을 조회합니다. (하루에 한 번만 기록됨)"""
+    end = date
+    start = end - timedelta(hours=24)
+    
+    log = (
+        db.query(EmotionLog)
+        .filter(
+            EmotionLog.user_id == user_id,
+            EmotionLog.recorded_at >= start,
+            EmotionLog.recorded_at < end
+        )
+        .order_by(EmotionLog.recorded_at.desc())
+        .first()
+    )
+    
+    if not log:
+        return []
+    
+    return {
+        "user_id": log.user_id,
+        "emotion": log.emotion,
+        "detail_emotions": json.loads(log.detail_emotions) if log.detail_emotions else [],
+        "memo": log.memo,
+        "recorded_at": log.recorded_at
+    }
+
+# 5. 일간 비교 분석 결과 저장
+def save_daily_comparison_analysis_result(db: Session, couple_id: str, date: datetime.date, result: dict):
+    date_start = datetime.combine(date, datetime.min.time())
+
+    obj = db.query(DailyComparisonAnalysisResult).filter(
+        DailyComparisonAnalysisResult.couple_id == couple_id,
+        DailyComparisonAnalysisResult.date == date_start
+    ).first()
+
+    result_str = json.dumps(result, ensure_ascii=False)
+    now = datetime.utcnow()
+    if obj:
+        obj.result = result_str
+        obj.modified_at = now
+    else:
+        obj = DailyComparisonAnalysisResult(
+            couple_id=couple_id,
+            date=date_start,
+            result=result_str,
+            created_at=now,
+            modified_at=now
+        )
+        db.add(obj)
+    db.commit()

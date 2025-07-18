@@ -7,6 +7,7 @@ from .post import Post, PostImage, Comment
 from .survey import UserSurveyResponse, SurveyQuestion, SurveyChoice
 from .analysis import (AIDailyAnalysisResult, 
                        CoupleDailyAnalysisResult,
+                       DailyComparisonAnalysisResult,
                        CoupleWeeklyAnalysisResult,
                        CoupleWeeklyRecommendation, 
                        CoupleWeeklyComparisonResult,
