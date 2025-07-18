@@ -196,26 +196,14 @@ async def get_analysis_stats(
         user_stats = weekly_stats.get("user_stats", {})
         new_user_stats = {}
         for user_id, stats in user_stats.items():
+            new_user_stats[user_id] = {}
             for key, value in stats.items():
                 if key.endswith("횟수") and isinstance(value, list):
-                    new_user_stats[key] = sum(value)
+                    new_user_stats[user_id][key] = sum(value)
                 elif key.endswith("전체샘플") and isinstance(value, list):
-                    new_user_stats[key] = [sample for samples in value for sample in samples]
+                    new_user_stats[user_id][key] = [sample for samples in value for sample in samples]
         weekly_stats["user_stats"] = new_user_stats
 
-        return {
-            "success": True,
-            "data": {
-                "total_analyses": {
-                    "daily": total_daily,
-                    "weekly": total_weekly,
-                    "recommendations": total_recommendations
-                },
-                "latest_analyses": {
-                    "daily": latest_daily.date.strftime("%Y-%m-%d") if latest_daily else None,
-                    "weekly": latest_weekly.week_start_date.strftime("%Y-%m-%d") if latest_weekly else None
-                }
-            }
-        }
+        return weekly_stats
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"분석 통계 조회 실패: {str(e)}")
