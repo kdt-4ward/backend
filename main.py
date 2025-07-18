@@ -37,7 +37,7 @@ async def on_startup():
     create_database_if_not_exists()
     ## =============== 배포시 삭제 ==================== ##
     ## test data 삽입
-    # insert_test_data_to_db()
+    insert_test_data_to_db()
 
     # # 유저 성향 분석 (비동기)
     # from jobs.analysis_personality import run_trait_summary_for_all_users

@@ -184,14 +184,24 @@ async def get_analysis_stats(
     end_date: Optional[date] = Query(None, description="종료 날짜 (YYYY-MM-DD)"),
     db: Session = Depends(get_session)
 ):
-    """분석 통계 정보 조회"""
+    """주간 통계 정보 조회"""
     try:
         # 총 분석 횟수
         end_date = end_date or datetime.now()
         week_dates = [end_date - timedelta(days=i) for i in range(7)]
         daily_couple_stats = load_daily_couple_stats(db, couple_id, week_dates)
         weekly_stats = aggregate_weekly_stats(daily_couple_stats)
-
+        # INSERT_YOUR_CODE
+        # weekly_stats["user_stats"]의 각 user별로, *_횟수 리스트를 sum해서 total로 저장
+        user_stats = weekly_stats.get("user_stats", {})
+        new_user_stats = {}
+        for user_id, stats in user_stats.items():
+            for key, value in stats.items():
+                if key.endswith("횟수") and isinstance(value, list):
+                    new_user_stats[key] = sum(value)
+                elif key.endswith("전체샘플") and isinstance(value, list):
+                    new_user_stats[key] = [sample for samples in value for sample in samples]
+        weekly_stats["user_stats"] = new_user_stats
 
         return {
             "success": True,
