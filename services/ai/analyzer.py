@@ -13,23 +13,68 @@ class BaseAnalyzer:
         raise NotImplementedError
 
 class DailyAnalyzer(BaseAnalyzer):
-    def __init__(self, db, fetch_func, analyze_func, save_func, prompt_name):
+    """
+    일간 분석 및 일간 비교 분석을 모두 처리할 수 있는 통합 Analyzer.
+    - chat_fetch_func: 채팅 로그를 가져오는 함수 (필수)
+    - emotion_fetch_func: 감정 로그를 가져오는 함수 (없으면 일반 일간 분석, 있으면 비교 분석)
+    - analyze_func: 분석 함수 (messages, emotions, prompt_name) 또는 (messages, prompt_name)
+    - save_func: 결과 저장 함수
+    - prompt_name: 사용할 프롬프트 이름
+    """
+    def __init__(
+        self,
+        db,
+        chat_fetch_func,
+        analyze_func,
+        save_func,
+        prompt_name,
+        emotion_fetch_func=None
+    ):
         super().__init__(analyze_func, save_func, prompt_name)
-        self.fetch_func = fetch_func
+        self.chat_fetch_func = chat_fetch_func
+        self.emotion_fetch_func = emotion_fetch_func
         self.db = db
 
     async def run(self, target_id, date):
-        chat_logs = self.fetch_func(self.db, target_id, date)
-        if not chat_logs:
-            logger.warning(f"[DailyAnalyzer] {target_id}의 {date} 대화 없음")
-            return
-        messages = [f"{c['user_id']} :{c['content']} [{c['created_at']}]" if isinstance(c, dict) else c for c in chat_logs]
-        try:
-            result = await self.analyze_func(messages, self.prompt_name)
-            self.save_func(self.db, target_id, date, result)
-            logger.info(f"[DailyAnalyzer] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 분석 저장 완료")
-        except Exception as e:
-            logger.error(f"[DailyAnalyzer] {target_id} 분석 실패: {e}")
+        chat_logs = self.chat_fetch_func(self.db, target_id, date)
+        emotion_logs = None
+        if self.emotion_fetch_func is not None:
+            emotion_logs = self.emotion_fetch_func(self.db, target_id, date)
+
+        # 일간 분석: 채팅 로그만 필요, 비교 분석: 채팅+감정 모두 필요
+        if self.emotion_fetch_func is None:
+            # 일반 일간 분석
+            if not chat_logs:
+                logger.warning(f"[DailyAnalyzer] {target_id}의 {date} 대화 없음")
+                return
+            messages = [
+                f"{c['user_id']} :{c['content']} [{c['created_at']}]" if isinstance(c, dict) else c
+                for c in chat_logs
+            ]
+            try:
+                result = await self.analyze_func(messages, self.prompt_name)
+                self.save_func(self.db, target_id, date, result)
+                logger.info(f"[DailyAnalyzer] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 분석 저장 완료")
+            except Exception as e:
+                logger.error(f"[DailyAnalyzer] {target_id} 분석 실패: {e}")
+        else:
+            # 비교 분석 (채팅+감정)
+            if not chat_logs and not emotion_logs:
+                logger.warning(f"[DailyAnalyzer] {target_id}의 {date} 데이터 없음")
+                return
+
+            messages = []
+            if chat_logs:
+                messages = [f"{c['user_id']} :{c['content']} [{c['created_at']}]" for c in chat_logs]
+            emotions = []
+            if emotion_logs:
+                emotions = [f"{e['user_id']} :{e['emotion']} - {e['memo']} [{e['recorded_at']}]" for e in emotion_logs]
+            try:
+                result = await self.analyze_func(messages, emotions, self.prompt_name)
+                self.save_func(self.db, target_id, date, result)
+                logger.info(f"[DailyAnalyzer] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 비교 분석 저장 완료")
+            except Exception as e:
+                logger.error(f"[DailyAnalyzer] {target_id} 비교 분석 실패: {e}")
 
 from services.ai.analyzer_langchain import aggregate_weekly_stats, aggregate_weekly_ai_stats_by_day
 from services.ai.weekly_analysis_pipeline import WeeklyAnalysisPipeline
