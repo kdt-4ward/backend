@@ -87,7 +87,7 @@ class PersonaPromptProvider:
             "content": prompt_template.format(
                 bot_name=config["persona_name"],
                 user_name=config["user_name"],
-                user_personality=config["user_personality"],
-                partner_personality=config["partner_personality"]
+                user_personality=config.get("user_personality", DEFAULT_PERSONALITY),
+                partner_personality=config.get("partner_personality", DEFAULT_PERSONALITY)
             )
         }
