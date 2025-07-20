@@ -27,8 +27,8 @@ class PersonaConfigService:
 
     def get_config(self) -> dict:
         raw = redis_client.get(self.redis_key)
-        if raw:
-            config = json.loads(raw)
+        if raw is not None:
+            config = json.loads(raw) # type: ignore
         else:
             config = self._load_from_db()
             redis_client.set(self.redis_key, json.dumps(config), ex=3600)
@@ -51,6 +51,9 @@ class PersonaConfigService:
 
             # 상대방 정보 가져오기
             couple = db.query(Couple).filter_by(couple_id=self.couple_id).first()
+            if couple is None:
+                raise ValueError(f"Couple with id {self.couple_id} not found")
+
             if self.user_id == couple.user_1:
                 partner_id = couple.user_2
             else:
@@ -76,8 +79,7 @@ class PersonaConfigService:
             obj = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
             if not obj:
                 obj = PersonaConfig(couple_id=self.couple_id)
-            obj.persona_name = name
-            obj.updated_at = datetime.utcnow()
+            obj.persona_name = name # type: ignore
             db.add(obj)
             db.commit()
 
@@ -96,6 +98,7 @@ class PersonaPromptProvider:
                 bot_name=config["persona_name"],
                 user_name=config["user_name"],
                 user_personality=config.get("user_personality", DEFAULT_PERSONALITY),
-                partner_personality=config.get("partner_personality", DEFAULT_PERSONALITY)
+                partner_personality=config.get("partner_personality", DEFAULT_PERSONALITY),
+                emotion=config.get("emotion", "Not Given")
             )
         }

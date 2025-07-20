@@ -1,11 +1,13 @@
 from services.ai.prompt_templates import PROMPT_REGISTRY
-from typing import List
+from typing import List, Optional
 from utils.langchain_helpers import run_langchain_prompt
 from utils.log_utils import get_logger
 
 logger = get_logger(__name__)
 
-async def analyze_daily(messages: List[str], emotions: List[str] = None, prompt_name: str = "daily_nlu") -> dict:
+async def analyze_daily(messages: List[str],
+                        emotions: Optional[List[str]] = None,
+                        prompt_name: str = "daily_nlu") -> dict:
     
     logger.info(f"[analyze_daily][{prompt_name}] messages: {messages}")
     input_vars = {"messages": messages}
