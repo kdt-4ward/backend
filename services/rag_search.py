@@ -127,21 +127,27 @@ async def process_incremental_faiss_embedding(user_id, turns_per_chunk=4):
 
     # 4. embedding
     new_embeddings = []
-    for idx, chunk in enumerate(new_chunks):
-        emb = await get_openai_embedding(chunk["text"])
-        new_embeddings.append(emb)
-        # DB에 embed_index 기록(증분으로 prev_chunk_count + idx)
-        for msg_id in chunk["msg_ids"]:
-            with get_db_session() as db:
-                msg = db.query(AIMessage).filter_by(id=msg_id, user_id=user_id).first()
-                if msg:
-                    msg.embed_index = prev_chunk_count + idx
-                    db.commit()
+    try:
+        for idx, chunk in enumerate(new_chunks):
+            emb = await get_openai_embedding(chunk["text"])
+            new_embeddings.append(emb)
+    except Exception as e:
+        # logger.error(f"Embedding 처리 실패: {e}") # logger 미정
+        return
     
     # 5. Redis에 append 저장 (concat)
     all_chunks = chunks + new_chunks
     all_embeddings_np = np.concatenate([embeddings_np, np.array(new_embeddings).astype("float32")], axis=0)
     RedisFaissChunkCache.save(user_id, all_chunks, all_embeddings_np)
+
+    # 배치 업데이트로 최적화
+    with get_db_session() as db:
+        for idx, chunk in enumerate(new_chunks):
+            for msg_id in chunk["msg_ids"]:
+                msg = db.query(AIMessage).filter_by(id=msg_id, user_id=user_id).first()
+                if msg:
+                    msg.embed_index = prev_chunk_count + idx
+        db.commit()  # 한 번에 커밋
 
 # 3. 검색시: 캐시/DB에서 인덱스/embedding 활용
 async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_per_chunk=4, threshold=1.5):

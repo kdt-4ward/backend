@@ -31,6 +31,29 @@ class PersonaChatBot:
     def get_history(self):
         return self.history_manager.load()
 
+    def get_full_history(self):
+        """DB에서 전체 대화 기록을 가져와서 임베딩용 형태로 반환"""
+        with SessionLocal() as db:
+            # function 메시지 제외하고 전체 메시지 조회
+            messages = (
+                db.query(AIMessage)
+                .filter_by(user_id=self.user_id)
+                .filter(AIMessage.role != "function")
+                .order_by(AIMessage.created_at)
+                .all()
+            )
+            
+            # 임베딩에 필요한 형태로 변환
+            result = []
+            for msg in messages:
+                result.append({
+                    "role": msg.role,
+                    "content": msg.content,
+                    "created_at": msg.created_at,
+                    "id": msg.id,
+                })
+            
+            return result
     def save_history(self, history):
         self.history_manager.save(history)
 
