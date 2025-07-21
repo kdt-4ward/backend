@@ -21,3 +21,4 @@ langdetect
 python-multipart
 bcrypt
 email-validator
+boto3

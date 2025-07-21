@@ -13,8 +13,6 @@ router = APIRouter()
 def save_post(req: PostRequest, db: Session = Depends(get_db_session)):
     print("✅ 받은 요청 데이터:", req.dict())
 
-    # 테스트용 주석처리
-    # couple_id, _ = load_couple_mapping(req.user_id)
     couple_id = req.couple_id
 
     if not couple_id:
@@ -131,5 +129,6 @@ def update_post(post_id: int, req: PostRequest, db: Session = Depends(get_db_ses
             image_order=img.image_order,
         ))
     db.commit()
+
 
     return {"message": "게시글 수정 완료"}

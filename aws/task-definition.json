@@ -19,6 +19,14 @@
                 {
                     "name": "OPENAI_API_KEY",
                     "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/OPENAI_API_KEY"
+                },
+                {
+                    "name": "S3-access-key",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/S3-access-key"
+                },
+                {
+                    "name": "S3-SECRET-ACCESS-KEY",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/S3-SECRET-ACCESS-KEY"
                 }
             ],
             "environment": [
