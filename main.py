@@ -77,6 +77,6 @@ app.include_router(api_router)
 
 # 임시 테스트용 로컬 파일 등록
 # AWS S3에 연결 시 삭제
-from fastapi.staticfiles import StaticFiles
-from routers import upload  
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")  # 정적 파일 서빙
+# from fastapi.staticfiles import StaticFiles
+# from routers import upload  
+# app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")  # 정적 파일 서빙

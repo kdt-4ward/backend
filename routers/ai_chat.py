@@ -128,7 +128,7 @@ async def get_recent_ai_chat_history(
 ):
     """사용자의 최근 AI 채팅 히스토리 조회"""
     try:
-        logger.info(f"[get_recent_ai_chat_history] 요청: user_id={user_id}, days={days}")
+        logger.info(f"[get_recent_ai_chat_history] 요청: user_id={user_id}")
         
         # 최근 N일 계산
         end_date = end_date or datetime.now()
@@ -149,11 +149,6 @@ async def get_recent_ai_chat_history(
             "success": True,
             "data": {
                 "user_id": user_id,
-                "period": {
-                    "start_date": start_date.isoformat(),
-                    "end_date": end_date.isoformat(),
-                    "days": days
-                },
                 "total_messages": len(filtered_messages),
                 "messages": [
                     {
