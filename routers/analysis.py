@@ -53,7 +53,7 @@ async def get_couple_weekly_analysis(
                     "couple_id": result.couple_id,
                     "week_start_date": result.week_start_date.strftime("%Y-%m-%d"),
                     "week_end_date": result.week_end_date.strftime("%Y-%m-%d"),
-                    "result": json.loads(result.result),
+                    "result": json.loads(str(result.result)) if result.result is not None else {},
                     "created_at": result.created_at.isoformat(),
                     "modified_at": result.modified_at.isoformat()
                 }
@@ -192,19 +192,23 @@ async def get_analysis_stats(
         daily_couple_stats = load_daily_couple_stats(db, couple_id, week_dates)
         print("daily_couple_stats 결과",daily_couple_stats)
         weekly_stats = aggregate_weekly_stats(daily_couple_stats)
-        print('weekly_stats 결과',weekly_stats)
-        # INSERT_YOUR_CODE
+        
         # weekly_stats["user_stats"]의 각 user별로, *_횟수 리스트를 sum해서 total로 저장
+        # analyzer_langchain.py의 aggregate_weekly_stats 구조에 맞게 합계 및 샘플 평탄화
         user_stats = weekly_stats.get("user_stats", {})
         new_user_stats = {}
 
         for user_id, stats in user_stats.items():
             new_user_stats[user_id] = {}
-            for key, value in stats.items():
-                if key.endswith("횟수") and isinstance(value, list):
-                    new_user_stats[user_id][key] = sum(value)
-                elif key.endswith("전체샘플") and isinstance(value, list):
-                    new_user_stats[user_id][key] = [sample for samples in value for sample in samples]
+            for stat_key, stat_val in stats.items():
+                # stat_key: affection, empathy, initiative, encouragement, conflict
+                # stat_val: {"count": [...], "samples": [[...], ...]}
+                count_list = stat_val.get("count", [])
+                samples_list = stat_val.get("samples", [])
+                new_user_stats[user_id][stat_key] = {
+                    "total_count": sum(count_list),
+                    "all_samples": [sample for samples in samples_list for sample in samples]
+                }
         weekly_stats["user_stats"] = new_user_stats
 
         return weekly_stats

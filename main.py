@@ -39,7 +39,7 @@ async def on_startup():
     ## test data 삽입
     insert_test_data_to_db()
 
-    # # 유저 성향 분석 (비동기)
+    # 유저 성향 분석 (비동기)
     # from jobs.analysis_personality import run_trait_summary_for_all_users
     # import asyncio
     # try:

@@ -107,11 +107,6 @@ def get_daily_chat_logs_by_couple_id(db: Session, couple_id: str, date: datetime
         Message.created_at < end
     ).order_by(Message.created_at).all()
 
-    print("=====================dialy chat log==============")
-    print(f"couple_id: {couple_id}")
-    print("rows")
-    print(rows)
-    print("=================================================")
     return [
         {"user_id": row.user_id, "content": row.content, "created_at": row.created_at}
         for row in rows

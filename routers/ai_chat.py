@@ -118,21 +118,19 @@ async def chat_with_persona_streaming(req: ChatRequest):
 
         return StreamingResponse(stream_response(), media_type="text/plain")
 
-
-@router.get("/history/{user_id}/recent")
+# GET /chat/history/recent?user_id=user_123&end_date=2024-01-15T14:30:00&limit=50
+@router.get("/history/recent")
 async def get_recent_ai_chat_history(
-    user_id: str,
-    end_date: Optional[str] = None,
+    user_id: str = Query(..., description="유저 ID"),
+    end_date: Optional[str] = Query(None, description="조회 종료 날짜 (YYYY-MM-DDTHH:MM:SS)"),
     limit: Optional[int] = Query(20, description="최대 조회 개수", ge=1, le=500),
     db: Session = Depends(get_session)
 ):
-    """사용자의 최근 AI 채팅 히스토리 조회"""
+    """사용자의 최근 AI 채팅 히스토리 조회 (user_id, end_date를 프론트에서 입력받음)"""
     try:
-        logger.info(f"[get_recent_ai_chat_history] 요청: user_id={user_id}")
-        
-        # 최근 N일 계산
-        end_date = end_date or datetime.now()
-        
+        if not end_date:
+            end_date = datetime.now().isoformat()
+        logger.info(f"[get_recent_ai_chat_history] 요청: user_id={user_id}, end_date={end_date}")
         # 메시지 조회
         messages = db.query(AIMessage).filter(
             AIMessage.user_id == user_id,

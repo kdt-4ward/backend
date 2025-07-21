@@ -23,7 +23,7 @@ class PersonaConfig(Base):
 
     couple_id = Column(String(255), ForeignKey("couples.couple_id"), primary_key=True, index=True)
     persona_name = Column(String(255), default="무민")
-    updated_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 # ================== AI 메시지(챗봇) =================
 class AIMessage(Base):
