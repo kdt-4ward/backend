@@ -7,7 +7,9 @@ logger = get_logger(__name__)
 
 async def analyze_daily(messages: List[str],
                         emotions: Optional[List[str]] = None,
-                        prompt_name: str = "daily_nlu") -> dict:
+                        prompt_name: str = "daily_nlu",
+                        user1_id: Optional[str] = None,
+                        user2_id: Optional[str] = None) -> dict:
     
     logger.info(f"[analyze_daily][{prompt_name}] messages: {messages}")
     input_vars = {"messages": messages}
@@ -15,6 +17,12 @@ async def analyze_daily(messages: List[str],
     if emotions is not None:
         logger.info(f"[analyze_daily][{prompt_name}] emotions: {emotions}")
         input_vars["emotions"] = emotions
+    
+    # 사용자 이름 매개변수 추가
+    if user1_id:
+        input_vars["user1_id"] = user1_id
+    if user2_id:
+        input_vars["user2_id"] = user2_id
 
     return await run_langchain_prompt(
         PROMPT_REGISTRY[prompt_name], 

@@ -7,7 +7,12 @@ BASE_URL = f"mysql+pymysql://{settings.db_user}:{settings.db_password}@{settings
 DATABASE_URL = f"{BASE_URL}{settings.db_name}?charset=utf8mb4"
 
 # SQLAlchemy 엔진 및 세션
-engine = create_engine(DATABASE_URL, echo=False)
+engine = create_engine(DATABASE_URL, 
+pool_size=10,
+max_overflow=20,
+pool_timeout=30,
+pool_recycle=1800,
+echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_engine():

@@ -1,5 +1,6 @@
 import datetime
 from utils.log_utils import get_logger
+from db.crud import get_users_by_couple_id
 
 logger = get_logger(__name__)
 
@@ -36,7 +37,19 @@ class DailyAnalyzer(BaseAnalyzer):
         self.db = db
 
     async def run(self, target_id, date):
+        """
+        param:
+            target_id: 분석 대상 커플 id
+            date: 분석 날짜
+        """
+        if self.prompt_name == "daily_ai_nlu":
+            user1_id = target_id
+            user2_id = None
+        else:
+            user1_id, user2_id = get_users_by_couple_id(self.db, target_id)
+
         chat_logs = self.chat_fetch_func(self.db, target_id, date)
+
         emotion_logs = None
         if self.emotion_fetch_func is not None:
             emotion_logs = self.emotion_fetch_func(self.db, target_id, date)
@@ -52,7 +65,7 @@ class DailyAnalyzer(BaseAnalyzer):
                 for c in chat_logs
             ]
             try:
-                result = await self.analyze_func(messages, self.prompt_name)
+                result = await self.analyze_func(messages, prompt_name=self.prompt_name, user1_id=user1_id, user2_id=user2_id)
                 self.save_func(self.db, target_id, date, result)
                 logger.info(f"[DailyAnalyzer] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 분석 저장 완료")
             except Exception as e:
@@ -70,7 +83,7 @@ class DailyAnalyzer(BaseAnalyzer):
             if emotion_logs:
                 emotions = [f"{e['user_id']} :{e['emotion']} - {e['memo']} [{e['recorded_at']}]" for e in emotion_logs]
             try:
-                result = await self.analyze_func(messages, emotions, self.prompt_name)
+                result = await self.analyze_func(messages, emotions=emotions, prompt_name=self.prompt_name, user1_id=user1_id, user2_id=user2_id)
                 self.save_func(self.db, target_id, date, result)
                 logger.info(f"[DailyAnalyzer] {target_id}의 {(date - datetime.timedelta(days=1)).date()} 비교 분석 저장 완료")
             except Exception as e:
@@ -98,29 +111,29 @@ class WeeklyAnalyzer:
         daily_user2_stats = self.load_daily_ai_stats_func(self.db, user2_id, week_dates)
 
         if not daily_couple_stats and not daily_user1_stats and not daily_user2_stats:
-            logger.warning(f"[WeeklyAnalyzer] {couple_id} - 데이터 부족으로 분석 스킵")
+            logger.warning(f"[WeeklyAnalyzer] couple_id: {couple_id} - 데이터 부족으로 분석 스킵")
             return
 
         if not daily_couple_stats:
-            logger.warning(f"[WeeklyAnalyzer] {couple_id} - couple chat 데이터 부족으로 분석 스킵")
+            logger.warning(f"[WeeklyAnalyzer] couple_id: {couple_id} - couple chat 데이터 부족으로 분석 스킵")
             couple_weekly = {"result": "데이터 부족 분석 스킵"}
         else:
             couple_weekly = aggregate_weekly_stats(daily_couple_stats)
 
         if not daily_user1_stats:
-            logger.warning(f"[WeeklyAnalyzer] {couple_id} - {user1_id} 님의 AI chat 데이터 부족으로 분석 스킵")
+            logger.warning(f"[WeeklyAnalyzer] couple_id: {couple_id} - user1_id: {user1_id} 님의 AI chat 데이터 부족으로 분석 스킵")
             user1_ai_weekly = {"result": "데이터 부족 분석 스킵"}
         else:
             user1_ai_weekly = aggregate_weekly_ai_stats_by_day(daily_user1_stats)
         
         if not daily_user2_stats:
-            logger.warning(f"[WeeklyAnalyzer] {couple_id} - {user2_id} 님의 AI chat 데이터 부족으로 분석 스킵")
+            logger.warning(f"[WeeklyAnalyzer] couple_id: {couple_id} - user2_id: {user2_id} 님의 AI chat 데이터 부족으로 분석 스킵")
             user2_ai_weekly = {"result": "데이터 부족 분석 스킵"}
         else:
             user2_ai_weekly = aggregate_weekly_ai_stats_by_day(daily_user2_stats)
 
-        pipeline = WeeklyAnalysisPipeline()
-        result = await pipeline.analyze(couple_weekly, user1_ai_weekly, user2_ai_weekly)
+        pipeline = WeeklyAnalysisPipeline(self.db)
+        result = await pipeline.analyze(couple_weekly, user1_ai_weekly, user2_ai_weekly, couple_id, user1_id, user2_id)
 
-        self.save_func(couple_id, user1_id, user2_id, result)
-        logger.info(f"[WeeklyAnalyzer] {couple_id} 주간 분석 완료")
+        await self.save_func(couple_id, user1_id, user2_id, result)
+        logger.info(f"[WeeklyAnalyzer] couple_id: {couple_id} 주간 분석 완료")

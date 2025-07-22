@@ -78,10 +78,19 @@ class CoupleWeeklyRecommendation(Base):
     week_start_date = Column(DateTime, nullable=False)
     week_end_date = Column(DateTime, nullable=False)
 
-    advice = Column(Text, nullable=False)  # 조언
-    content_type = Column(String(50))      # 예: "영화", "플레이리스트"
-    content_title = Column(String(255))
-    content_reason = Column(Text)
+    advice = Column(Text, nullable=False)  # 조언/솔루션
+    
+    # 기본 song 정보
+    song_title = Column(String(255), nullable=True)
+    song_reason = Column(Text, nullable=True)
+    
+    # 기본 movie 정보  
+    movie_title = Column(String(255), nullable=True)
+    movie_reason = Column(Text, nullable=True)
+
+    # 강화된 정보 (TMDB, YouTube API 정보)
+    enhanced_song_data = Column(Text, nullable=True)  # JSON string - YouTube API 정보
+    enhanced_movie_data = Column(Text, nullable=True)  # JSON string - TMDB API 정보
 
     created_at = Column(DateTime, default=datetime.utcnow)
 
