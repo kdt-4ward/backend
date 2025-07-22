@@ -22,3 +22,5 @@ python-multipart
 bcrypt
 email-validator
 aiohttp
+boto3
+

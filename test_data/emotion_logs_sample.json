@@ -3,7 +3,7 @@
     "emotion_id": 1,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "고마움",
+    "emotion": "1",
     "detail_emotions": [
       "고마움",
       "기대감"
@@ -17,7 +17,7 @@
     "emotion_id": 2,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "미안함",
+    "emotion": "6",
     "detail_emotions": [
       "미안함",
       "죄책감"
@@ -31,7 +31,7 @@
     "emotion_id": 3,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "사랑",
+    "emotion": "7",
     "detail_emotions": [
       "사랑",
       "다정함"
@@ -45,7 +45,7 @@
     "emotion_id": 4,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "친밀감",
+    "emotion": "8",
     "detail_emotions": [
       "친밀감"
     ],
@@ -58,7 +58,7 @@
     "emotion_id": 5,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "억울함",
+    "emotion": "9",
     "detail_emotions": [
       "억울함",
       "서운함"
@@ -72,7 +72,7 @@
     "emotion_id": 6,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "행복",
+    "emotion": "5",
     "detail_emotions": [
       "행복",
       "감사"
@@ -86,7 +86,7 @@
     "emotion_id": 7,
     "user_id": "1",
     "couple_id": "1",
-    "emotion": "신뢰",
+    "emotion": "4",
     "detail_emotions": [
       "신뢰",
       "애정"
@@ -100,7 +100,7 @@
     "emotion_id": 8,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "의지",
+    "emotion": "4",
     "detail_emotions": [
       "의지",
       "바쁨"
@@ -114,7 +114,7 @@
     "emotion_id": 9,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "서운함",
+    "emotion": "9",
     "detail_emotions": [
       "서운함",
       "실망감"
@@ -128,7 +128,7 @@
     "emotion_id": 10,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "이해",
+    "emotion": "2",
     "detail_emotions": [
       "이해",
       "다정함"
@@ -142,7 +142,7 @@
     "emotion_id": 11,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "호감",
+    "emotion": "6",
     "detail_emotions": [
       "호감",
       "편안함"
@@ -156,7 +156,7 @@
     "emotion_id": 12,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "기대감",
+    "emotion": "4",
     "detail_emotions": [
       "기대감",
       "불만"
@@ -170,7 +170,7 @@
     "emotion_id": 13,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "기쁨",
+    "emotion": "5",
     "detail_emotions": [
       "기쁨",
       "감동"
@@ -184,7 +184,7 @@
     "emotion_id": 14,
     "user_id": "2",
     "couple_id": "1",
-    "emotion": "사랑",
+    "emotion": "7",
     "detail_emotions": [
       "사랑",
       "안정감"

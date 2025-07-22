@@ -113,14 +113,16 @@ async def get_analysis_stats(
     try:
         # 총 분석 횟수
         end_date = end_date or datetime.now()
-        week_dates = [end_date - timedelta(days=i) for i in range(7)]
+        week_dates = [end_date - timedelta(days=i) for i in reversed(range(7))]
         daily_couple_stats = load_daily_couple_stats(db, couple_id, week_dates)
+        print("daily_couple_stats 결과",daily_couple_stats)
         weekly_stats = aggregate_weekly_stats(daily_couple_stats)
         
         # weekly_stats["user_stats"]의 각 user별로, *_횟수 리스트를 sum해서 total로 저장
         # analyzer_langchain.py의 aggregate_weekly_stats 구조에 맞게 합계 및 샘플 평탄화
         user_stats = weekly_stats.get("user_stats", {})
         new_user_stats = {}
+
         for user_id, stats in user_stats.items():
             new_user_stats[user_id] = {}
             for stat_key, stat_val in stats.items():

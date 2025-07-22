@@ -46,7 +46,8 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
-
+        extra = "allow"
+        
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._api_key_list = [k.strip() for k in self.openai_api_key.split(",") if k.strip()]
