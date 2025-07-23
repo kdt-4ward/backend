@@ -15,7 +15,6 @@ def build_trait_prompt(responses: list[dict], user_name: str = "User") -> str:
     trait_list = "\n".join(trait_lines)
     
     return PROMPT_REGISTRY["user_trait_summary_prompt"].format(
-        user_name=user_name,
         trait_list=trait_list
     )
 
@@ -31,6 +30,8 @@ async def summarize_personality_from_tags(responses: list[dict], user_name: str 
         messages=[
             {"role": "user", "content": prompt}
         ],
+        temperature=0.5,
+        max_tokens=1024
     )
     # 응답 파싱 (최신 openai 라이브러리 기준)
-    return completion.choices[0].message.content.strip()
+    return completion.choices[0].message.content.strip() if completion.choices[0].message.content else ""

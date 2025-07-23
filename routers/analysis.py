@@ -6,19 +6,12 @@ import json
 
 from db.db import get_session
 from db.db_tables.analysis import (
-    AIDailyAnalysisResult,
-    CoupleDailyAnalysisResult,
-    DailyComparisonAnalysisResult,
     CoupleWeeklyAnalysisResult,
     CoupleWeeklyRecommendation,
-    CoupleWeeklyComparisonResult,
-    UserTraitSummary,
-    WeeklySolution
 )
 
-from db.crud import load_daily_couple_stats
-from db.db_tables.user import User
-from db.db_tables.couple import Couple
+from db.crud import load_daily_couple_stats, get_user_name, get_users_by_couple_id
+from utils.user_mapping import replace_user_ids_with_names
 from services.ai.analyzer import aggregate_weekly_stats
 
 
@@ -26,10 +19,9 @@ router = APIRouter()
 
 # ==================== 주간 분석 결과 ====================
 
-@router.get("/weekly/couple/{couple_id}")
+@router.get("/weekly/couple/analysis/{couple_id}")
 async def get_couple_weekly_analysis(
     couple_id: str,
-    start_date: Optional[date] = Query(None, description="주 시작 날짜 (YYYY-MM-DD)"),
     end_date: Optional[date] = Query(None, description="주 종료 날짜 (YYYY-MM-DD)"),
     db: Session = Depends(get_session)
 ):
@@ -39,67 +31,92 @@ async def get_couple_weekly_analysis(
             CoupleWeeklyAnalysisResult.couple_id == couple_id
         )
         
-        if start_date:
-            query = query.filter(CoupleWeeklyAnalysisResult.week_start_date >= start_date)
         if end_date:
             query = query.filter(CoupleWeeklyAnalysisResult.week_end_date <= end_date)
             
-        results = query.order_by(CoupleWeeklyAnalysisResult.week_start_date.desc()).all()
+        result = query.order_by(CoupleWeeklyAnalysisResult.week_start_date.desc()).first()
+        if result is None:
+            return {
+                "success": True,
+                "data": None
+            }
         
+        analysis_result = json.loads(str(result.result)) if result.result is not None else {}
+
+        if analysis_result:
+            user1_id, user2_id = get_users_by_couple_id(db, couple_id)
+            if user1_id and user2_id:  # None 체크 추가
+                user1_name = get_user_name(db, user1_id)
+                user2_name = get_user_name(db, user2_id)
+                
+                # positive_points와 negative_points가 리스트인 경우 각 항목을 처리
+                if isinstance(analysis_result.get("positive_points"), list):
+                    analysis_result["positive_points"] = [
+                        replace_user_ids_with_names(str(point), user1_id, user1_name, user2_id, user2_name)
+                        for point in analysis_result["positive_points"]
+                    ]
+                else:
+                    analysis_result["positive_points"] = replace_user_ids_with_names(str(analysis_result["positive_points"]), user1_id, user1_name, user2_id, user2_name)
+                
+                if isinstance(analysis_result.get("negative_points"), list):
+                    analysis_result["negative_points"] = [
+                        replace_user_ids_with_names(str(point), user1_id, user1_name, user2_id, user2_name)
+                        for point in analysis_result["negative_points"]
+                    ]
+                else:
+                    analysis_result["negative_points"] = replace_user_ids_with_names(str(analysis_result["negative_points"]), user1_id, user1_name, user2_id, user2_name)
+                
+                analysis_result["summary"] = replace_user_ids_with_names(str(analysis_result["summary"]), user1_id, user1_name, user2_id, user2_name)
+
         return {
             "success": True,
-            "data": [
-                {
-                    "id": result.id,
-                    "couple_id": result.couple_id,
-                    "week_start_date": result.week_start_date.strftime("%Y-%m-%d"),
-                    "week_end_date": result.week_end_date.strftime("%Y-%m-%d"),
-                    "result": json.loads(str(result.result)) if result.result is not None else {},
-                    "created_at": result.created_at.isoformat(),
-                    "modified_at": result.modified_at.isoformat()
-                }
-                for result in results
-            ]
+            "data": {
+                "week_start_date": result.week_start_date.strftime("%Y-%m-%d"),
+                "week_end_date": result.week_end_date.strftime("%Y-%m-%d"),
+                "result": analysis_result,
+                "created_at": result.created_at.isoformat(),
+            }
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"커플 주간 분석 조회 실패: {str(e)}")
 
-@router.get("/weekly/comparison/{couple_id}")
-async def get_weekly_comparison_analysis(
+@router.get("/weekly/couple/solution/{couple_id}")
+async def get_couple_weekly_solution(
     couple_id: str,
-    start_date: Optional[date] = Query(None, description="주 시작 날짜 (YYYY-MM-DD)"),
     end_date: Optional[date] = Query(None, description="주 종료 날짜 (YYYY-MM-DD)"),
     db: Session = Depends(get_session)
 ):
-    """주간 비교 분석 결과 조회 (AI vs 커플 채팅)"""
+    """커플 주간 솔루션 조회"""
     try:
-        query = db.query(CoupleWeeklyComparisonResult).filter(
-            CoupleWeeklyComparisonResult.couple_id == couple_id
-        )
+        result = db.query(CoupleWeeklyRecommendation).filter(
+            CoupleWeeklyRecommendation.couple_id == couple_id
+        ).filter(
+            CoupleWeeklyRecommendation.week_end_date <= end_date
+        ).order_by(CoupleWeeklyRecommendation.week_start_date.desc()).first()
+
+        if result is None:
+            return {
+                "success": True,
+                "data": None
+            }
         
-        if start_date:
-            query = query.filter(CoupleWeeklyComparisonResult.week_start_date >= start_date)
-        if end_date:
-            query = query.filter(CoupleWeeklyComparisonResult.week_end_date <= end_date)
-            
-        results = query.order_by(CoupleWeeklyComparisonResult.week_start_date.desc()).all()
-        
+        user1_id, user2_id = get_users_by_couple_id(db, couple_id)
+        user1_name = get_user_name(db, user1_id)
+        user2_name = get_user_name(db, user2_id)
+
+        cleaned_advice = replace_user_ids_with_names(str(result.advice), user1_id, user1_name, user2_id, user2_name)
+
         return {
             "success": True,
-            "data": [
-                {
-                    "id": result.id,
-                    "couple_id": result.couple_id,
-                    "week_start_date": result.week_start_date.strftime("%Y-%m-%d"),
-                    "week_end_date": result.week_end_date.strftime("%Y-%m-%d"),
-                    "comparison": result.comparison,
-                    "created_at": result.created_at.isoformat()
-                }
-                for result in results
-            ]
+            "data": {
+                "week_start_date": result.week_start_date.strftime("%Y-%m-%d"),
+                "week_end_date": result.week_end_date.strftime("%Y-%m-%d"),
+                "advice": cleaned_advice,
+                "created_at": result.created_at.isoformat(),
+            }
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"주간 비교 분석 조회 실패: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"커플 주간 분석 조회 실패: {str(e)}")
 
 # ==================== 분석 통계 ====================
 
