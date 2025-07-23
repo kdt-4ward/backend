@@ -37,6 +37,12 @@ class Settings(BaseSettings):
     access_token_expire_seconds: int = Field(..., env="ACCESS_TOKEN_EXPIRE_SECONDS")
     refresh_token_expire_seconds: int = Field(..., env="REFRESH_TOKEN_EXPIRE_SECONDS")
 
+    # === TMDB ===
+    tmdb_api_key: str = Field(..., env="TMDB_API_KEY")
+
+    # === YouTube ===
+    youtube_api_key: str = Field(..., env="YOUTUBE_API_KEY")
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

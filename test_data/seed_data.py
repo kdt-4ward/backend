@@ -181,4 +181,14 @@ def insert_test_data_to_db():
     db.add_all(messages)
     db.commit()
     print("✅ Seed data successfully inserted.")
+
+    users = db.query(User).all()
+    for user in users:
+        print(user.user_id)
+        print(user.name)
+        print(user.gender)
+        print(user.created_at)
+        print(user.profile_image)
+        print(user.email)
+        print(user.birth)
     

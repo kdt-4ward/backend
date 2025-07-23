@@ -23,15 +23,13 @@ async def run_all_weekly_analyses(start_date=None):
         start_date = datetime.today().date() - timedelta(days=7)
     week_dates = get_week_dates(start_date)
 
-    # 분석기 생성
+    # 분석기 생성 - 더 깔끔한 방법
     saver = WeeklyResultSaver(db_session=session, week_dates=week_dates)
     analyzer = WeeklyAnalyzer(
         db=session,
         load_daily_couple_stats_func=load_daily_couple_stats,
         load_daily_ai_stats_func=load_daily_ai_stats,
-        save_func=lambda c_id, u1, u2, result: saver.save(
-            c_id, u1, u2, result
-        )
+        save_func=saver.save  # 직접 비동기 메서드 전달
     )
 
     # 모든 커플에 대해 실행

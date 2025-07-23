@@ -21,6 +21,7 @@ from db.db_tables.user import User
 from db.db_tables.couple import Couple
 from services.ai.analyzer import aggregate_weekly_stats
 
+
 router = APIRouter()
 
 # ==================== 주간 분석 결과 ====================
@@ -99,82 +100,6 @@ async def get_weekly_comparison_analysis(
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"주간 비교 분석 조회 실패: {str(e)}")
-
-@router.get("/weekly/recommendations/{couple_id}")
-async def get_weekly_recommendations(
-    couple_id: str,
-    start_date: Optional[date] = Query(None, description="주 시작 날짜 (YYYY-MM-DD)"),
-    end_date: Optional[date] = Query(None, description="주 종료 날짜 (YYYY-MM-DD)"),
-    db: Session = Depends(get_session)
-):
-    """주간 추천 컨텐츠 조회"""
-    try:
-        query = db.query(CoupleWeeklyRecommendation).filter(
-            CoupleWeeklyRecommendation.couple_id == couple_id
-        )
-        
-        if start_date:
-            query = query.filter(CoupleWeeklyRecommendation.week_start_date >= start_date)
-        if end_date:
-            query = query.filter(CoupleWeeklyRecommendation.week_end_date <= end_date)
-            
-        results = query.order_by(CoupleWeeklyRecommendation.week_start_date.desc()).all()
-        
-        return {
-            "success": True,
-            "data": [
-                {
-                    "id": result.id,
-                    "couple_id": result.couple_id,
-                    "week_start_date": result.week_start_date.strftime("%Y-%m-%d"),
-                    "week_end_date": result.week_end_date.strftime("%Y-%m-%d"),
-                    "advice": result.advice,
-                    "content_type": result.content_type,
-                    "content_title": result.content_title,
-                    "content_reason": result.content_reason,
-                    "created_at": result.created_at.isoformat()
-                }
-                for result in results
-            ]
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"주간 추천 조회 실패: {str(e)}")
-
-
-@router.get("/user/weekly-solutions/{user_id}")
-async def get_user_weekly_solutions(
-    user_id: str,
-    start_date: Optional[date] = Query(None, description="시작 날짜 (YYYY-MM-DD)"),
-    end_date: Optional[date] = Query(None, description="종료 날짜 (YYYY-MM-DD)"),
-    db: Session = Depends(get_session)
-):
-    """사용자 주간 솔루션 조회"""
-    try:
-        query = db.query(WeeklySolution).filter(
-            WeeklySolution.user_id == user_id
-        )
-        
-        if start_date:
-            query = query.filter(WeeklySolution.created_at >= start_date)
-        if end_date:
-            query = query.filter(WeeklySolution.created_at <= end_date)
-            
-        results = query.order_by(WeeklySolution.created_at.desc()).all()
-        
-        return {
-            "success": True,
-            "data": [
-                {
-                    "id": result.id,
-                    "user_id": result.user_id,
-                    "content": result.content,
-                    "created_at": result.created_at.isoformat()
-                }
-                for result in results
-            ]
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"사용자 주간 솔루션 조회 실패: {str(e)}")
 
 # ==================== 분석 통계 ====================
 

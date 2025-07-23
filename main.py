@@ -35,11 +35,12 @@ create_database_if_not_exists()
 @app.on_event("startup")
 async def on_startup():
     create_database_if_not_exists()
-    ## =============== 배포시 삭제 ==================== ##
-    ## test data 삽입
-    insert_test_data_to_db()
+    # =============== 배포시 삭제 ==================== ##
+    # test data 삽입
+    # insert_test_data_to_db()
 
-    # 유저 성향 분석 (비동기)
+    # # 유저 성향 분석 (비동기)
+
     # from jobs.analysis_personality import run_trait_summary_for_all_users
     # import asyncio
     # try:
@@ -54,10 +55,11 @@ async def on_startup():
     #     logging.error(f"유저 couple chat 분석 실패: {e}")
 
     # from jobs.weekly_analysis import test_run_seven_days_analysis
-    # try:
-    #     await test_run_seven_days_analysis()
-    #     logging.info("주간 분석 완료")
-    # except Exception as e:
+
+    # # try:
+    # await test_run_seven_days_analysis()
+    # #     logging.info("주간 분석 완료")
+    # # except Exception as e:
     #     logging.error(f"주간 분석 실패: {e}")
     
 
