@@ -200,13 +200,14 @@ async def openai_stream_with_function_call(
                 logger.warning(f"[WARN] function_call arguments 파싱 실패: {arguments_collected} | {e}")
                 args = {}
 
-            if "query" not in args:
+            if function_name == "search_past_chats" and "query" not in args:
                 logger.warning(f"[function_call] 'query' 인자가 없음 → 사용자 입력으로 대체")
                 args["query"] = history[-1]["content"]
+            
             # 🔧 function 실행
             result = await function_map[function_name](**args)
             function_msg_id = bot.save_to_db(bot.user_id, "function", json.dumps(result, ensure_ascii=False)) if bot else len(history)
-
+    
             history.append({
                 "role": "function",
                 "name": function_name,
