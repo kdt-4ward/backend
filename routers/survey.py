@@ -5,6 +5,8 @@ from db.db_tables import UserSurveyResponse, SurveyQuestion, SurveyChoice
 from models.schema import SurveyResponseInput
 from datetime import datetime
 from typing import List
+from jobs.analysis_personality import analyze_and_save_user_trait_summary
+import asyncio
 
 router = APIRouter()
 
@@ -53,6 +55,7 @@ def submit_survey_response(data_list: List[SurveyResponseInput], db: Session = D
         db.commit()
         db.refresh(response)
         # 성공적으로 다 저장된 경우에만!
+        asyncio.create_task(analyze_and_save_user_trait_summary(db, data_list[0].user_id))
         return {"message": "설문 응답이 저장되었습니다.", "user_id": data_list[0].user_id}
     
     except Exception as e:

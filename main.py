@@ -58,9 +58,9 @@ async def on_startup():
 
     # # try:
     # await test_run_seven_days_analysis()
-    # #     logging.info("주간 분석 완료")
-    # # except Exception as e:
-    #     logging.error(f"주간 분석 실패: {e}")
+    #     logging.info("주간 분석 완료")
+    # except Exception as e:
+        # logging.error(f"주간 분석 실패: {e}")
     
 
 # DB 테이블 생성
