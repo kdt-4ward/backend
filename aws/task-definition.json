@@ -27,6 +27,14 @@
                 {
                     "name": "S3-SECRET-ACCESS-KEY",
                     "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/S3-SECRET-ACCESS-KEY"
+                },
+                {
+                    "name": "TMDB_API_KEY"
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/TMDB_API_KEY"
+                },
+                {
+                    "name": "YOUTUBE_API_KEY"
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/YOUTUBE_API_KEY"
                 }
             ],
             "environment": [
