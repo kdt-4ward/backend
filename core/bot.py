@@ -177,4 +177,4 @@ def should_trigger_summary(turns: list[list[dict]], token_threshold: int = 2500,
     total_tokens = sum(
         count_tokens(msg["content"]) for turn in turns for msg in turn
     )
-    return len(turns) >= turn_threshold and total_tokens >= token_threshold
+    return len(turns) >= turn_threshold or total_tokens >= token_threshold
