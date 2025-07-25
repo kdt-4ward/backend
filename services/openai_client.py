@@ -260,5 +260,5 @@ def filter_for_openai(history: list) -> list:
             msg['role'] = "function"
             msg["name"] = "chat_summarizer"
         assert msg.get("role") in ("system", "user", "assistant", "function"), msg
-        assert isinstance(msg.get("content"), str), msg
+        assert isinstance(msg.get("content", ""), str), msg
     return openai_inputs
