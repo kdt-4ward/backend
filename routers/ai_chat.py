@@ -40,14 +40,19 @@ async def chat_with_persona(req: ChatRequest):
         function_map = build_function_map()
 
         user_msg_id = bot.save_to_db(req.user_id, "user", req.message)
-        history = bot.get_history()
+        
+        # 저장된 대화 기록 로드 (system prompt 제외)
+        history = await bot.get_history()
         history.append({"role": "user", "content": req.message, "id": user_msg_id})
-        bot.save_history(history)
+        await bot.history_manager.save(history)  # await 추가
+        
+        # OpenAI API 호출용 전체 히스토리 생성 (system prompt 포함)
+        full_history = await bot.get_full_history_for_openai(user_message=req.message)  # await 추가
         
         try:
-            logger.info(f"[chat_with_persona] OpenAI 호출 시작: user_id={req.user_id}, history_len={len(history)}")
+            logger.info(f"[chat_with_persona] OpenAI 호출 시작: user_id={req.user_id}, history_len={len(full_history)}")
             response = await openai_completion_with_function_call(
-                history,
+                full_history,  # system prompt가 포함된 전체 히스토리 사용
                 functions=functions,
                 function_map=function_map,
                 bot=bot
@@ -63,7 +68,7 @@ async def chat_with_persona(req: ChatRequest):
         # assistant 응답 저장
         assistant_msg_id = bot.save_to_db(req.user_id, "assistant", response)
         history.append({"role": "assistant", "content": response, "id": assistant_msg_id})
-        bot.save_history(history)
+        await bot.history_manager.save(history)  # await 추가
 
         # celery 사용 : 메인 프로세스 부하 줄여주기 (비동기 분산 처리)
         # run_check_and_summarize.delay(req.user_id)
@@ -71,8 +76,8 @@ async def chat_with_persona(req: ChatRequest):
 
         asyncio.create_task(bot.check_and_summarize_if_needed())
         asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
-        logger.info(f"[chat_with_persona] 응답 완료: user_id={req.user_id}, msg_id={assistant_msg_id}")
-        return PlainTextResponse(response)
+
+        return {"response": response}
 
 @router.post("/stream", response_class=StreamingResponse)
 async def chat_with_persona_streaming(req: ChatRequest):
@@ -87,16 +92,21 @@ async def chat_with_persona_streaming(req: ChatRequest):
         function_map = build_function_map(req.user_id, bot.couple_id)
 
         user_msg_id = bot.save_to_db(req.user_id, "user", req.message)
-        history = bot.get_history()
+        
+        # 저장된 대화 기록 로드 (system prompt 제외)
+        history = await bot.get_history()
         history.append({"role": "user", "content": req.message, "id": user_msg_id})
-        bot.save_history(history)
+        await bot.history_manager.save(history)  # await 추가
+        
+        # OpenAI API 호출용 전체 히스토리 생성 (system prompt 포함)
+        full_history = await bot.get_full_history_for_openai(user_message=req.message)  # await 추가
 
         async def stream_response():
             collected = ""  # 🔥 조립용 변수
             try:
-                logger.info(f"[chat_with_persona] GPT 스트리밍 호출 시작: user_id={req.user_id}, history_len={len(history)}")
+                logger.info(f"[chat_with_persona] GPT 스트리밍 호출 시작: user_id={req.user_id}, history_len={len(full_history)}")
                 async for chunk in openai_stream_with_function_call(
-                    history=history,
+                    history=full_history,  # system prompt가 포함된 전체 히스토리 사용
                     functions=functions,
                     function_map=function_map,
                     bot=bot
@@ -104,7 +114,7 @@ async def chat_with_persona_streaming(req: ChatRequest):
                     collected += chunk
                     yield chunk
                 
-                logger.info(f"[chat_with_persona] GPT 스트리밍 완료: user_id={req.user_id}")
+                logger.info(f"[chat_with_persona] GPT 스트리밍 완료: user_id={req.user_id}")  # await 추가
 
                 # 후작업 비동기
                 asyncio.create_task(bot.check_and_summarize_if_needed())

@@ -203,8 +203,14 @@ JSON 형식으로 응답해주세요:
             
             if existing_response:
                 logger.warning(f"[SurveyManager] 사용자 {user_id}의 질문 {question_id}에 대한 응답이 이미 존재합니다.")
-                return False
-            
+                if existing_response.custom_input is None and existing_response.choice_id == choice_id:
+                    logger.info(f"[SurveyManager] 사용자 {user_id}의 질문 {question_id}에 대한 응답이 이미 존재하고 같은 선택지입니다.")
+                    return False
+                else:
+                    logger.info(f"[SurveyManager] 사용자 {user_id}의 질문 {question_id}에 대한 응답이 이미 존재하고 다른 선택지입니다. 삭제하고 새로 저장합니다.")
+                    self.db.delete(existing_response)
+                    self.db.commit()
+                    
             # 새로운 응답 저장
             response = UserSurveyResponse(
                 user_id=user_id,

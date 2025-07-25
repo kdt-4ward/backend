@@ -24,12 +24,21 @@ class PersonaChatBot:
         self.history_manager = AIChatHistoryManager(
             user_id=self.user_id,
             couple_id=self.couple_id,
-            prompt_provider=self.prompt_provider.get,
+            prompt_provider=self._get_prompt_provider,
             summary_provider=self.summary_provider.get
         )
 
-    def get_history(self):
-        return self.history_manager.load()
+    async def _get_prompt_provider(self, user_message: str = None) -> dict:
+        """비동기 프롬프트 제공자"""
+        return await self.prompt_provider.get(user_message)
+
+    async def get_history(self):
+        """저장된 대화 기록만 반환 (system prompt 제외)"""
+        return await self.history_manager.load()
+
+    async def get_full_history_for_openai(self, user_message: str = None):
+        """OpenAI API 호출용 전체 히스토리 (system prompt 포함) - 비동기 버전"""
+        return await self.history_manager.get_full_history_for_openai(user_message)
 
     def get_full_history(self):
         """DB에서 전체 대화 기록을 가져와서 임베딩용 형태로 반환"""
@@ -49,11 +58,11 @@ class PersonaChatBot:
                 result.append({
                     "role": msg.role,
                     "content": msg.content,
-                    "created_at": msg.created_at,
                     "id": msg.id,
+                    "name": msg.name if hasattr(msg, 'name') else None
                 })
-            
             return result
+
     def save_history(self, history):
         self.history_manager.save(history)
 
@@ -76,14 +85,15 @@ class PersonaChatBot:
             raise ValueError(f"[PersonaChatBot] user_id={self.user_id}로 couple_id를 찾을 수 없습니다. 커플 매핑이 필요합니다.")
         return couple_id
 
-    def save_to_db(self, user_id, role, content):
+    def save_to_db(self, user_id, role, content, name=None):
         with SessionLocal() as db:
             ai_msg = AIMessage(
                 user_id=user_id,
                 couple_id=self.couple_id,
                 role=role,
                 content=content,
-                created_at=datetime.utcnow()
+                created_at=datetime.utcnow(),
+                name=name
             )
             db.add(ai_msg)
             db.commit()
@@ -107,7 +117,7 @@ class PersonaChatBot:
         if not acquire_lock(f"lock:summarize:{self.user_id}"):
             return
         try:
-            history = self.get_history()
+            history = await self.get_history()
             # 'system', 'summary' 제외
             filtered = [h for h in history if h["role"] not in (Role.SYSTEM, Role.SUMMARY)]
 

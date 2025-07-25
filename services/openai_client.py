@@ -206,7 +206,7 @@ async def openai_stream_with_function_call(
             
             # 🔧 function 실행
             result = await function_map[function_name](**args)
-            function_msg_id = bot.save_to_db(bot.user_id, "function", json.dumps(result, ensure_ascii=False)) if bot else len(history)
+            function_msg_id = bot.save_to_db(bot.user_id, "function", json.dumps(result, ensure_ascii=False), name=function_name) if bot else len(history)
     
             history.append({
                 "role": "function",
@@ -260,5 +260,5 @@ def filter_for_openai(history: list) -> list:
             msg['role'] = "function"
             msg["name"] = "chat_summarizer"
         assert msg.get("role") in ("system", "user", "assistant", "function"), msg
-        assert isinstance(msg.get("content", ""), str), msg
+        assert isinstance(msg.get("content"), str), msg
     return openai_inputs
