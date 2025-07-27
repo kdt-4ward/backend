@@ -1,0 +1,1633 @@
+[
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "일어났어?",
+      "created_at": "2025-07-28T07:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "오늘 1교시 수업있잖아",
+      "created_at": "2025-07-28T07:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "일어났어ㅠㅠ 그 수업 꼭 가야돼?",
+      "created_at": "2025-07-28T07:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "완전 이불이 나 붙잡고 있어",
+      "created_at": "2025-07-28T07:55:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "ㅋㅋㅋㅋㅋ얼른 준비해",
+      "created_at": "2025-07-28T08:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "알겠어 ㅋㅋㅋ",
+      "created_at": "2025-07-28T08:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "세수는 했고… 옷 뭐 입지ㅠㅠ",
+      "created_at": "2025-07-28T08:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "저번에 나랑 가서 산 스커트입어",
+      "created_at": "2025-07-28T08:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오 그거!",
+      "created_at": "2025-07-28T08:22:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "딱이다 오늘 분위기랑",
+      "created_at": "2025-07-28T08:22:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "수업 끝나고 아침 꼭 먹고",
+      "created_at": "2025-07-28T08:25:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응응",
+      "created_at": "2025-07-28T08:25:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알았어 준비해 이따 톡할게",
+      "created_at": "2025-07-28T08:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응~ 오빠도 잘 다녀와",
+      "created_at": "2025-07-28T08:31:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "이따 톡해!",
+      "created_at": "2025-07-28T08:31:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "밥 먹었어?",
+      "created_at": "2025-07-28T13:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나 지금 학식 줄 서있어 ㅋㅋ",
+      "created_at": "2025-07-28T13:34:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오늘 메뉴 나쁘지 않다",
+      "created_at": "2025-07-28T13:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "병준이는?",
+      "created_at": "2025-07-28T13:42:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "점심먹고 지금은 카페",
+      "created_at": "2025-07-28T13:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나도 밥먹고 아.아 먹어지",
+      "created_at": "2025-07-28T13:55:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "기다려봐 쿠폰 보내줄게",
+      "created_at": "2025-07-28T14:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 진짜?!",
+      "created_at": "2025-07-28T14:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "최고다",
+      "created_at": "2025-07-28T14:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "혼자 먹었어 아님 사람들이랑 같이 먹었어?",
+      "created_at": "2025-07-28T14:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "같은 과 애들이랑~",
+      "created_at": "2025-07-28T14:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "근데 얘들 멘탈 나가서 좀 시끄러웠어 ㅋㅋ",
+      "created_at": "2025-07-28T14:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "학교에서 작업해?",
+      "created_at": "2025-07-28T14:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 오후엔 작업실 가야돼",
+      "created_at": "2025-07-28T14:32:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "힘들겠다ㅠㅠ",
+      "created_at": "2025-07-28T14:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응… 좀 지치긴 해ㅠ",
+      "created_at": "2025-07-28T14:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "저녁도 학교에서 먹겠네",
+      "created_at": "2025-07-28T15:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그럴 듯 ㅋㅋ",
+      "created_at": "2025-07-28T15:11:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오늘은 컵라면 각이야",
+      "created_at": "2025-07-28T15:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "밥먹어",
+      "created_at": "2025-07-28T15:13:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "너 라면 먹으면 배 아프잖아",
+      "created_at": "2025-07-28T15:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "알겠어…",
+      "created_at": "2025-07-28T15:21:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그럼 학식 저녁으로 챙길게!",
+      "created_at": "2025-07-28T15:21:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "너 지난번에도 라면먹고 체해서 힘들어했잖아",
+      "created_at": "2025-07-28T21:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응… 기억나",
+      "created_at": "2025-07-28T21:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나 라면 먹었는데",
+      "created_at": "2025-07-28T21:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아니 아픈적 있었으며",
+      "created_at": "2025-07-28T21:21:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "지금 배 엄청 아파ㅠㅠ",
+      "created_at": "2025-07-28T21:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "근데 지금은 아프니까…",
+      "created_at": "2025-07-28T21:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "잔소리는",
+      "created_at": "2025-07-28T21:35:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "어! 그니까 귀찮아도 밥먹으라고 했잖아",
+      "created_at": "2025-07-28T21:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "알아…ㅠ",
+      "created_at": "2025-07-28T21:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "잔소리가 아니라....",
+      "created_at": "2025-07-28T21:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알았어 약은 먹었어?",
+      "created_at": "2025-07-28T22:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 방금 먹었어",
+      "created_at": "2025-07-28T22:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "눕고 있으니까 좀 나아졌어",
+      "created_at": "2025-07-28T22:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "오늘 늦게까지 있지 말고 집에서 쉬어",
+      "created_at": "2025-07-28T22:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오늘은 그냥 일찍 들어가야겠다",
+      "created_at": "2025-07-28T22:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "라면 자제해",
+      "created_at": "2025-07-28T22:41:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "알았다니깐 아픈데 왜 자꾸 뭐라고 그래",
+      "created_at": "2025-07-28T22:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나도 안다고....",
+      "created_at": "2025-07-28T23:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "아... 아직도 속이 좀 안좋아... 아침에도 거의 못 먹었어",
+      "created_at": "2025-07-29T09:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래서 내가 어제 라면 먹지 말랬잖아...",
+      "created_at": "2025-07-29T09:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "배 안 좋다 했을 때부터 조심했어야지",
+      "created_at": "2025-07-29T09:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "알지... 근데 그때 너무 먹고 싶었단 말이야ㅠㅠ",
+      "created_at": "2025-07-29T09:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "먹고 싶은 거랑 몸 생각하는 거랑은 다르지\n요즘 너 계속 위 약해진 거 같아서 걱정돼",
+      "created_at": "2025-07-29T09:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그니까... 나도 알아...\n근데 왜 자꾸 어제부터 똑같은 말 계속해",
+      "created_at": "2025-07-29T09:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "걱정이 아니라 화내잖아",
+      "created_at": "2025-07-29T09:11:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "화내는 거 아니고... 그냥 네가 아픈 게 싫어서 그래",
+      "created_at": "2025-07-29T10:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그리고.... 내가",
+      "created_at": "2025-07-29T10:11:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "근데 듣다 보면... 자꾸 잔소리처럼 들려\n나 지금도 속 안 좋은데 그러니까 더 짜증 나...",
+      "created_at": "2025-07-29T10:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "걱정돼서 그런 건데",
+      "created_at": "2025-07-29T10:13:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알았어... 미안해",
+      "created_at": "2025-07-29T10:13:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "알아, 걱정하는 건 고마워\n근데 지금은 그냥 좀 쉬고 싶어",
+      "created_at": "2025-07-29T11:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "잘 잤어?",
+      "created_at": "2025-07-30T09:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응... 그냥 잤어",
+      "created_at": "2025-07-30T09:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "속은 좀 괜찮아졌어?",
+      "created_at": "2025-07-30T09:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "조금... 아직은 좀 답답해",
+      "created_at": "2025-07-30T09:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래도 어제보단 나은 거네... 다행이다",
+      "created_at": "2025-07-30T09:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응",
+      "created_at": "2025-07-30T09:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "나 아직도 네 기분 좀 안 좋은 거 같아서 말 조심하게 돼",
+      "created_at": "2025-07-30T10:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그냥 좀 피곤해서 그래",
+      "created_at": "2025-07-30T10:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "어제 그런 식으로 끝난 게 계속 마음에 걸려서...",
+      "created_at": "2025-07-30T10:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나도 그랬어...",
+      "created_at": "2025-07-30T10:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "말 더 하면 또 불편할까봐",
+      "created_at": "2025-07-30T10:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그냥 좀...",
+      "created_at": "2025-07-30T10:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알겠어 쉬어",
+      "created_at": "2025-07-30T11:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응",
+      "created_at": "2025-07-30T11:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나 오늘은 좀 괜찮았어… 어제는 내가 좀 예민했지ㅠ",
+      "created_at": "2025-07-31T15:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "다행이다",
+      "created_at": "2025-07-31T15:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "지금은 괜찮아?",
+      "created_at": "2025-07-31T15:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응… 지금은 좀 편해졌어 오빠한테 말하니까 마음도 좀 풀리고…",
+      "created_at": "2025-07-31T15:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "학교는 가?",
+      "created_at": "2025-07-31T15:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 가야지~",
+      "created_at": "2025-07-31T15:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알았어 사실 나도 걱정돼서 말했던 건데 어느 순간 짜증 내서 미안해",
+      "created_at": "2025-07-31T15:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "아냐… 나도 오빠 말 다 맞았는데 그땐 너무 꽉 막혀 있었어…ㅠ",
+      "created_at": "2025-07-31T15:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "고마워",
+      "created_at": "2025-07-31T15:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "나도 고마워… 그래도 우리 이렇게 풀어서 다행이다",
+      "created_at": "2025-07-31T15:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "이번 주말에 볼까? 아님 집에 더 쉴래?",
+      "created_at": "2025-07-31T15:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "보고 싶지… 근데 오빠도 피곤할 텐데 괜찮아…?",
+      "created_at": "2025-07-31T15:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "괜찮아 그럼 우리 뭐할까? 전에 가보고 싶다고 한 라부부 팝업 갈까? 그거 이번 주가 마지막이래",
+      "created_at": "2025-07-31T15:06:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 진짜?? 그럼 완전 가야지!! 오빠 기억하고 있었어?",
+      "created_at": "2025-07-31T15:07:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "응 기억하지",
+      "created_at": "2025-07-31T15:07:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "좋아 그리고 그다음 뭐할까?",
+      "created_at": "2025-07-31T15:08:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "흠~ 팝업 보고 근처 카페 가자!",
+      "created_at": "2025-07-31T15:08:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아니면 근처에 젠몬 팝업도 하는데 거기도 구경할까? 자기 젠몬 선글라스 갖고 싶어 했잖아",
+      "created_at": "2025-07-31T15:09:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오빠… 왜 이렇게 기억 잘해… 감동이야 진짜 젠몬도 가자!! 거기 완전 가보고 싶었어",
+      "created_at": "2025-07-31T15:09:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "좋아 그리고 저녁 먹자",
+      "created_at": "2025-07-31T15:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "완전 좋아!! 그날은 오빠가 먹고 싶은 걸로 정해",
+      "created_at": "2025-07-31T15:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아니야 너 아팠는데 네가 먹고 싶은 걸로 골라",
+      "created_at": "2025-07-31T15:11:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "흐잉… 그럼 나 이번엔 고기 땡겨 괜찮아??",
+      "created_at": "2025-07-31T15:11:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래",
+      "created_at": "2025-07-31T15:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "고마워 주말만 기다려진다 진짜",
+      "created_at": "2025-07-31T15:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "나도",
+      "created_at": "2025-07-31T15:13:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "이번엔 진짜 웃기만 하자 우리",
+      "created_at": "2025-07-31T15:13:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래 퇴근하고 다시 연락할게",
+      "created_at": "2025-07-31T15:14:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "나 퇴근했어",
+      "created_at": "2025-07-31T19:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "수고했어 지금 집 가는 중이야?",
+      "created_at": "2025-07-31T19:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "도착했어",
+      "created_at": "2025-07-31T19:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "속은 괜찮아?",
+      "created_at": "2025-07-31T19:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 이제 거의 다 나았어! 걱정해줘서 고마워",
+      "created_at": "2025-07-31T19:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "오늘 회사에서 회의 준비하는데",
+      "created_at": "2025-07-31T19:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응응? 무슨 일 있었어?? 회의 준비 힘들었지",
+      "created_at": "2025-07-31T19:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "갑자기 화면 연결이 안 돼서 좀 당황했어",
+      "created_at": "2025-07-31T19:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 어떡해 그 순간 진짜 식은땀 났겠다",
+      "created_at": "2025-07-31T19:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래도 다시 연결하니까 잘 나왔어",
+      "created_at": "2025-07-31T19:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "휴 다행이다 진짜 오빠 멘탈 챙긴 거 너무 잘했어",
+      "created_at": "2025-07-31T19:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아 그리고 아침에 말한 라부부 팝업 예약해야 입장 가능하대",
+      "created_at": "2025-07-31T19:06:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 진짜?? 몰랐어 그럼 우리 얼른 예약하자!! 자리 없으면 어떡해",
+      "created_at": "2025-07-31T19:06:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "이미 했지",
+      "created_at": "2025-07-31T19:07:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "뭐야… 완전 멋있어 오빠 진짜 든든하다 진심",
+      "created_at": "2025-07-31T19:07:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "ㅋㅋㅋㅋㅋ귀여워",
+      "created_at": "2025-07-31T19:07:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "뭐래 ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-07-31T19:08:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "오늘은 일찍 자야겠다. 어제 늦게 잤더니 피곤해",
+      "created_at": "2025-07-31T19:08:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응응 오늘은 일찍 자요 우리 오빠",
+      "created_at": "2025-07-31T22:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "내일 아침엔 좀 덜 피곤했음 좋겠다",
+      "created_at": "2025-07-31T22:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "일어났어?",
+      "created_at": "2025-08-01T18:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 방금ㅎㅎ 이제 퇴근 중이지?",
+      "created_at": "2025-08-01T18:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "어! 어떻게 알았어 ㅋㅋㅋㅋ",
+      "created_at": "2025-08-01T18:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "느낌이 딱 왔지 지금 버스야? 지하철?",
+      "created_at": "2025-08-01T18:30:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "지하철 사람 많아ㅠㅠ",
+      "created_at": "2025-08-01T18:31:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헐 진짜ㅠㅠ 나였으면 숨 막혀서 기절함",
+      "created_at": "2025-08-01T18:31:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래도 2개 역만 지나면 집 도착",
+      "created_at": "2025-08-01T18:31:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오 다 왔네!! 집 가면 뭐 먹을 거야?",
+      "created_at": "2025-08-01T18:31:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "몰라 힘들어서 배달 시킬까 고민중",
+      "created_at": "2025-08-01T18:32:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "배달 시켜버려 그냥",
+      "created_at": "2025-08-01T18:32:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알았어\n저녁 메뉴 추천 해줘",
+      "created_at": "2025-08-01T18:32:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오케이 오케이ㅋㅋ 치킨이랑 마라탕 어때?",
+      "created_at": "2025-08-01T18:33:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "식상해",
+      "created_at": "2025-08-01T18:33:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그럼… 쌀국수 vs 분짜 어때?",
+      "created_at": "2025-08-01T18:33:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "쌀국수! 쌀국수 좋다 ㅋㅋㅋㅋ",
+      "created_at": "2025-08-01T18:33:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "고수 추가는..?",
+      "created_at": "2025-08-01T18:34:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "물론 해야지",
+      "created_at": "2025-08-01T18:34:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "고수파 인정 이따 도착하면 시켜",
+      "created_at": "2025-08-01T18:34:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아 맞다 우리 주말에 몇시에 볼까?",
+      "created_at": "2025-08-01T18:34:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오후 2시 어때?",
+      "created_at": "2025-08-01T18:35:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "거기가 6시까지 하니까 좀 일찍 볼까?",
+      "created_at": "2025-08-01T18:35:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그럼 12시? 브런치도 같이 먹고",
+      "created_at": "2025-08-01T18:35:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래",
+      "created_at": "2025-08-01T18:35:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그날 뭐 입을지 또 고민되네",
+      "created_at": "2025-08-01T18:36:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "나도 ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-01T18:36:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "우리 또 맞춰 입을래? 톤만 맞춰도 예쁠 듯!",
+      "created_at": "2025-08-01T18:36:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "톤만 맞추자",
+      "created_at": "2025-08-01T18:36:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그럼 나 연베이지 생각 중",
+      "created_at": "2025-08-01T18:37:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그럼 지난번에 성수에서 산 베이지색 바지 입을게",
+      "created_at": "2025-08-01T18:37:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "완벽하다 그럼 사진 예쁘게 찍히겠다 우리",
+      "created_at": "2025-08-01T18:37:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "둥이는?",
+      "created_at": "2025-08-01T18:37:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "둥이는 엄마랑 있기로 했엉 주말에 우리 둘이 데이트 하니까",
+      "created_at": "2025-08-01T18:38:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그럼 금요일에 본가 가겠네?",
+      "created_at": "2025-08-01T18:38:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 금요일 저녁에 갈 거야 둥이 짐도 챙겨야 돼서",
+      "created_at": "2025-08-01T18:38:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "둥이 보면 아버지 좋아 하시겠네 요즘 빠지셨잖아",
+      "created_at": "2025-08-01T18:38:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "맞아 맨날 “둥이야~ 이리 온나~” 하심",
+      "created_at": "2025-08-01T18:39:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-01T18:39:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "진짜 둘이 꽁냥꽁냥해 나보다 둥이 더 좋아하는 듯",
+      "created_at": "2025-08-01T18:39:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "나 집 도착했어",
+      "created_at": "2025-08-01T18:39:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "수고했어 오늘 쌀국수 얼른 시켜",
+      "created_at": "2025-08-01T18:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "웅",
+      "created_at": "2025-08-01T18:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "따뜻하게 먹고 조금 누워 있어",
+      "created_at": "2025-08-01T18:40:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "어디쯤이야? 나 거의 도착",
+      "created_at": "2025-08-02T11:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 벌써? 나 아직 2정거장 남았어ㅠㅠ",
+      "created_at": "2025-08-02T11:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "ㅋㅋㅋㅋ 아니야 나도 1정거장 남았어",
+      "created_at": "2025-08-02T11:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "ㅋㅋㅋ 다행이다 같이 들어가자",
+      "created_at": "2025-08-02T11:50:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그래 2번 출구 앞에서 기다릴게",
+      "created_at": "2025-08-02T11:51:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응응 나 도착하면 톡할게! 좀만 기다려",
+      "created_at": "2025-08-02T11:51:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "이 사진 잘 나왔다",
+      "created_at": "2025-08-02T21:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 진짜 예쁘다 이거!! 배경이랑 색감 찰떡이야",
+      "created_at": "2025-08-02T21:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "이 사진은 움직여서 음식 흔들리게 찍혔어",
+      "created_at": "2025-08-02T21:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "앗 아까 내가 팔 툭 쳤을 때다 ㅋㅋ",
+      "created_at": "2025-08-02T21:00:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "ㅋㅋㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-02T21:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "뭐야? ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-02T21:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아니야",
+      "created_at": "2025-08-02T21:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "에이 왜ㅠㅠ 그래도 이 사진이 자꾸 보게 되던데",
+      "created_at": "2025-08-02T21:01:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "그건 인정",
+      "created_at": "2025-08-02T21:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "우리 아까 라부부 살 때 라스트 3개만 남아서 조마조마했잖아",
+      "created_at": "2025-08-02T21:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "ㅋㅋㅋ",
+      "created_at": "2025-08-02T21:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "난 벌써 가방에 걸었어",
+      "created_at": "2025-08-02T21:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헐 귀여워 나도 집 가자마자 달아야지 우리 커플템 됐네",
+      "created_at": "2025-08-02T21:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아까 너가 뽑은 게 레어 중 하나라고 옆사람이 부러워한 거 웃기던데 ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-02T21:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "아 그거 진짜 ㅋㅋㅋ\n옆에서 “헐 대박…” 이러는 거 들렸지?",
+      "created_at": "2025-08-02T21:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "웅 ㅋㅋㅋ 우리 것만 계속 쳐다보던데\n찾아보니까 그거 잘 안 나온대",
+      "created_at": "2025-08-02T21:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헉 진짜? 몰랐는데 운빨 대박이었네 나 ㅋㅋ",
+      "created_at": "2025-08-02T21:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "집 도착하려면 아직 많이 남았지?",
+      "created_at": "2025-08-02T21:04:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 아직 한 30분…ㅠ 오빠는?\n이제 거의 다 왔지?",
+      "created_at": "2025-08-02T21:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "나 10분 뒤 도착",
+      "created_at": "2025-08-02T21:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "오오 금방이네",
+      "created_at": "2025-08-02T21:05:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "본가로 가서 더 걸리겠다",
+      "created_at": "2025-08-02T21:06:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "아니야 그래도 한 번에 가는 버스 있어서 비슷해",
+      "created_at": "2025-08-02T21:07:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "도착하면 둥이 뛰고 좋아하겠네 ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-02T21:08:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그치 꼬리 부웅 흔들면서 달려올 듯",
+      "created_at": "2025-08-02T21:08:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "오늘 어머니 아버지가 산책 시키셨으니까 아침 산책 안 해도 되겠네",
+      "created_at": "2025-08-02T21:09:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "완전 개이득~ 나 아침에 조금 더 잘 수 있겠다",
+      "created_at": "2025-08-02T21:09:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "ㅋㅋㅋㅋㅋㅋ 주말은 늦잠이지",
+      "created_at": "2025-08-02T21:11:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "그치그치 완전 국룰이지 ㅋㅋ 눈 떠보면 11시 됐을 듯",
+      "created_at": "2025-08-02T21:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "난 아침에 러닝",
+      "created_at": "2025-08-02T21:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헐 대박… 존경해 진짜 난 이불 밖은 위험해 ㅋㅋ",
+      "created_at": "2025-08-02T21:14:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "저번처럼 못 일어날까봐 종호한테 부탁했어 ㅋㅋㅋㅋ",
+      "created_at": "2025-08-02T21:15:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "종호오빠 찬스 썼구나 이번엔 진짜 못 빠지겠네",
+      "created_at": "2025-08-02T21:15:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "걔 요즘 러닝에 빠져서 헬스 안 하고 러닝만 하잖아",
+      "created_at": "2025-08-02T21:16:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "완전 러너 된 듯",
+      "created_at": "2025-08-02T21:17:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아침부터 10km 뛰자던데 ㅋㅋㅋ",
+      "created_at": "2025-08-02T21:19:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "도착했어?",
+      "created_at": "2025-08-02T21:19:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응 방금 도착했어 둥이 완전 날 미친 듯 반겨줬어",
+      "created_at": "2025-08-02T21:21:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "알았어 이따 톡 할게",
+      "created_at": "2025-08-02T21:21:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응응! 푹 쉬고 이따 톡 하자",
+      "created_at": "2025-08-02T21:25:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "런닝 했어?",
+      "created_at": "2025-08-03T13:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "응 아침부터 종호가 전화해서 일어났어",
+      "created_at": "2025-08-03T13:02:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "10km 뛰자는 거 8km로 합의봄 ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-03T13:03:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "뛰다가 토할 뻔 ㅋㅋㅋㅋㅋ",
+      "created_at": "2025-08-03T13:06:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "헐 ㅋㅋㅋㅋ 미쳤네 그래서 물은 챙겨 갔어?",
+      "created_at": "2025-08-03T13:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "응 끝나고 편의점에서",
+      "created_at": "2025-08-03T13:10:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "아침은?",
+      "created_at": "2025-08-03T13:12:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아직 아.점 먹어야지",
+      "created_at": "2025-08-03T13:17:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "아니다 시간 보니까 점심이네 ㅋㅋㅋㅋ",
+      "created_at": "2025-08-03T13:18:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "ㅋㅋㅋㅋ",
+      "created_at": "2025-08-03T13:20:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "일요일 아침인데 생각보다 뛰는 사람 많더라",
+      "created_at": "2025-08-03T13:25:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "맞아 ㅋㅋ 요즘 사람들 일욜 아침에도 열정 넘치더라",
+      "created_at": "2025-08-03T13:29:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "9275",
+      "content": "밥 왔다 내가 밥 먹고 전화할게",
+      "created_at": "2025-08-03T13:32:00",
+      "is_delivered": true
+    },
+    {
+      "couple_id": "3508",
+      "user_id": "4301",
+      "content": "응응~ 기다릴게 맛있는 거 먹고 전화 줘",
+      "created_at": "2025-08-03T13:37:00",
+      "is_delivered": true
+    }
+  ]

@@ -1,0 +1,62 @@
+[
+  {
+    "user_id": "3168",
+    "question_id": 1,
+    "choice_id": 1,
+    "custom_input": null
+  },
+  {
+    "user_id": "3168",
+    "question_id": 2,
+    "choice_id": 1,
+    "custom_input": null
+  },
+  {
+    "user_id": "3168",
+    "question_id": 3,
+    "choice_id": 4,
+    "custom_input": null
+  },
+  {
+    "user_id": "3168",
+    "question_id": 4,
+    "choice_id": 2,
+    "custom_input": null
+  },
+  {
+    "user_id": "3168",
+    "question_id": 5,
+    "choice_id": 1,
+    "custom_input": null
+  },
+  {
+    "user_id": "7820",
+    "question_id": 1,
+    "choice_id": 2,
+    "custom_input": null
+  },
+  {
+    "user_id": "7820",
+    "question_id": 2,
+    "choice_id": 2,
+    "custom_input": null
+  },
+  {
+    "user_id": "7820",
+    "question_id": 3,
+    "choice_id": 1,
+    "custom_input": null
+  },
+  {
+    "user_id": "7820",
+    "question_id": 4,
+    "choice_id": 3,
+    "custom_input": null
+  },
+  {
+    "user_id": "7820",
+    "question_id": 5,
+    "choice_id": 2,
+    "custom_input": null
+  }
+]

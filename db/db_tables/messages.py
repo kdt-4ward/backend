@@ -35,7 +35,7 @@ class AIMessage(Base):
     role = Column(String(20), nullable=False)  # 'user' or 'assistant'
     content = Column(Text, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
-    name = Column(String(255), nullable=True)
+    name = Column(String(255), nullable=True) # function_name
     embed_index = Column(Integer, nullable=True)
 # =============== AI 메세지 누적 요약 =====================
 class AIChatSummary(Base):
