@@ -104,7 +104,7 @@
                 },
                 {
                     "name": "DB_ENDPOINT",
-                    "value": "database-2.cvgqs06qk6hf.ap-northeast-2.rds.amazonaws.com"
+                    "value": "database-1.cvgqs06qk6hf.ap-northeast-2.rds.amazonaws.com"
                 },
                 {
                     "name": "APP_HOST",
