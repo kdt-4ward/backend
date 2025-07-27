@@ -35,6 +35,10 @@
                 {
                     "name": "YOUTUBE_API_KEY",
                     "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/YOUTUBE_API_KEY"
+                },
+                {
+                    "name": "DB_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:525127693055:secret:rds!db-1aac4f22-a626-404f-b165-7245ce66a8be-S3552y"
                 }
             ],
             "environment": [
@@ -113,10 +117,6 @@
                 {
                     "name": "APP_PORT",
                     "value": "80"
-                },
-                {
-                    "name": "DB_PASSWORD",
-                    "value": "4ward-luvtune"
                 },
                 {
                     "name": "GOOGLE_REDIRECT_URI",
