@@ -59,6 +59,14 @@
                     "value": "admin"
                 },
                 {
+                    "name": "ACCESS_TOKEN_EXPIRE_SECONDS",
+                    "value": "3600"
+                },
+                {
+                    "name": "REFRESH_TOKEN_EXPIRE_SECONDS",
+                    "value": "2592000"
+                },
+                {
                     "name": "DB_NAME",
                     "value": "test_db"
                 },
