@@ -1,10 +1,14 @@
 import json
 import redis
+import traceback
 from core.settings import settings
 from db.db_tables import Couple, AIMessage, Message, AIChatSummary
 from db.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
 import numpy as np
+from utils.log_uitls import get_logger
+
+logger = get_logger(__name__)
 
 # Redis 연결
 redis_client = redis.StrictRedis(host=settings.redis_host,
@@ -122,22 +126,37 @@ def save_couple_mapping(user1: str, user2: str, couple_id: str):
     redis_client.set(f"chatbot:couple:pair:{couple_id}", json.dumps([user1, user2]))
 
 def load_couple_mapping(user_id: str):
-    couple_id = redis_client.get(f"chatbot:couple:user:{user_id}")
-    if couple_id:
-        pair_json = redis_client.get(f"chatbot:couple:pair:{couple_id}")
-        if pair_json:
-            user1, user2 = json.loads(pair_json)
+    try:
+        couple_id = redis_client.get(f"chatbot:couple:user:{user_id}")
+        if couple_id:
+            try:
+                pair_json = redis_client.get(f"chatbot:couple:pair:{couple_id.decode()}")
+                if pair_json:
+                    user1, user2 = json.loads(pair_json)
+                    partner = user2 if user_id == user1 else user1
+                    return couple_id.decode(), partner
+            except (redis.exceptions.RedisError, json.JSONDecodeError) as e:
+                traceback.print_exc()
+                logger.error(f"⚠️ pair_json 조회 실패: {e}")
+    except redis.exceptions.RedisError as e:
+        traceback.print_exc()
+        logger.error(f"❌ Redis 접근 실패: {e}")
+
+    # Redis가 비정상적이거나 데이터 없으면 → DB fallback
+    try:
+        with SessionLocal() as db:
+            couple = db.query(Couple).filter(
+                (Couple.user_1 == user_id) | (Couple.user_2 == user_id)
+            ).first()
+            if not couple:
+                return None, None
+
+            couple_id = couple.couple_id
+            user1 = couple.user_1
+            user2 = couple.user_2
+            save_couple_mapping(user1, user2, couple_id)  # Redis에 저장 시도
             partner = user2 if user_id == user1 else user1
             return couple_id, partner
-    # Redis에 없으면 DB 조회
-    with SessionLocal() as db:
-        couple = db.query(Couple).filter((Couple.user_1 == user_id) | (Couple.user_2 == user_id)).first()
-        if not couple:
-            return None, None
-
-        couple_id = couple.couple_id
-        user1 = couple.user_1
-        user2 = couple.user_2
-        save_couple_mapping(user1, user2, couple_id)  # Redis 저장
-        partner = user2 if user_id == user1 else user1
-        return couple_id, partner
+    except Exception as e:
+        print(f"❌ DB 접근 실패: {e}")
+        return None, None
