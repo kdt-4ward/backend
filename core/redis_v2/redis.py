@@ -14,7 +14,8 @@ logger = get_logger(__name__)
 redis_client = redis.StrictRedis(host=settings.redis_host,
                                  port=settings.redis_port,
                                  db=0,
-                                 decode_responses=True)
+                                 decode_responses=True,
+                                 ssl=True)
 
 class RedisStorageBase:
     def __init__(self, prefix: str, expire: int = 3600):
@@ -74,7 +75,8 @@ redis_bin_client = redis.StrictRedis(
     host=settings.redis_host,
     port=settings.redis_port,
     db=0,
-    decode_responses=False
+    decode_responses=False,
+    ssl=True
 )
 
 class RedisFaissChunkCache:
