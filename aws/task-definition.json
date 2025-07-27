@@ -52,7 +52,7 @@
                 },
                 {
                     "name": "REDIS_HOST",
-                    "value": "127.0.0.1"
+                    "value": "luvtune-redis-vosq56.serverless.apn2.cache.amazonaws.com"
                 },
                 {
                     "name": "GOOGLE_CLIENT_SECRET",
