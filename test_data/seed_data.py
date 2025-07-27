@@ -42,7 +42,7 @@ def init_database():
         raise
 
 def insert_test_data_to_db():
-    init_database()
+    # init_database()
     # ======== 1. 원본 JSON 파일 로딩 =========
     with open("test_data/couple_user_seed_data.json", "r", encoding="utf-8") as f:
         user_data = json.load(f)
