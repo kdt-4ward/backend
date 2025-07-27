@@ -66,11 +66,11 @@ async def chat_with_persona(req: ChatRequest):
         bot.save_history(history)
 
         # celery 사용 : 메인 프로세스 부하 줄여주기 (비동기 분산 처리)
-        # run_check_and_summarize.delay(req.user_id)
-        # run_embedding.delay(req.user_id)
+        run_check_and_summarize.delay(req.user_id)
+        run_embedding.delay(req.user_id)
         
-        asyncio.create_task(bot.check_and_summarize_if_needed())
-        asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
+        # asyncio.create_task(bot.check_and_summarize_if_needed())
+        # asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
         logger.info(f"[chat_with_persona] 응답 완료: user_id={req.user_id}, msg_id={assistant_msg_id}")
         return PlainTextResponse(response)
 
@@ -107,12 +107,12 @@ async def chat_with_persona_streaming(req: ChatRequest):
                 logger.info(f"[chat_with_persona] GPT 스트리밍 완료: user_id={req.user_id}")
                 
                 # celery 사용 : 메인 프로세스 부하 줄여주기 (비동기 분산 처리)
-                # run_check_and_summarize.delay(req.user_id)
-                # run_embedding.delay(req.user_id)
+                run_check_and_summarize.delay(req.user_id)
+                run_embedding.delay(req.user_id)
 
                 # 후작업 비동기
-                asyncio.create_task(bot.check_and_summarize_if_needed())
-                asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
+                # asyncio.create_task(bot.check_and_summarize_if_needed())
+                # asyncio.create_task(process_incremental_faiss_embedding(req.user_id))
             except RetryError as e:
                 logger.error(f"[chat_with_persona] GPT 응답 실패! user_id={req.user_id} | error={e}")
                 yield "[ERROR] GPT 응답 실패"
