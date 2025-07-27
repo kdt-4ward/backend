@@ -93,8 +93,9 @@ app = FastAPI(
 def health_check():
     return {"status": "ok"}
 
-# @app.on_event("startup")
-# async def on_startup():
+@app.on_event("startup")
+async def on_startup():
+    insert_test_data_to_db()
     # # 데이터베이스 초기화
     # drop_database()
     # create_database_if_not_exists()
