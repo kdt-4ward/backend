@@ -6,7 +6,7 @@ from db.db_tables import Couple, AIMessage, Message, AIChatSummary
 from db.db import SessionLocal
 from sqlalchemy.exc import SQLAlchemyError
 import numpy as np
-from utils.log_uitls import get_logger
+from utils.log_utils import get_logger
 
 logger = get_logger(__name__)
 
