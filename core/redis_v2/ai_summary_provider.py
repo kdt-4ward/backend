@@ -1,14 +1,7 @@
 from core.settings import settings
 from db.db_tables import AIChatSummary
 from db.db import SessionLocal
-import redis
-
-redis_client = redis.StrictRedis(
-    host=settings.redis_host,
-    port=settings.redis_port,
-    db=0,
-    decode_responses=True
-)
+from core.redis_v2.redis import redis_client
 
 class AISummaryProvider:
     def __init__(self, user_id: str):
