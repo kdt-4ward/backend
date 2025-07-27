@@ -4,15 +4,8 @@ from db.db_tables import PersonaConfig, User, UserTraitSummary, Couple, EmotionL
 from db.db import SessionLocal
 from services.ai.prompt_templates import PROMPT_REGISTRY
 
-import redis
 from datetime import datetime, timedelta
-
-redis_client = redis.StrictRedis(
-    host=settings.redis_host,
-    port=settings.redis_port,
-    db=0,
-    decode_responses=True
-)
+from core.redis_v2.redis import redis_client
 
 DEFAULT_NAME = "러비"
 USER_NAME = "사용자"
