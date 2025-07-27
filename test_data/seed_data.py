@@ -132,14 +132,6 @@ def insert_test_data_to_db():
     db.add(couple)
     db.commit()
 
-    # 2. 설문 문항
-    db.add_all(survey_questions)
-    db.commit()  # 반드시 커밋해야 choices에서 FK 참조 가능
-
-    # 3. 선택지
-    db.add_all(survey_choices)
-    db.commit()
-
     # 4. 유저 응답
     db.add_all(responses)
     db.commit()
