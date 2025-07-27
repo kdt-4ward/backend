@@ -13,7 +13,7 @@ from db.crud import (
 )
 from services.ai.analyzer_langchain import analyze_daily
 from services.ai.analyzer import DailyAnalyzer
-from db.db import get_session
+from core.dependencies import get_db_session
 
 logger = logging.getLogger(__name__)
 
@@ -21,9 +21,10 @@ async def run_daily_for_all(target_ids: list[str], analyzer: DailyAnalyzer, date
     tasks = [analyzer.run(tid, date) for tid in target_ids]
     await asyncio.gather(*tasks)
 
-async def daily_couplechat_analysis_for_all_couples(target_date=None):
-    db = get_session()
-    couple_ids = get_all_couple_ids(db)
+async def daily_couplechat_analysis_for_all_couples(target_date=None, couple_ids=None):
+    db = get_db_session()
+    if couple_ids is None:
+        couple_ids = get_all_couple_ids(get_db_session())
     if target_date is None:
         target_date = datetime.date.today()
 
@@ -37,27 +38,30 @@ async def daily_couplechat_analysis_for_all_couples(target_date=None):
     await run_daily_for_all(couple_ids, analyzer, target_date)
     # asyncio.run(run_daily_for_all(couple_ids, analyzer, target_date))
 
-async def daily_aichat_analysis_for_all_users():
-    user_ids = get_all_user_ids()
-    today = datetime.date.today()
+async def daily_aichat_analysis_for_all_users(target_date=None, user_ids=None):
+    if user_ids is None:
+        user_ids = get_all_user_ids(get_db_session())
+    if target_date is None:
+        target_date = datetime.date.today()
 
     analyzer = DailyAnalyzer(
-        db=get_session(),
+        db=get_db_session(),
         chat_fetch_func=get_daily_ai_chat_logs_by_user_id,
         analyze_func=analyze_daily,
         save_func=save_daily_ai_analysis_result,
         prompt_name="daily_ai_nlu"
     )
-    await run_daily_for_all(user_ids, analyzer, today)
+    await run_daily_for_all(user_ids, analyzer, target_date)
     # asyncio.run(run_daily_for_all(user_ids, analyzer, today))
 
-async def daily_couplechat_emotion_comparison_analysis_for_all_couples(target_date=None):
+async def daily_couplechat_emotion_comparison_analysis_for_all_couples(target_date=None, couple_ids=None):
     """
     일간 커플 채팅과 감정 기록 비교 분석을 모든 커플에 대해 실행합니다.
     채팅에서 보인 감정과 기록된 감정의 일치도, 소통 패턴과 감정의 연관성 등을 분석합니다.
     """
-    db = get_session()
-    couple_ids = get_all_couple_ids(db)
+    db = get_db_session()
+    if couple_ids is None:
+        couple_ids = get_all_couple_ids(get_db_session())
     if target_date is None:
         target_date = datetime.date.today()
 

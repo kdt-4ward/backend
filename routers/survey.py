@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from core.dependencies import get_db_session  # DB 세션 의존성 주입
 from db.db_tables import UserSurveyResponse, SurveyQuestion, SurveyChoice
@@ -11,7 +11,9 @@ import asyncio
 router = APIRouter()
 
 @router.post("/response")
-def submit_survey_response(data_list: List[SurveyResponseInput], db: Session = Depends(get_db_session)):
+def submit_survey_response(data_list: List[SurveyResponseInput], 
+                           db: Session = Depends(get_db_session),
+                           background_tasks: BackgroundTasks = BackgroundTasks()):
     print('데이터', data_list)
     try:
         responses = []
@@ -55,7 +57,7 @@ def submit_survey_response(data_list: List[SurveyResponseInput], db: Session = D
         db.commit()
         db.refresh(response)
         # 성공적으로 다 저장된 경우에만!
-        asyncio.create_task(analyze_and_save_user_trait_summary(db, data_list[0].user_id))
+        background_tasks.add_task(analyze_and_save_user_trait_summary, db, data_list[0].user_id)
         return {"message": "설문 응답이 저장되었습니다.", "user_id": data_list[0].user_id}
     
     except Exception as e:

@@ -25,7 +25,9 @@ async def run_langchain_prompt(
     - 에러 발생 시 상세 로그와 함께 실패 반환.
     """
     prompt = ChatPromptTemplate.from_template(prompt_template)
-    chain = prompt | get_langchain_llm() | JsonOutputParser()
+    # get_langchain_llm은 async 함수이므로, await로 호출해서 인스턴스를 받아야 합니다.
+    llm = await get_langchain_llm()
+    chain = prompt | llm | JsonOutputParser()
 
     safe_input_vars = {}
     for k, v in input_vars.items():

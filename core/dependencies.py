@@ -26,15 +26,15 @@ async def get_openai_client() -> AsyncOpenAI:
 
 
 # 2. Langchain LLM
-_langchain_llm: BaseChatModel = ChatOpenAI(
-    model="gpt-4o",
-    temperature=0.7,
-    streaming=False,
-    verbose=True,
-    max_tokens=4096,
-    api_key=settings.openai_api_key
-)
-def get_langchain_llm() -> BaseChatModel:
+async def get_langchain_llm() -> BaseChatModel:
+    _langchain_llm: BaseChatModel = ChatOpenAI(
+        model="gpt-4o",
+        temperature=0.7,
+        streaming=False,
+        verbose=True,
+        max_tokens=4096,
+        api_key=await settings.get_next_api_key()
+    )
     return _langchain_llm
 
 

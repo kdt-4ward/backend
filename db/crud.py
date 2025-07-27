@@ -69,7 +69,7 @@ def get_all_user_ids(db):
     """전체 user_id 리스트 반환"""
     return [row.user_id for row in db.query(User.user_id).all()]
 
-def get_users_by_couple_id(db, couple_id: str) -> list[User]:
+def get_users_by_couple_id(db, couple_id: str) -> tuple[str, str]:
     couple = db.query(Couple).filter(Couple.couple_id == couple_id).first()
     if not couple:
         return []
@@ -150,9 +150,12 @@ def get_daily_ai_chat_logs_by_user_id(db: Session, user_id: str, date: datetime.
     ]
 
 # 4. 유저 일간 AI 분석 결과 저장
-def save_daily_ai_analysis_result(db: Session, user_id: str, couple_id: str, date: datetime.date, result: dict):
+def save_daily_ai_analysis_result(db: Session, user_id: str, date: datetime.date, result: dict):
     # date는 반드시 "해당 일" 00:00:00 ~ 23:59:59 범위의 날짜
     date_start = datetime.combine(date, datetime.min.time())
+
+    # user_id로부터 couple_id 찾기
+    couple_id = get_couple_id_by_user_id(db, user_id)
 
     # upsert 방식: user_id + date(unique)에 대해 갱신/저장
     obj = db.query(AIDailyAnalysisResult).filter(
@@ -178,6 +181,21 @@ def save_daily_ai_analysis_result(db: Session, user_id: str, couple_id: str, dat
         )
         db.add(obj)
     db.commit()
+
+def get_couple_id_by_user_id(db: Session, user_id: str) -> str | None:
+    """사용자 ID로부터 커플 ID를 찾습니다. user_1 또는 user_2에서 찾습니다."""
+    # user_1에서 찾기
+    couple = db.query(Couple.couple_id).filter(Couple.user_1 == user_id).first()
+    if couple:
+        return couple.couple_id
+    
+    # user_2에서 찾기
+    couple = db.query(Couple.couple_id).filter(Couple.user_2 == user_id).first()
+    if couple:
+        return couple.couple_id
+    
+    # 커플을 찾지 못한 경우
+    return None
 
 def load_daily_couple_stats(db: Session, couple_id: str, week_dates: list[datetime.date]) -> list[dict]:
     summaries = db.query(CoupleDailyAnalysisResult).filter(

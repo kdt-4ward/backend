@@ -8,12 +8,14 @@ from db.db import get_session
 def get_week_dates(start_date: datetime.date) -> list[datetime.date]:
     return [start_date + timedelta(days=i) for i in range(7)]
 
-async def run_all_weekly_analyses(start_date=None):
+async def run_all_weekly_analyses(start_date=None, couple_ids=None):
     session = get_session()
 
     # 커플 정보 로드
+    if couple_ids is None:
+        couple_ids = get_all_couple_ids(session)
+    
     couple_list = []
-    couple_ids = get_all_couple_ids(session)
     for couple_id in couple_ids:
         user1_id, user2_id = get_users_by_couple_id(session, couple_id)
         couple_list.append((couple_id, user1_id, user2_id))
