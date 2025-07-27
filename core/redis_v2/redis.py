@@ -132,11 +132,13 @@ def load_couple_mapping(user_id: str):
         couple_id = redis_client.get(f"chatbot:couple:user:{user_id}")
         if couple_id:
             try:
-                pair_json = redis_client.get(f"chatbot:couple:pair:{couple_id.decode()}")
+                if isinstance(couple_id, bytes):
+                      couple_id = couple_id.decode()
+                pair_json = redis_client.get(f"chatbot:couple:pair:{couple_id}")
                 if pair_json:
                     user1, user2 = json.loads(pair_json)
                     partner = user2 if user_id == user1 else user1
-                    return couple_id.decode(), partner
+                    return couple_id, partner
             except (redis.exceptions.RedisError, json.JSONDecodeError) as e:
                 traceback.print_exc()
                 logger.error(f"⚠️ pair_json 조회 실패: {e}")
