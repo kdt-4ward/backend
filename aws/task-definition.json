@@ -21,7 +21,7 @@
                     "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/OPENAI_API_KEY"
                 },
                 {
-                    "name": "S3-access-key",
+                    "name": "S3-ACCESS-KEY",
                     "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/S3-access-key"
                 },
                 {
@@ -121,6 +121,14 @@
                 {
                     "name": "GOOGLE_REDIRECT_URI",
                     "value": "https://auth.expo.io/@soso12321/frontend"
+                },
+                {
+                    "name": "S3-BUCKET-NAME",
+                    "value": "4ward-s3"
+                },
+                {
+                    "name": "S3-REGION",
+                    "value": "ap-northeast-2"
                 }
             ],
             "environmentFiles": [],
