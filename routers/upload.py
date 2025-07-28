@@ -3,23 +3,16 @@
 import boto3
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import JSONResponse
-import os
 from uuid import uuid4
-from dotenv import load_dotenv
-load_dotenv()
+from core.settings import settings
 
 router = APIRouter()
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_REGION = os.getenv("AWS_REGION")
-BUCKET_NAME = os.getenv("BUCKET_NAME")
-
 s3 = boto3.client(
     "s3",
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=AWS_REGION
+    aws_access_key_id=settings.aws_access_key_id,
+    aws_secret_access_key=settings.aws_secret_access_key,
+    region_name=settings.aws_region
 )
 
 @router.post("/upload/image/")
@@ -30,12 +23,12 @@ async def upload_image(file: UploadFile = File(...)):
     # S3 업로드
     s3.upload_fileobj(
         file.file,
-        BUCKET_NAME,
+        settings.bucket_name,
         filename,
         ExtraArgs={"ContentType": file.content_type}  # 공개 읽기 권한
     )
 
-    image_url = f"https://{BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com/{filename}"
+    image_url = f"https://{settings.bucket_name}.s3.{settings.aws_region}.amazonaws.com/{filename}"
     return JSONResponse(content={"image_url": image_url})
 
 
