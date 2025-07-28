@@ -44,10 +44,10 @@ class Settings(BaseSettings):
     youtube_api_key: str = Field(..., env="YOUTUBE_API_KEY")
 
     # == AWS ===
-    aws_access_key_id: str = Field(..., env="S3-ACCESS-KEY")
-    aws_secret_access_key: str = Field(..., env="S3-SECRET-ACCESS-KEY")
-    aws_region: str = Field(..., env="S3-REGION")
-    bucket_name: str = Field(..., env="S3-BUCKET-NAME")
+    aws_access_key_id: str = Field(..., env="S3_ACCESS_KEY")
+    aws_secret_access_key: str = Field(..., env="S3_SECRET_ACCESS_KEY")
+    aws_region: str = Field(..., env="S3_REGION")
+    bucket_name: str = Field(..., env="S3_BUCKET_NAME")
 
     class Config:
         env_file = ".env"
