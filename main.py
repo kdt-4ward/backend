@@ -11,6 +11,7 @@ from jobs.daily_analysis import test_weekly_couplechat_analysis_from_start_date
 from test_data.process_analysis_data import process_analysis_data
 import logging
 import sys
+import asyncio
 
 def create_daily_analysis_result_json():
     from core.dependencies import get_db_session
@@ -96,23 +97,24 @@ def health_check():
 
 @app.on_event("startup")
 async def on_startup():
-#     insert_test_data_to_db()
-    # 데이터베이스 초기화
-    drop_database()
-    create_database_if_not_exists()
-    Base.metadata.create_all(bind=engine)
+# #     insert_test_data_to_db()
+#     # 데이터베이스 초기화
+#     drop_database()
+#     create_database_if_not_exists()
+#     Base.metadata.create_all(bind=engine)
 
-    # # ## 시나리오 데이터 삽입
-    insert_scenario_data()
+#     # # ## 시나리오 데이터 삽입
+#     insert_scenario_data()
 
-    ## 시나리오 데이터 분석
-    try:
-        await process_analysis_data()
-    except Exception as e:
-        logging.error(f"데이터 분석 처리 실패: {e}")
+    # 분석 태스크는 백그라운드로 실행 (ELB 타임아웃 방지)
+    async def run_scenario_analysis():
+        try:
+            await process_analysis_data()
+            logging.info("시나리오 데이터 분석 완료")
+        except Exception as e:
+            logging.error(f"데이터 분석 처리 실패: {e}")
 
-    # # db 일간분석 결과 json 파일 생성
-    # create_daily_analysis_result_json()
+    asyncio.create_task(run_scenario_analysis())
 
 # CORS
 app.add_middleware(

@@ -37,7 +37,8 @@ async def call_openai_completion(history: list, functions=None, function_call="a
     params = {
         "model": "gpt-4o",
         "messages": history,
-        "stream": False
+        "stream": False,
+        "temperature": 0.1
     }
     if functions:
         params["functions"] = functions
