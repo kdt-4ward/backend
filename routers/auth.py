@@ -8,12 +8,13 @@ from models.schema import GoogleAuthCode, UserLoginRequest, UserSignupRequest
 from fastapi import Request
 from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
-from db.db_tables import User, Couple, CoupleInvite, AIMessage, Message
 from sqlalchemy.orm import Session
 from datetime import datetime, time
 from utils.jwt_utils import create_access_token, create_refresh_token, verify_token
 from core.settings import settings
 from db.db import get_session  # DB 세션 의존성 주입
+from db.crud import get_couple_id_by_user_id
+from db.db_tables import *
 
 router = APIRouter()
 
@@ -146,37 +147,75 @@ def login(data: UserLoginRequest, db: Session = Depends(get_session)):
     }
 
 ## user 삭제 시 커플 초대, 커플 정보 삭제.
+## user 삭제 시 관련된 모든 정보(커플, 초대, 메시지, 분석 등) 외래키 관계 고려해서 삭제
 @router.get("/delete-user")
 def delete_user(user=Depends(get_current_user), db: Session = Depends(get_session)):
-    user_id = user.get("sub")
-    
-    ai_chat_logs = db.query(AIMessage).filter(AIMessage.user_id == user_id).all()
-    for log in ai_chat_logs:
-        db.delete(log)
+    user_id = user.get("sub")    
+    couple_id = get_couple_id_by_user_id(user_id)
 
-    msgs = db.query(Message).filter(Message.user_id == user_id).all()
-    for msg in msgs:
-        db.delete(msg)
-
+    # 1. 커플 초대 삭제
     invites = db.query(CoupleInvite).filter(
         (CoupleInvite.inviter_user_id == user_id) |
         (CoupleInvite.invited_user_id == user_id)
     ).all()
     for invite in invites:
         db.delete(invite)
+    db.commit()
 
+    # 2. 커플 관련 분석/설정/요약/메시지 등 삭제 (couple_id 기준)
+    if couple_id:
+        # 커플 일간/주간 분석
+        db.query(CoupleDailyAnalysisResult).filter(CoupleDailyAnalysisResult.couple_id == couple_id).delete()
+        db.query(CoupleWeeklyAnalysisResult).filter(CoupleWeeklyAnalysisResult.couple_id == couple_id).delete()
+        db.query(CoupleWeeklyComparisonResult).filter(CoupleWeeklyComparisonResult.couple_id == couple_id).delete()
+        # 커플 페르소나 설정
+        db.query(PersonaConfig).filter(PersonaConfig.couple_id == couple_id).delete()
+        # 커플 요약
+        db.query(AIChatSummary).filter(AIChatSummary.couple_id == couple_id).delete()
+        # 커플 메시지
+        db.query(Message).filter(Message.couple_id == couple_id).delete()
+        # 커플 게시글/댓글/이미지
+        from db.db_tables import Post, PostImage, Comment
+        post_ids = [p.post_id for p in db.query(Post).filter(Post.couple_id == couple_id).all()]
+        if post_ids:
+            db.query(PostImage).filter(PostImage.post_id.in_(post_ids)).delete(synchronize_session=False)
+            db.query(Comment).filter(Comment.post_id.in_(post_ids)).delete(synchronize_session=False)
+            db.query(Post).filter(Post.couple_id == couple_id).delete()
+        db.commit()
+
+    # 3. 커플 정보 삭제 (user가 속한 커플)
     couples = db.query(Couple).filter(
         (Couple.user_1 == user_id) | (Couple.user_2 == user_id)
     ).all()
     for couple in couples:
         db.delete(couple)
-
-    user = db.query(User).filter(User.user_id == user_id).first()
-    if user:
-        db.delete(user)
-
     db.commit()
-    return {"detail": "User deleted successfully"}
+
+
+    # 4. 유저 관련 데이터 삭제 (user_id 기준)
+    # AI 메시지
+    db.query(AIMessage).filter(AIMessage.user_id == user_id).delete()
+    # AI 일간 분석
+    db.query(AIDailyAnalysisResult).filter(AIDailyAnalysisResult.user_id == user_id).delete()
+    # AI 요약
+    db.query(AIChatSummary).filter(AIChatSummary.user_id == user_id).delete()
+    # 메시지
+    db.query(Message).filter(Message.user_id == user_id).delete()
+    # 감정 로그
+    db.query(EmotionLog).filter(EmotionLog.user_id == user_id).delete()
+    # 설문 응답
+    db.query(UserSurveyResponse).filter(UserSurveyResponse.user_id == user_id).delete()
+    # 성향 요약
+    db.query(UserTraitSummary).filter(UserTraitSummary.user_id == user_id).delete()
+    db.commit()
+
+    # 5. 유저 삭제
+    user_obj = db.query(User).filter(User.user_id == user_id).first()
+    if user_obj:
+        db.delete(user_obj)
+        db.commit()
+
+    return {"detail": "회원 탈퇴 및 관련 데이터가 모두 삭제되었습니다."}
 
     
 # @router.get("/auth/google/callback")
