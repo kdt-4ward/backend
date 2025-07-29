@@ -72,7 +72,8 @@ def create_daily_analysis_result_json():
     
     with open("results/weekly_comparison_result.json", "w") as f:
         json.dump(serializable_comparison_data, f, ensure_ascii=False, indent=4)
-
+    db.close()
+    
 log_format = "[%(asctime)s][%(levelname)s][%(name)s] %(message)s"
 date_format = "%Y-%m-%d %H:%M:%S"
 

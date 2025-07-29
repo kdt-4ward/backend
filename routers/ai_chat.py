@@ -180,7 +180,7 @@ async def reset_ai_chat_session(req: ChatRequest):
     bot.reset()
     return {"message": f"{req.user_id} 님의 AI 세션이 초기화되었습니다."}
 
-@router.post("/configure")
+@router.patch("/configure")
 async def set_ai_bot_config(req: BotConfigRequest):
     logger.info(f"[set_ai_bot_config] user_id={req.user_id}, persona_name={req.persona_name}")
     partner_id = get_connection_manager().get_partner(req.user_id)

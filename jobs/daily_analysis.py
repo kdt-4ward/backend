@@ -22,59 +22,60 @@ async def run_daily_for_all(target_ids: list[str], analyzer: DailyAnalyzer, date
     await asyncio.gather(*tasks)
 
 async def daily_couplechat_analysis_for_all_couples(target_date=None, couple_ids=None):
-    db = get_db_session()
-    if couple_ids is None:
-        couple_ids = get_all_couple_ids(get_db_session())
-    if target_date is None:
-        target_date = datetime.date.today()
+    with get_db_session() as db:
+        if couple_ids is None:
+            couple_ids = get_all_couple_ids(db)
+        if target_date is None:
+            target_date = datetime.date.today()
 
-    analyzer = DailyAnalyzer(
-        db=db,
-        chat_fetch_func=get_daily_chat_logs_by_couple_id,
-        analyze_func=analyze_daily,
-        save_func=save_daily_couple_analysis_result,
-        prompt_name="daily_nlu"
-    )
-    await run_daily_for_all(couple_ids, analyzer, target_date)
-    # asyncio.run(run_daily_for_all(couple_ids, analyzer, target_date))
+        analyzer = DailyAnalyzer(
+            db=db,
+            chat_fetch_func=get_daily_chat_logs_by_couple_id,
+            analyze_func=analyze_daily,
+            save_func=save_daily_couple_analysis_result,
+            prompt_name="daily_nlu"
+        )
+        await run_daily_for_all(couple_ids, analyzer, target_date)
+        # asyncio.run(run_daily_for_all(couple_ids, analyzer, target_date))
 
 async def daily_aichat_analysis_for_all_users(target_date=None, user_ids=None):
-    if user_ids is None:
-        user_ids = get_all_user_ids(get_db_session())
-    if target_date is None:
-        target_date = datetime.date.today()
+    with get_db_session() as db:
+        if user_ids is None:
+            user_ids = get_all_user_ids(db)
+        if target_date is None:
+            target_date = datetime.date.today()
 
-    analyzer = DailyAnalyzer(
-        db=get_db_session(),
-        chat_fetch_func=get_daily_ai_chat_logs_by_user_id,
-        analyze_func=analyze_daily,
-        save_func=save_daily_ai_analysis_result,
-        prompt_name="daily_ai_nlu"
-    )
-    await run_daily_for_all(user_ids, analyzer, target_date)
-    # asyncio.run(run_daily_for_all(user_ids, analyzer, today))
+        analyzer = DailyAnalyzer(
+                db=db,
+                chat_fetch_func=get_daily_ai_chat_logs_by_user_id,
+                analyze_func=analyze_daily,
+            save_func=save_daily_ai_analysis_result,
+            prompt_name="daily_ai_nlu"
+        )
+        await run_daily_for_all(user_ids, analyzer, target_date)
+        # asyncio.run(run_daily_for_all(user_ids, analyzer, today))
 
 async def daily_couplechat_emotion_comparison_analysis_for_all_couples(target_date=None, couple_ids=None):
     """
     일간 커플 채팅과 감정 기록 비교 분석을 모든 커플에 대해 실행합니다.
     채팅에서 보인 감정과 기록된 감정의 일치도, 소통 패턴과 감정의 연관성 등을 분석합니다.
     """
-    db = get_db_session()
-    if couple_ids is None:
-        couple_ids = get_all_couple_ids(get_db_session())
-    if target_date is None:
-        target_date = datetime.date.today()
+    with get_db_session() as db:
+        if couple_ids is None:
+            couple_ids = get_all_couple_ids(db)
+        if target_date is None:
+            target_date = datetime.date.today()
 
-    analyzer = DailyAnalyzer(
-        db=db,
-        chat_fetch_func=get_daily_chat_logs_by_couple_id,
-        emotion_fetch_func=get_daily_emotion_logs_by_couple_id,
-        analyze_func=analyze_daily,
-        save_func=save_daily_comparison_analysis_result,
-        prompt_name="daily_comparison_prompt"
-    )
-    await run_daily_for_all(couple_ids, analyzer, target_date)
-    logger.info(f"[일간 비교 분석] {len(couple_ids)}개 커플의 {target_date} 비교 분석 완료")
+        analyzer = DailyAnalyzer(
+            db=db,
+            chat_fetch_func=get_daily_chat_logs_by_couple_id,
+            emotion_fetch_func=get_daily_emotion_logs_by_couple_id,
+            analyze_func=analyze_daily,
+            save_func=save_daily_comparison_analysis_result,
+            prompt_name="daily_comparison_prompt"
+        )
+        await run_daily_for_all(couple_ids, analyzer, target_date)
+        logger.info(f"[일간 비교 분석] {len(couple_ids)}개 커플의 {target_date} 비교 분석 완료")
 
 async def test_weekly_couplechat_analysis_from_start_date():
     start_date = datetime.datetime(2025, 7, 2, 4, 0, 0)

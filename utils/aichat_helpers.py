@@ -129,6 +129,8 @@ async def get_survey_question(user_id: str, context: str) -> dict:
             "message": f"성향 질문 조회 중 오류가 발생했습니다: {str(e)}",
             "question": None
         }
+    finally:
+        db.close()
 
 async def save_survey_response(user_id: str, question_id: int, user_response: str) -> dict:
     """
@@ -181,3 +183,5 @@ async def save_survey_response(user_id: str, question_id: int, user_response: st
             "success": False,
             "message": f"답변 저장 중 오류가 발생했습니다: {str(e)}"
         }
+    finally:
+        db.close()
