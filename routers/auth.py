@@ -8,7 +8,7 @@ from models.schema import GoogleAuthCode, UserLoginRequest, UserSignupRequest
 from fastapi import Request
 from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
-from db.db_tables import User, Couple, CoupleInvite, AIMessage
+from db.db_tables import User, Couple, CoupleInvite, AIMessage, Message
 from sqlalchemy.orm import Session
 from datetime import datetime, time
 from utils.jwt_utils import create_access_token, create_refresh_token, verify_token
@@ -149,6 +149,15 @@ def login(data: UserLoginRequest, db: Session = Depends(get_session)):
 @router.get("/delete-user")
 def delete_user(user=Depends(get_current_user), db: Session = Depends(get_session)):
     user_id = user.get("sub")
+    
+    ai_chat_logs = db.query(AIMessage).filter(AIMessage.user_id == user_id).all()
+    for log in ai_chat_logs:
+        db.delete(log)
+
+    msgs = db.query(Message).filter(Message.user_id == user_id).all()
+    for msg in msgs:
+        db.delete(msg)
+
     invites = db.query(CoupleInvite).filter(
         (CoupleInvite.inviter_user_id == user_id) |
         (CoupleInvite.invited_user_id == user_id)
@@ -165,10 +174,6 @@ def delete_user(user=Depends(get_current_user), db: Session = Depends(get_sessio
     user = db.query(User).filter(User.user_id == user_id).first()
     if user:
         db.delete(user)
-
-    ai_chat_logs = db.query(AIMessage).filter(AIMessage.user_id == user_id).all()
-    for log in ai_chat_logs:
-        db.delete(log)
 
     db.commit()
     return {"detail": "User deleted successfully"}
