@@ -117,7 +117,7 @@ async def rebuild_user_chunks(user_id, turns_per_chunk=4):
         logger.error(f"chunk 재구성 실패: {e}")
 
 # 3. 검색시: 캐시/DB에서 인덱스/embedding 활용
-async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_per_chunk=4, threshold=0.7):
+async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_per_chunk=4, threshold=0.5):
     """과거 대화 검색 (FAISS 기반)"""
     try:
         search_service = FAISSSearchService(similarity_threshold=threshold)
