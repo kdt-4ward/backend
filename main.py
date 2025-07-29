@@ -105,6 +105,8 @@ async def on_startup():
 
 #     # # ## 시나리오 데이터 삽입
 #     insert_scenario_data()
+#     # # ## 시나리오 데이터 삽입
+#     insert_scenario_data()
 
     # 분석 태스크는 백그라운드로 실행 (ELB 타임아웃 방지)
     async def run_scenario_analysis():
