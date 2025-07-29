@@ -147,7 +147,8 @@ def login(data: UserLoginRequest, db: Session = Depends(get_session)):
 
 ## user 삭제 시 커플 초대, 커플 정보 삭제.
 @router.get("/delete-user")
-def delete_user(user_id: str, db: Session = Depends(get_session)):
+def delete_user(user=Depends(get_current_user), db: Session = Depends(get_session)):
+    user_id = user.get("sub")
     invites = db.query(CoupleInvite).filter(
         (CoupleInvite.inviter_user_id == user_id) |
         (CoupleInvite.invited_user_id == user_id)
