@@ -94,22 +94,22 @@ app = FastAPI(
 def health_check():
     return {"status": "ok"}
 
-@app.on_event("startup")
-async def on_startup():
-#     insert_test_data_to_db()
-    # 데이터베이스 초기화
-    drop_database()
-    create_database_if_not_exists()
-    Base.metadata.create_all(bind=engine)
+# @app.on_event("startup")
+# async def on_startup():
+# #     insert_test_data_to_db()
+#     # 데이터베이스 초기화
+#     drop_database()
+#     create_database_if_not_exists()
+#     Base.metadata.create_all(bind=engine)
 
-    # # ## 시나리오 데이터 삽입
-    insert_scenario_data()
+#     # # ## 시나리오 데이터 삽입
+#     insert_scenario_data()
 
-    ## 시나리오 데이터 분석
-    try:
-        await process_analysis_data()
-    except Exception as e:
-        logging.error(f"데이터 분석 처리 실패: {e}")
+#     ## 시나리오 데이터 분석
+#     try:
+#         await process_analysis_data()
+#     except Exception as e:
+#         logging.error(f"데이터 분석 처리 실패: {e}")
 
     # # db 일간분석 결과 json 파일 생성
     # create_daily_analysis_result_json()
