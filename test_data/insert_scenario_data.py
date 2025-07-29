@@ -1,8 +1,8 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-
+import bcrypt
 from db.db import SessionLocal, engine
 from db.db_tables import Base, User, Couple, AIMessage, Message, UserSurveyResponse, SurveyQuestion, SurveyChoice
 
@@ -60,7 +60,8 @@ def insert_scenario_data():
                         user_id=user_id,
                         name=data["names"][i],
                         email=f"{user_id}@test.com",
-                        created_at=datetime.utcnow()
+                        password=bcrypt.hashpw("1234".encode(), bcrypt.gensalt()).decode(),
+                        created_at=datetime.utcnow() - timedelta(days=20)
                     )
                     users_to_insert.append(user)
         
@@ -85,7 +86,7 @@ def insert_scenario_data():
                     couple_id=data["couple_id"],
                     user_1=data["user_ids"][0],
                     user_2=data["user_ids"][1],
-                    created_at=datetime.utcnow()
+                    created_at=datetime.utcnow() - timedelta(days=20)
                 )
                 couples_to_insert.append(couple)
         
@@ -106,7 +107,8 @@ def insert_scenario_data():
             if not os.path.exists(folder_path):
                 print(f"⚠️ {folder_path} 폴더가 존재하지 않습니다.")
                 continue
-            
+            if couple_folder not in couple_data:
+                continue
             couple_info = couple_data[couple_folder]
             
             # AI 메시지 처리
@@ -150,7 +152,7 @@ def insert_ai_messages(db: Session, messages_data: list, couple_id: str):
             user_id=msg_data["user_id"],
             couple_id=msg_data["couple_id"],
             content=msg_data["content"],
-            created_at=datetime.fromisoformat(msg_data["created_at"])
+            created_at=datetime.fromisoformat(msg_data["created_at"]) - timedelta(days=10)
         ).first()
         
         if not existing_msg:
@@ -159,7 +161,7 @@ def insert_ai_messages(db: Session, messages_data: list, couple_id: str):
                 couple_id=msg_data["couple_id"],
                 role=msg_data["role"],
                 content=msg_data["content"],
-                created_at=datetime.fromisoformat(msg_data["created_at"]),
+                created_at=datetime.fromisoformat(msg_data["created_at"]) - timedelta(days=10),
                 embed_index=msg_data.get("embed_index"),
                 name=msg_data.get("name", None)
             )
@@ -182,7 +184,7 @@ def insert_couple_messages(db: Session, messages_data: list, couple_id: str):
             couple_id=msg_data["couple_id"],
             user_id=msg_data["user_id"],
             content=msg_data["content"],
-            created_at=datetime.fromisoformat(msg_data["created_at"])
+            created_at=datetime.fromisoformat(msg_data["created_at"]) - timedelta(days=10)
         ).first()
         
         if not existing_msg:
@@ -190,7 +192,7 @@ def insert_couple_messages(db: Session, messages_data: list, couple_id: str):
                 couple_id=msg_data["couple_id"],
                 user_id=msg_data["user_id"],
                 content=msg_data["content"],
-                created_at=datetime.fromisoformat(msg_data["created_at"]),
+                created_at=datetime.fromisoformat(msg_data["created_at"]) - timedelta(days=10),
                 is_delivered=msg_data.get("is_delivered", True)
             )
             couple_messages_to_insert.append(message)

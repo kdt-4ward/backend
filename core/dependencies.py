@@ -29,7 +29,7 @@ async def get_openai_client() -> AsyncOpenAI:
 async def get_langchain_llm() -> BaseChatModel:
     _langchain_llm: BaseChatModel = ChatOpenAI(
         model="gpt-4o",
-        temperature=0.7,
+        temperature=0.1,
         streaming=False,
         verbose=True,
         max_tokens=4096,

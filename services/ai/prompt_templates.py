@@ -5,7 +5,8 @@ from .prompts.analysis.weekly import (
     COUPLE_WEEKLY_PROMPT, 
     AI_WEEKLY_PROMPT,
     COMPARE_PROMPT,
-    SOLUTION_PROMPT
+    SOLUTION_PROMPT,
+    SOLUTION_OUTPUT_PROMPT
 )
 from .prompts.user_trait import USER_TRAIT_SUMMARY_PROMPT
 
@@ -17,6 +18,7 @@ PROMPT_REGISTRY = {
     "ai_weekly_prompt": AI_WEEKLY_PROMPT,
     "compare_prompt": COMPARE_PROMPT,
     "solution_prompt": SOLUTION_PROMPT,
+    "solution_output_prompt": SOLUTION_OUTPUT_PROMPT,
     "user_trait_summary_prompt": USER_TRAIT_SUMMARY_PROMPT,
     "chatbot_prompt_en": CHATBOT_PROMPT_EN,
     "chatbot_prompt_ko": CHATBOT_PROMPT_KO,

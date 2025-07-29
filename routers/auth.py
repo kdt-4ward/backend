@@ -15,7 +15,9 @@ from core.settings import settings
 from db.db import get_session  # DB 세션 의존성 주입
 from db.crud import get_couple_id_by_user_id
 from db.db_tables import *
+from utils.log_utils import get_logger
 
+logger = get_logger(__name__)
 router = APIRouter()
 
 # class CodeBody(BaseModel):
@@ -149,276 +151,21 @@ def login(data: UserLoginRequest, db: Session = Depends(get_session)):
 ## user 삭제 시 커플 초대, 커플 정보 삭제.
 ## user 삭제 시 관련된 모든 정보(커플, 초대, 메시지, 분석 등) 외래키 관계 고려해서 삭제
 @router.get("/delete-user")
-def delete_user(user=Depends(get_current_user), db: Session = Depends(get_session)):
-    user_id = user.get("sub")    
-    couple_id = get_couple_id_by_user_id(user_id)
-
-    # 1. 커플 초대 삭제
-    invites = db.query(CoupleInvite).filter(
-        (CoupleInvite.inviter_user_id == user_id) |
-        (CoupleInvite.invited_user_id == user_id)
-    ).all()
-    for invite in invites:
-        db.delete(invite)
-    db.commit()
-
-    # 2. 커플 관련 분석/설정/요약/메시지 등 삭제 (couple_id 기준)
-    if couple_id:
-        # 커플 일간/주간 분석
-        db.query(CoupleDailyAnalysisResult).filter(CoupleDailyAnalysisResult.couple_id == couple_id).delete()
-        db.query(CoupleWeeklyAnalysisResult).filter(CoupleWeeklyAnalysisResult.couple_id == couple_id).delete()
-        db.query(CoupleWeeklyComparisonResult).filter(CoupleWeeklyComparisonResult.couple_id == couple_id).delete()
-        # 커플 페르소나 설정
-        db.query(PersonaConfig).filter(PersonaConfig.couple_id == couple_id).delete()
-        # 커플 요약
-        db.query(AIChatSummary).filter(AIChatSummary.couple_id == couple_id).delete()
-        # 커플 메시지
-        db.query(Message).filter(Message.couple_id == couple_id).delete()
-        # 커플 게시글/댓글/이미지
-        from db.db_tables import Post, PostImage, Comment
-        post_ids = [p.post_id for p in db.query(Post).filter(Post.couple_id == couple_id).all()]
-        if post_ids:
-            db.query(PostImage).filter(PostImage.post_id.in_(post_ids)).delete(synchronize_session=False)
-            db.query(Comment).filter(Comment.post_id.in_(post_ids)).delete(synchronize_session=False)
-            db.query(Post).filter(Post.couple_id == couple_id).delete()
+def delete_user_completely(user=Depends(get_current_user), db: Session = Depends(get_session)):
+    """사용자와 관련된 모든 데이터를 완전히 삭제"""
+    user_id = user.get("sub")
+    try:
+        user = db.query(User).filter(User.user_id == user_id).first()
+        if not user:
+            return False, "사용자를 찾을 수 없습니다."
+        
+        # 하드 삭제 (CASCADE로 모든 관련 데이터 삭제)
+        db.delete(user)
         db.commit()
-
-    # 3. 커플 정보 삭제 (user가 속한 커플)
-    couples = db.query(Couple).filter(
-        (Couple.user_1 == user_id) | (Couple.user_2 == user_id)
-    ).all()
-    for couple in couples:
-        db.delete(couple)
-    db.commit()
-
-
-    # 4. 유저 관련 데이터 삭제 (user_id 기준)
-    # AI 메시지
-    db.query(AIMessage).filter(AIMessage.user_id == user_id).delete()
-    # AI 일간 분석
-    db.query(AIDailyAnalysisResult).filter(AIDailyAnalysisResult.user_id == user_id).delete()
-    # AI 요약
-    db.query(AIChatSummary).filter(AIChatSummary.user_id == user_id).delete()
-    # 메시지
-    db.query(Message).filter(Message.user_id == user_id).delete()
-    # 감정 로그
-    db.query(EmotionLog).filter(EmotionLog.user_id == user_id).delete()
-    # 설문 응답
-    db.query(UserSurveyResponse).filter(UserSurveyResponse.user_id == user_id).delete()
-    # 성향 요약
-    db.query(UserTraitSummary).filter(UserTraitSummary.user_id == user_id).delete()
-    db.commit()
-
-    # 5. 유저 삭제
-    user_obj = db.query(User).filter(User.user_id == user_id).first()
-    if user_obj:
-        db.delete(user_obj)
-        db.commit()
-
-    return {"detail": "회원 탈퇴 및 관련 데이터가 모두 삭제되었습니다."}
-
-    
-# @router.get("/auth/google/callback")
-# async def google_callback_get(request: Request):
-#     # 쿼리 파라미터에서 code 꺼냄
-#     code = request.query_params.get("code")
-#     print("✅ GET 방식 전달받은 code:", code)
-
-#     if not code:
-#         raise HTTPException(status_code=400, detail="코드 없음")
-
-#     token_json = await get_google_access_token(code)
-#     access_token = token_json.get("access_token")
-
-#     if not access_token:
-#         raise HTTPException(status_code=400, detail="토큰 요청 실패")
-
-#     userinfo = await get_google_userinfo(access_token)
-#     print("👤 유저 정보:", userinfo)
-
-#     name = userinfo.get("name")
-#     email = userinfo.get("email")
-
-#     if not email or not name:
-#         raise HTTPException(status_code=400, detail="유저 정보 누락")
-
-#     # DB 저장
-#     db = SessionLocal()
-#     try:
-#         user = User(email=email, name=name)
-#         db.add(user)
-#         db.commit()
-#     except IntegrityError:
-#         db.rollback()  # 이미 존재하는 경우 무시
-#     finally:
-#         db.close()
-
-#     return {"user_info": {"name": name, "email": email}}
-#     # return {"user_info": userinfo}
-
-# def save_user(name: str, email: str):
-#     db: Session = SessionLocal()
-#     user_id = hash_email(email)
-
-#     # 중복 저장 방지
-#     existing = db.query(User).filter_by(user_id=user_id).first()
-#     if existing:
-#         print(f"🔁 이미 존재하는 사용자: {user_id}")
-#         db.close()
-#         return user_id
-
-#     user = User(user_id=user_id, name=name)
-#     db.add(user)
-#     db.commit()
-#     db.close()
-#     print(f"✅ 사용자 저장 완료: {user_id}")
-#     return user_id
-
-
-# @router.get("/auth/google/callback")
-# async def google_callback_get(request: Request):
-#     code = request.query_params.get("code")
-#     print("✅ GET 방식 전달받은 code:", code)
-
-#     if not code:
-#         raise HTTPException(status_code=400, detail="코드 없음")
-
-#     token_json = await get_google_access_token(code)
-#     access_token = token_json.get("access_token")
-
-#     if not access_token:
-#         raise HTTPException(status_code=400, detail="토큰 요청 실패")
-
-#     userinfo = await get_google_userinfo(access_token)
-#     print("👤 유저 정보:", userinfo)
-
-#     name = userinfo.get("name")
-#     email = userinfo.get("email")
-
-#     if not name or not email:
-#         raise HTTPException(status_code=400, detail="유저 정보 누락")
-
-#     # ✅ 이메일 해싱해서 user_id 생성
-#     user_id = hash_email(email)
-
-#     db: Session = SessionLocal()
-#     try:
-#         # ✅ 이미 존재하는 사용자면 스킵
-#         existing = db.query(User).filter_by(user_id=user_id).first()
-#         if not existing:
-#             user = User(
-#                 user_id=user_id,
-#                 name=name,
-#                 email=email,
-#                 password="",
-#                 created_at=datetime.utcnow()
-#             )
-#             db.add(user)
-#             db.commit()
-#             print(f"✅ 새 사용자 저장 완료: {user_id}")
-#         else:
-#             print(f"🔁 이미 존재하는 사용자: {user_id}")
-#     finally:
-#         db.close()
-
-#     return {
-#         "user_info": {
-#             "user_id": user_id,
-#             "name": name,
-#             "email": email
-#         }
-#     }
-
-# @router.post("/auth/google/code")
-# async def google_login_code(request: Request):
-#     code = request.query_params.get("code")
-#     if not code:
-#         raise HTTPException(status_code=400, detail="code missing")
-    
-#     # 1. 구글에서 access_token 받아오기
-#     token_json = await get_google_access_token(code)
-#     access_token = token_json.get("access_token")
-#     if not access_token:
-#         raise HTTPException(status_code=400, detail="token request failed")
-    
-#     # 2. 구글에서 유저 정보 받아오기
-#     userinfo = await get_google_userinfo(access_token)
-#     name = userinfo.get("name")
-#     email = userinfo.get("email")
-#     if not name or not email:
-#         raise HTTPException(status_code=400, detail="user info missing")
-    
-#     # 3. 유저 생성(없으면) + user_id 해싱 생성
-#     user_id = hash_email(email)
-#     db: Session = SessionLocal()
-#     try:
-#         user = db.query(User).filter_by(user_id=user_id).first()
-#         if not user:
-#             user = User(
-#                 user_id=user_id,
-#                 name=name,
-#                 email=email,
-#                 created_at=datetime.utcnow()
-#             )
-#             db.add(user)
-#             db.commit()
-#         # 4. JWT 액세스/리프레시 토큰 발급
-#         access_token_jwt = create_access_token({"sub": user_id, "email": email})
-#         refresh_token_jwt = create_refresh_token({"sub": user_id, "email": email})
-#     finally:
-#         db.close()
-    
-#     # 5. 결과 반환
-#     return {
-#         "user_info": {
-#             "user_id": user_id,
-#             "name": name,
-#             "email": email
-#         },
-#         "access_token": access_token_jwt,
-#         "refresh_token": refresh_token_jwt,
-#         "token_type": "bearer"
-#     }
-
-# # --- GET 방식 (웹리다이렉트 테스트용, 앱은 주로 POST 사용) ---
-# @router.get("/auth/google/callback")
-# async def google_callback_get(request: Request):
-#     code = request.query_params.get("code")
-#     if not code:
-#         raise HTTPException(status_code=400, detail="코드 없음")
-
-#     token_json = await get_google_access_token(code)
-#     access_token = token_json.get("access_token")
-#     if not access_token:
-#         raise HTTPException(status_code=400, detail="토큰 요청 실패")
-    
-#     userinfo = await get_google_userinfo(access_token)
-#     name = userinfo.get("name")
-#     email = userinfo.get("email")
-    
-#     if not name or not email:
-#         raise HTTPException(status_code=400, detail="유저 정보 누락")
-    
-#     user_id = hash_email(email)
-#     db: Session = SessionLocal()
-#     try:
-#         existing = db.query(User).filter_by(user_id=user_id).first()
-#         if not existing:
-#             user = User(
-#                 user_id=user_id,
-#                 name=name,
-#                 email=email,
-#                 created_at=datetime.utcnow()
-#             )
-#             db.add(user)
-#             db.commit()
-#     finally:
-#         db.close()
-
-#     return {
-#         "user_info": {
-#             "user_id": user_id,
-#             "name": name,
-#             "email": email
-#         }
-#     }
+        logger.info(f"사용자 {user_id} 완전 삭제 완료")
+        return True
+        
+    except Exception as e:
+        db.rollback()
+        logger.error(f"사용자 {user_id} 삭제 실패: {e}")
+        return False

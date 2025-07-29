@@ -88,12 +88,12 @@ class SurveyManager:
             
             # AI 선택이 실패한 경우 기본 로직으로 fallback
             logger.warning(f"[SurveyManager] AI 질문 선택 실패, 기본 로직으로 fallback")
-            return self._select_question_by_priority(unanswered_questions)
+            return None
             
         except Exception as e:
             logger.error(f"[SurveyManager] 맥락적 질문 선택 실패: {e}")
             # 에러 발생 시 기본 로직으로 fallback
-            return self._select_question_by_priority(unanswered_questions)
+            return None
     
     def _select_question_by_priority(self, unanswered_questions: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
         """
@@ -128,9 +128,7 @@ class SurveyManager:
             for q in unanswered_questions:
                 question_data = {
                     "question_id": q["question_id"],
-                    "text": q["text"],
-                    "code": q["code"],
-                    "choices": [choice["text"] for choice in q["choices"]]
+                    "text": q["text"]
                 }
                 questions_json.append(question_data)
             
@@ -152,12 +150,18 @@ class SurveyManager:
 3. 자연스럽게 대화 흐름에 삽입할 수 있는 질문
 
 JSON 형식으로 응답해주세요:
+
 {{
     "selected_question_id": 선택한_질문의_ID,
     "reasoning": "선택 이유 (간단히 설명)"
 }}
 
-선택할 수 없는 경우 null을 반환하세요.
+선택할 수 없는 경우 아래 형식으로 응답해주세요:
+
+{{
+  "selected_question_id": null,
+  "reasoning": "현재 대화와 관련된 질문이 없습니다."
+}}
 """
             
             # OpenAI 호출

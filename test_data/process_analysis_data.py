@@ -269,7 +269,7 @@ async def process_analysis_data():
         logger.info("1️⃣ 성향 분석 시작")
         logger.info("=" * 50)
         
-        # await run_trait_summary_for_all_users()
+        await run_trait_summary_for_all_users()
         logger.info("✅ 성향 분석 완료")
         
         # 2. 일간 분석 (확인 후 필요한 것만)
