@@ -8,7 +8,7 @@ from models.schema import GoogleAuthCode, UserLoginRequest, UserSignupRequest
 from fastapi import Request
 from db.db import SessionLocal
 from sqlalchemy.exc import IntegrityError
-from db.db_tables import User
+from db.db_tables import User, Couple, CoupleInvite, AIMessage
 from sqlalchemy.orm import Session
 from datetime import datetime, time
 from utils.jwt_utils import create_access_token, create_refresh_token, verify_token
@@ -145,6 +145,34 @@ def login(data: UserLoginRequest, db: Session = Depends(get_session)):
         "couple_id": user.couple_id
     }
 
+## user 삭제 시 커플 초대, 커플 정보 삭제.
+@router.get("/delete-user")
+def delete_user(user_id: str, db: Session = Depends(get_session)):
+    invites = db.query(CoupleInvite).filter(
+        (CoupleInvite.inviter_user_id == user_id) |
+        (CoupleInvite.invited_user_id == user_id)
+    ).all()
+    for invite in invites:
+        db.delete(invite)
+
+    couples = db.query(Couple).filter(
+        (Couple.user_1 == user_id) | (Couple.user_2 == user_id)
+    ).all()
+    for couple in couples:
+        db.delete(couple)
+
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if user:
+        db.delete(user)
+
+    ai_chat_logs = db.query(AIMessage).filter(AIMessage.user_id == user_id).all()
+    for log in ai_chat_logs:
+        db.delete(log)
+
+    db.commit()
+    return {"detail": "User deleted successfully"}
+
+    
 # @router.get("/auth/google/callback")
 # async def google_callback_get(request: Request):
 #     # 쿼리 파라미터에서 code 꺼냄
