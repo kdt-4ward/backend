@@ -159,9 +159,29 @@ def delete_user_completely(user=Depends(get_current_user), db: Session = Depends
         if not user:
             return False, "사용자를 찾을 수 없습니다."
         
-        # 하드 삭제 (CASCADE로 모든 관련 데이터 삭제)
+        # 1. 먼저 사용자의 couple_id를 None으로 설정하여 순환 참조 해제
+        if user.couple_id:
+            # 커플 정보 조회
+            couple = db.query(Couple).filter_by(couple_id=user.couple_id).first()
+            if couple:
+                # 커플의 다른 사용자도 couple_id 해제
+                other_user_id = couple.user_2 if couple.user_1 == user_id else couple.user_1
+                other_user = db.query(User).filter_by(user_id=other_user_id).first()
+                if other_user:
+                    other_user.couple_id = None
+                
+                # 사용자의 couple_id 해제
+                user.couple_id = None
+                db.commit()
+                
+                # 2. 커플 삭제 (이제 순환 참조 없음)
+                db.delete(couple)
+                db.commit()
+        
+        # 3. 마지막으로 사용자 삭제
         db.delete(user)
         db.commit()
+        
         logger.info(f"사용자 {user_id} 완전 삭제 완료")
         return True
         

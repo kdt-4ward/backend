@@ -95,8 +95,8 @@ app = FastAPI(
 def health_check():
     return {"status": "ok"}
 
-@app.on_event("startup")
-async def on_startup():
+# @app.on_event("startup")
+# async def on_startup():
 # #     insert_test_data_to_db()
 #     # 데이터베이스 초기화
 #     drop_database()
@@ -108,15 +108,15 @@ async def on_startup():
 #     # # ## 시나리오 데이터 삽입
 #     insert_scenario_data()
 
-    # 분석 태스크는 백그라운드로 실행 (ELB 타임아웃 방지)
-    async def run_scenario_analysis():
-        try:
-            await process_analysis_data()
-            logging.info("시나리오 데이터 분석 완료")
-        except Exception as e:
-            logging.error(f"데이터 분석 처리 실패: {e}")
+    # # 분석 태스크는 백그라운드로 실행 (ELB 타임아웃 방지)
+    # async def run_scenario_analysis():
+    #     try:
+    #         await process_analysis_data()
+    #         logging.info("시나리오 데이터 분석 완료")
+    #     except Exception as e:
+    #         logging.error(f"데이터 분석 처리 실패: {e}")
 
-    asyncio.create_task(run_scenario_analysis())
+    # asyncio.create_task(run_scenario_analysis())
 
 # CORS
 app.add_middleware(
