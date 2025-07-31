@@ -171,7 +171,7 @@ class SurveyManager:
 """
             
             # OpenAI 호출
-            response = await call_openai_completion([{"role": "user", "content": prompt}])
+            response, _ = await call_openai_completion([{"role": "user", "content": prompt}])
             
             # 응답 파싱
             try:
@@ -468,7 +468,7 @@ JSON 형식으로 응답해주세요:
 """
             
             # OpenAI 호출
-            response = await call_openai_completion([{"role": "user", "content": prompt}])
+            response, _ = await call_openai_completion([{"role": "user", "content": prompt}])
             
             # 응답 파싱
             try:

@@ -106,7 +106,7 @@ class RAGService:
                     chunk_messages.append(messages[i])
                     i += 1
             
-            if len(chunk_messages) >= self.turns_per_chunk * 2:  # 최소 8개 메시지 이상
+            if len(chunk_messages) >= self.turns_per_chunk * 2:  # 최소 turns_per_chunk * 2 개 메시지 이상
                 chunk = self._build_chunk_dict(chunk_messages)
                 chunks.append(chunk)
                 

@@ -141,6 +141,18 @@
                 {
                     "name": "SUM_TRIGGER_TOKENS",
                     "value": "1500"
+                },
+                {
+                    "name": "FAISS_TURNS_PER_CHUNK",
+                    "value": "3"
+                },
+                {
+                    "name": "FAISS_OVERLAP_TURNS",
+                    "value": "1"
+                },
+                {
+                    "name": "FAISS_THRESHOLD",
+                    "value": "0.3"
                 }
             ],
             "environmentFiles": [],

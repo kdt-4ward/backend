@@ -53,6 +53,11 @@ class Settings(BaseSettings):
     sum_turn_threshold: int = Field(..., env="SUM_TURN_THRESHOLD")
     sum_remaining_size: int = Field(..., env="SUM_REMAINING_SIZE")
     sum_trigger_tokens: int = Field(..., env="SUM_TRIGGER_TOKENS")
+
+    # === FAISS ===
+    faiss_turns_per_chunk: int = Field(..., env="FAISS_TURNS_PER_CHUNK")
+    faiss_overlap_turns: int = Field(..., env="FAISS_OVERLAP_TURNS")
+    faiss_threshold: float = Field(..., env="FAISS_THRESHOLD")
     
     class Config:
         env_file = ".env"
