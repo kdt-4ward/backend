@@ -34,12 +34,26 @@ class OptimizedFAISSCache:
     @classmethod
     def save_faiss_index(cls, user_id: str, index: faiss.Index, chunks: List[Dict], 
                         chunk_texts: List[str], metadata: Dict):
-        """FAISS 인덱스와 관련 데이터를 Redis에 저장"""
+        """FAISS 인덱스와 관련 데이터를 Redis에 저장 (안전한 버전)"""
         try:
-            # FAISS 인덱스를 바이트로 직렬화
-            index_bytes = faiss.serialize_index(index)
+            # 1. FAISS 인덱스 직렬화
+            try:
+                # 먼저 faiss.serialize_index 시도
+                index_bytes = faiss.serialize_index(index)
+                
+                # NumPy 배열인 경우 bytes로 변환
+                if isinstance(index_bytes, np.ndarray):
+                    index_bytes = index_bytes.tobytes()
+                elif not isinstance(index_bytes, bytes):
+                    # 다른 타입인 경우 pickle 사용
+                    index_bytes = pickle.dumps(index_bytes)
+                    
+            except Exception as serialize_error:
+                logger.warning(f"faiss.serialize_index 실패, pickle 사용: {serialize_error}")
+                # pickle로 대체
+                index_bytes = pickle.dumps(index)
             
-            # Redis에 저장
+            # 2. Redis에 저장
             redis_bin_client.set(cls._index_key(user_id), index_bytes)
             redis_client.set(cls._chunk_text_key(user_id), json.dumps(chunk_texts))
             redis_client.set(cls._meta_key(user_id), json.dumps(metadata))
@@ -48,23 +62,30 @@ class OptimizedFAISSCache:
             
         except Exception as e:
             logger.error(f"❌ FAISS 인덱스 캐시 저장 실패: {e}")
-    
+            logger.error(f"index_bytes 타입: {type(index_bytes) if 'index_bytes' in locals() else 'undefined'}")
+
     @classmethod
     def load_faiss_index(cls, user_id: str) -> Tuple[Optional[faiss.Index], Optional[List[str]], Optional[Dict]]:
-        """Redis에서 FAISS 인덱스와 관련 데이터 로드"""
+        """Redis에서 FAISS 인덱스와 관련 데이터 로드 (안전한 버전)"""
         try:
-            # 인덱스 로드
+            # 1. 인덱스 로드
             index_bytes = redis_bin_client.get(cls._index_key(user_id))
             if not index_bytes:
                 return None, None, None
             
-            index = faiss.deserialize_index(index_bytes)
+            # 2. 역직렬화 시도
+            try:
+                # 먼저 faiss.deserialize_index 시도
+                index = faiss.deserialize_index(index_bytes)
+            except Exception as deserialize_error:
+                logger.warning(f"faiss.deserialize_index 실패, pickle 사용: {deserialize_error}")
+                # pickle로 대체
+                index = pickle.loads(index_bytes)
             
-            # chunk 텍스트 로드
+            # 3. 나머지 데이터 로드
             chunk_texts_raw = redis_client.get(cls._chunk_text_key(user_id))
             chunk_texts = json.loads(chunk_texts_raw) if chunk_texts_raw else []
             
-            # 메타데이터 로드
             meta_raw = redis_client.get(cls._meta_key(user_id))
             metadata = json.loads(meta_raw) if meta_raw else {}
             
