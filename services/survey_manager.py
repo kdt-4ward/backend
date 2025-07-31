@@ -134,33 +134,39 @@ class SurveyManager:
             
             # OpenAI 프롬프트 구성
             prompt = f"""
-당신은 연애 상담 AI 챗봇입니다. 사용자와의 대화 맥락을 고려하여 가장 적절한 성향 질문을 선택해야 합니다.
+당신은 연애 상담을 전문으로 하는 AI 챗봇입니다.  
+사용자에게 보다 적절한 조언을 제공하기 위해, 현재 대화 맥락에 자연스럽게 이어질 수 있는 성향 질문을 하나 선정하거나, 적절한 질문이 없을 경우 새로운 질문을 생성해야 합니다.
 
-[현재 대화 맥락]
+[현재 대화 맥락]  
 {conversation_context}
 
-[사용 가능한 성향 질문들]
+[사용 가능한 성향 질문 목록]  
 {json.dumps(questions_json, ensure_ascii=False, indent=2)}
 
-위 질문들 중에서 현재 대화 맥락과 가장 관련성이 높고, 사용자에게 자연스럽게 물어볼 수 있는 질문을 하나 선택해주세요.
+다음 기준에 따라 적절한 성향 질문을 선택하거나, 새로운 질문을 생성해 주세요.  
+이 질문은 사용자의 성향, 가치관, 상황을 더 깊이 이해함으로써 개인화된 상담과 조언을 제공하기 위한 목적입니다.
 
-선택 기준:
-1. 현재 대화 주제와 직접적으로 관련된 질문
-2. 사용자의 상황을 더 잘 이해하는데 도움이 되는 질문
-3. 자연스럽게 대화 흐름에 삽입할 수 있는 질문
+1. 현재 대화 주제와 직접적으로 관련된 질문일 것
+2. 사용자의 감정이나 상황을 더 깊이 이해하는 데 도움이 될 것
+3. 대화 흐름상 자연스럽게 이어질 수 있을 것
+4. 조언이나 피드백을 개인화하기 위해 필요한 정보일 것
+5. 사용자의 성향, 가치관, 관계 패턴 등을 파악하는 데 유의미할 것
 
-JSON 형식으로 응답해주세요:
+---
+
+질문을 선택한 경우, 다음 형식으로 응답하세요:
 
 {{
-    "selected_question_id": 선택한_질문의_ID,
-    "reasoning": "선택 이유 (간단히 설명)"
+  "selected_question_id": "선택한 질문의 ID",
+  "reasoning": "선택 이유에 대한 간단한 설명"
 }}
 
-선택할 수 없는 경우 아래 형식으로 응답해주세요:
+선택할 만한 질문이 없는 경우, 자연스러운 흐름에 맞는 질문을 새로 생성한 뒤 다음 형식으로 응답하세요:
 
 {{
   "selected_question_id": null,
-  "reasoning": "현재 대화와 관련된 질문이 없습니다."
+  "reasoning": "새로운 질문을 생성하게 된 이유",
+  "generated_question": "생성한 질문 문장"
 }}
 """
             
@@ -183,6 +189,16 @@ JSON 형식으로 응답해주세요:
                     logger.warning(f"[SurveyManager] AI가 선택한 질문 ID {selected_id}를 찾을 수 없음")
                     return None
                 else:
+                    # 새로운 질문 생성된 경우
+                    generated_question = result.get("generated_question")
+                    if generated_question:
+                        logger.info(f"[SurveyManager] AI 질문 생성 결과: {generated_question}")
+                        
+                        # 새로운 질문을 DB에 저장
+                        new_question = await self._save_generated_question(generated_question, reasoning)
+                        if new_question:
+                            return new_question
+                    
                     logger.info(f"[SurveyManager] AI가 적절한 질문을 찾지 못함")
                     return None
                     
@@ -192,6 +208,68 @@ JSON 형식으로 응답해주세요:
                 
         except Exception as e:
             logger.error(f"[SurveyManager] AI 질문 선택 중 오류: {e}")
+            return None
+    
+    async def _save_generated_question(self, question_text: str, reasoning: str) -> Optional[Dict[str, Any]]:
+        """
+        AI가 생성한 새로운 질문을 DB에 저장합니다.
+        """
+        try:
+            # 가장 높은 order 값 조회
+            max_order = self.db.query(SurveyQuestion.order).order_by(SurveyQuestion.order.desc()).first()
+            new_order = (max_order[0] if max_order else 0) + 1
+            
+            # 새로운 질문 생성
+            new_question = SurveyQuestion(
+                code=f"AI_GENERATED_{new_order}",
+                text=question_text,
+                order=new_order,
+                created_at=datetime.utcnow()
+            )
+            
+            self.db.add(new_question)
+            self.db.commit()
+            self.db.refresh(new_question)
+            
+            # 기본 선택지 생성 (주관식 형태)
+            default_choices = [
+                {"text": "예", "tag": "yes"},
+                {"text": "아니오", "tag": "no"},
+                {"text": "모르겠다", "tag": "unsure"}
+            ]
+            
+            for choice_data in default_choices:
+                choice = SurveyChoice(
+                    question_id=new_question.id,
+                    text=choice_data["text"],
+                    tag=choice_data["tag"]
+                )
+                self.db.add(choice)
+            
+            self.db.commit()
+            
+            # 생성된 질문을 반환 형식으로 변환
+            created_question = {
+                "question_id": new_question.id,
+                "code": new_question.code,
+                "text": new_question.text,
+                "order": new_question.order,
+                "choices": [
+                    {
+                        "choice_id": choice.id,
+                        "text": choice.text,
+                        "tag": choice.tag
+                    }
+                    for choice in self.db.query(SurveyChoice).filter_by(question_id=new_question.id).all()
+                ]
+            }
+            
+            logger.info(f"[SurveyManager] 새로운 질문 DB 저장 완료: question_id={new_question.id}, text={question_text}")
+            return created_question
+            
+        except Exception as e:
+            logger.error(f"[SurveyManager] 새로운 질문 DB 저장 실패: {e}")
+            self.db.rollback()
             return None
     
     def save_survey_response(self, user_id: str, question_id: int, choice_id: Optional[int] = None, custom_input: Optional[str] = None) -> bool:

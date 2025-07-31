@@ -6,6 +6,7 @@ import numpy as np
 import json
 from datetime import datetime
 from utils.log_utils import get_logger
+from services.optimized_faiss_search_service import OptimizedFAISSSearchService
 
 logger = get_logger(__name__)
 
@@ -13,9 +14,10 @@ class RAGService:
     def __init__(self, turns_per_chunk: int = 4, overlap_turns: int = 1):
         self.turns_per_chunk = turns_per_chunk
         self.overlap_turns = overlap_turns  # overlap할 턴 수
+        self.optimized_search_service = OptimizedFAISSSearchService()
     
     async def build_chunks_and_embeddings(self, user_id: str) -> List[Dict]:
-        """DB에서 메시지를 읽어서 chunk 생성 및 embedding 저장"""
+        """DB에서 메시지를 읽어서 chunk 생성 및 embedding 저장 (캐시 업데이트 포함)"""
         session = get_session()
         
         try:
@@ -47,6 +49,10 @@ class RAGService:
                 await self._process_chunk_embedding(session, user_id, chunk)
             
             session.commit()
+            
+            # 캐시 증분 업데이트
+            await self._update_cache_incrementally(user_id, chunks)
+            
             logger.info(f"Successfully processed {len(chunks)} chunks for user {user_id}")
             return chunks
             
@@ -56,6 +62,13 @@ class RAGService:
             return []
         finally:
             session.close()
+    
+    async def _update_cache_incrementally(self, user_id: str, new_chunks: List[Dict]):
+        """새로운 chunk가 추가될 때 캐시 증분 업데이트"""
+        try:
+            await self.optimized_search_service.update_cache_incrementally(user_id, new_chunks)
+        except Exception as e:
+            logger.error(f"캐시 증분 업데이트 실패: {e}")
     
     def _create_chunks_from_messages(self, messages: List[AIMessage]) -> List[Dict]:
         """메시지 리스트에서 chunk 생성 (overlap 포함)"""
@@ -174,15 +187,12 @@ class RAGService:
             raise
     
     async def rebuild_all_chunks(self, user_id: str) -> List[Dict]:
-        """사용자의 모든 메시지로부터 chunk 재구성"""
+        """사용자의 모든 chunk 재구성 (캐시 재구성 포함)"""
         session = get_session()
         
         try:
-            # 기존 chunk metadata 삭제
+            # 기존 chunk 삭제
             session.query(ChunkMetadata).filter_by(user_id=user_id).delete()
-            
-            # 모든 메시지의 embed_index 초기화
-            session.query(AIMessage).filter_by(user_id=user_id).update({"embed_index": None})
             
             # 모든 메시지 가져오기
             all_messages = (
@@ -193,21 +203,26 @@ class RAGService:
                 .all()
             )
             
-            session.commit()
-            
             if not all_messages:
                 logger.info(f"No messages found for user {user_id}")
                 return []
             
-            logger.info(f"Rebuilding chunks for {len(all_messages)} messages for user {user_id}")
-            
-            # chunk 생성 및 저장
+            # chunk 생성
             chunks = self._create_chunks_from_messages(all_messages)
             
+            if not chunks:
+                logger.info(f"No valid chunks created for user {user_id}")
+                return []
+            
+            # embedding 생성 및 저장
             for chunk in chunks:
                 await self._process_chunk_embedding(session, user_id, chunk)
             
             session.commit()
+            
+            # 캐시 전체 재구성
+            await self._rebuild_cache(user_id)
+            
             logger.info(f"Successfully rebuilt {len(chunks)} chunks for user {user_id}")
             return chunks
             
@@ -217,6 +232,13 @@ class RAGService:
             return []
         finally:
             session.close()
+    
+    async def _rebuild_cache(self, user_id: str):
+        """캐시 전체 재구성"""
+        try:
+            await self.optimized_search_service._rebuild_cache_from_db(user_id)
+        except Exception as e:
+            logger.error(f"캐시 재구성 실패: {e}")
     
     def get_chunk_count(self, user_id: str) -> int:
         """사용자의 chunk 개수 반환"""

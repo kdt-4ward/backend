@@ -90,9 +90,15 @@ async def get_couple_weekly_solution(
     try:
         result = db.query(CoupleWeeklyRecommendation).filter(
             CoupleWeeklyRecommendation.couple_id == couple_id
-        ).filter(
-            CoupleWeeklyRecommendation.week_end_date <= end_date
-        ).order_by(CoupleWeeklyRecommendation.week_start_date.desc()).first()
+        ).order_by(CoupleWeeklyRecommendation.week_end_date.desc())
+
+        if end_date:
+            result = result.filter(
+                CoupleWeeklyRecommendation.week_end_date <= end_date
+            )
+
+        result = result.first()
+
 
         if result is None:
             return {

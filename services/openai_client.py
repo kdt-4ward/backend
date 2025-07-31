@@ -77,11 +77,11 @@ async def openai_completion_with_function_call(
 
     call_count = 0
     while call_count < max_func_calls:
-        print(f"[openai_completion_with_function_call] call_count={call_count} | params={params}")
+        logger.info(f"[openai_completion_with_function_call] call_count={call_count} | params={params}")
         try:
             response = await client.chat.completions.create(**params)
         except BadRequestError as e:
-            print(e)
+            logger.error(f"[openai_completion_with_function_call] BadRequestError: {e}")
         
         if not response.choices:
             raise ValueError("GPT 응답에 choices가 없습니다.")
@@ -119,12 +119,16 @@ async def openai_completion_with_function_call(
             else:
                 function_msg_id = history[-1]["id"] + 1
             
-            history.append({
-                "role": "function",
-                "name": func_name,
-                "content": json.dumps(result, ensure_ascii=False) if not isinstance(result, str) else result,
-                "id":function_msg_id
-            })
+            if func_name == "save_survey_response":
+                logger.info(f"[function_call] save_survey_response: {result}")
+                params["function_call"] = "none"
+            else:
+                history.append({
+                    "role": "function",
+                    "name": func_name,
+                    "content": json.dumps(result, ensure_ascii=False) if not isinstance(result, str) else result,
+                    "id":function_msg_id
+                })
 
             if bot is not None:
                 bot.save_history(history)

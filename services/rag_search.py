@@ -13,6 +13,7 @@ from datetime import datetime
 from utils.log_utils import get_logger
 from services.rag_service import RAGService
 from services.faiss_search_service import FAISSSearchService
+from services.optimized_faiss_search_service import OptimizedFAISSSearchService
 
 logger = get_logger(__name__)
 
@@ -116,12 +117,12 @@ async def rebuild_user_chunks(user_id, turns_per_chunk=4):
     except Exception as e:
         logger.error(f"chunk 재구성 실패: {e}")
 
-# 3. 검색시: 캐시/DB에서 인덱스/embedding 활용
+# 3. 검색시: 캐시/DB에서 인덱스/embedding 활용 (최적화된 버전)
 async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_per_chunk=4, threshold=0.5):
-    """과거 대화 검색 (FAISS 기반)"""
+    """과거 대화 검색 (최적화된 FAISS 기반)"""
     try:
-        search_service = FAISSSearchService(similarity_threshold=threshold)
-        results = await search_service.search_similar_chunks(user_id, query, top_k)
+        search_service = OptimizedFAISSSearchService(similarity_threshold=threshold)
+        results = await search_service.search_similar_chunks_optimized(user_id, query, top_k)
         
         if not results:
             return "관련있는 대화 기록이 없습니다."
@@ -135,10 +136,10 @@ async def search_past_chats(query, top_k=3, user_id=None, couple_id=None, turns_
         return "검색 중 오류가 발생했습니다."
 
 async def search_past_chats_with_time_filter(query, user_id, start_date=None, end_date=None, top_k=3, threshold=0.7):
-    """시간 필터를 적용한 과거 대화 검색 (FAISS 기반)"""
+    """시간 필터를 적용한 과거 대화 검색 (최적화된 FAISS 기반)"""
     try:
-        search_service = FAISSSearchService(similarity_threshold=threshold)
-        results = await search_service.search_with_time_filter(
+        search_service = OptimizedFAISSSearchService(similarity_threshold=threshold)
+        results = await search_service.search_with_time_filter_optimized(
             user_id, query, start_date, end_date, top_k
         )
         
@@ -149,7 +150,7 @@ async def search_past_chats_with_time_filter(query, user_id, start_date=None, en
         return response_text
         
     except Exception as e:
-        logger.error(f"Time-filtered FAISS search failed: {e}")
+        logger.error(f"최적화된 시간 필터 FAISS search failed: {e}")
         return "검색 중 오류가 발생했습니다."
 
 async def search_past_chats_by_keywords(keywords, user_id, top_k=3, threshold=0.7):
@@ -167,3 +168,22 @@ async def search_past_chats_by_keywords(keywords, user_id, top_k=3, threshold=0.
     except Exception as e:
         logger.error(f"Keyword search with FAISS failed: {e}")
         return "검색 중 오류가 발생했습니다."
+
+# 새로운 함수: 캐시 관리
+async def rebuild_user_cache(user_id: str):
+    """사용자의 FAISS 캐시 재구성"""
+    try:
+        search_service = OptimizedFAISSSearchService()
+        await search_service._rebuild_cache_from_db(user_id)
+        logger.info(f"✅ 사용자 {user_id}의 캐시 재구성 완료")
+    except Exception as e:
+        logger.error(f"❌ 캐시 재구성 실패: {e}")
+
+async def clear_user_cache(user_id: str):
+    """사용자의 FAISS 캐시 삭제"""
+    try:
+        from services.optimized_faiss_search_service import OptimizedFAISSCache
+        OptimizedFAISSCache.clear_cache(user_id)
+        logger.info(f"✅ 사용자 {user_id}의 캐시 삭제 완료")
+    except Exception as e:
+        logger.error(f"❌ 캐시 삭제 실패: {e}")
