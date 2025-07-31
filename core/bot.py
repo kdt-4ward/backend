@@ -10,6 +10,7 @@ from db.db import SessionLocal
 from datetime import datetime
 from models.schema import Role
 from utils.token_truncate import count_tokens
+from core.settings import settings
 
 class PersonaChatBot:
     def __init__(self, user_id: str, lang: str = None):
@@ -133,10 +134,11 @@ class PersonaChatBot:
             if current_turn:
                 turns.append(current_turn)
 
-            turn_threshold = 10
-            remaining_size = 5
+            turn_threshold = settings.sum_turn_threshold
+            remaining_size = settings.sum_remaining_size
+            summary_trigger_tokens = settings.sum_trigger_tokens
             assert turn_threshold > remaining_size, f"turn_threshold: {turn_threshold}, MIN_REMAINING_SIZE: {remaining_size}"
-            summary_trigger_tokens = 2500
+            
 
             prev_summary = self.get_summary()
 

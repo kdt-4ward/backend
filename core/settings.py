@@ -49,6 +49,11 @@ class Settings(BaseSettings):
     s3_region: str = Field(..., env="S3_REGION")
     s3_bucket_name: str = Field(..., env="S3_BUCKET_NAME")
 
+    # === Summary ===
+    sum_turn_threshold: int = Field(..., env="SUM_TURN_THRESHOLD")
+    sum_remaining_size: int = Field(..., env="SUM_REMAINING_SIZE")
+    sum_trigger_tokens: int = Field(..., env="SUM_TRIGGER_TOKENS")
+    
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

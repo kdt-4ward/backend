@@ -129,6 +129,18 @@
                 {
                     "name": "S3_REGION",
                     "value": "ap-northeast-2"
+                },
+                {
+                    "name": "SUM_TURN_THRESHOLD",
+                    "value": "7"
+                },
+                {
+                    "name": "SUM_REMAINING_SIZE",
+                    "value": "3"
+                },
+                {
+                    "name": "SUM_TRIGGER_TOKENS",
+                    "value": "1500"
                 }
             ],
             "environmentFiles": [],
