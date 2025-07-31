@@ -36,22 +36,8 @@ class OptimizedFAISSCache:
                         chunk_texts: List[str], metadata: Dict):
         """FAISS 인덱스와 관련 데이터를 Redis에 저장 (안전한 버전)"""
         try:
-            # 1. FAISS 인덱스 직렬화
-            try:
-                # 먼저 faiss.serialize_index 시도
-                index_bytes = faiss.serialize_index(index)
-                
-                # NumPy 배열인 경우 bytes로 변환
-                if isinstance(index_bytes, np.ndarray):
-                    index_bytes = index_bytes.tobytes()
-                elif not isinstance(index_bytes, bytes):
-                    # 다른 타입인 경우 pickle 사용
-                    index_bytes = pickle.dumps(index_bytes)
-                    
-            except Exception as serialize_error:
-                logger.warning(f"faiss.serialize_index 실패, pickle 사용: {serialize_error}")
-                # pickle로 대체
-                index_bytes = pickle.dumps(index)
+            # 1. FAISS 인덱스를 pickle로 직렬화 (가장 안전한 방법)
+            index_bytes = pickle.dumps(index)
             
             # 2. Redis에 저장
             redis_bin_client.set(cls._index_key(user_id), index_bytes)
@@ -71,26 +57,31 @@ class OptimizedFAISSCache:
             # 1. 인덱스 로드
             index_bytes = redis_bin_client.get(cls._index_key(user_id))
             if not index_bytes:
+                logger.debug(f"캐시된 인덱스가 없습니다: user_id={user_id}")
                 return None, None, None
             
-            # 2. 역직렬화 시도
+            # 2. pickle로 역직렬화 (가장 안전한 방법)
             try:
-                # 먼저 faiss.deserialize_index 시도
-                index = faiss.deserialize_index(index_bytes)
-            except Exception as deserialize_error:
-                logger.warning(f"faiss.deserialize_index 실패, pickle 사용: {deserialize_error}")
-                # pickle로 대체
                 index = pickle.loads(index_bytes)
+                logger.debug(f"인덱스 로드 성공: user_id={user_id}, 타입={type(index)}")
+            except Exception as pickle_error:
+                logger.error(f"pickle 역직렬화 실패: {pickle_error}")
+                return None, None, None
             
             # 3. 나머지 데이터 로드
-            chunk_texts_raw = redis_client.get(cls._chunk_text_key(user_id))
-            chunk_texts = json.loads(chunk_texts_raw) if chunk_texts_raw else []
-            
-            meta_raw = redis_client.get(cls._meta_key(user_id))
-            metadata = json.loads(meta_raw) if meta_raw else {}
-            
-            logger.info(f"✅ FAISS 인덱스 캐시 로드 완료: user_id={user_id}")
-            return index, chunk_texts, metadata
+            try:
+                chunk_texts_raw = redis_client.get(cls._chunk_text_key(user_id))
+                chunk_texts = json.loads(chunk_texts_raw) if chunk_texts_raw else []
+                
+                meta_raw = redis_client.get(cls._meta_key(user_id))
+                metadata = json.loads(meta_raw) if meta_raw else {}
+                
+                logger.info(f"✅ FAISS 인덱스 캐시 로드 완료: user_id={user_id}")
+                return index, chunk_texts, metadata
+                
+            except json.JSONDecodeError as json_error:
+                logger.error(f"JSON 파싱 실패: {json_error}")
+                return None, None, None
             
         except Exception as e:
             logger.error(f"❌ FAISS 인덱스 캐시 로드 실패: {e}")
@@ -98,14 +89,42 @@ class OptimizedFAISSCache:
     
     @classmethod
     def clear_cache(cls, user_id: str):
-        """사용자의 캐시 삭제"""
+        """사용자의 캐시 삭제 (안전한 버전)"""
         try:
+            # 기존 캐시 삭제
             redis_bin_client.delete(cls._index_key(user_id))
             redis_client.delete(cls._chunk_text_key(user_id))
             redis_client.delete(cls._meta_key(user_id))
+            
             logger.info(f"✅ FAISS 캐시 삭제 완료: user_id={user_id}")
+            
         except Exception as e:
             logger.error(f"❌ FAISS 캐시 삭제 실패: {e}")
+
+    @classmethod
+    def clear_all_cache(cls):
+        """모든 FAISS 캐시 삭제 (개발/테스트용)"""
+        try:
+            # 패턴으로 모든 관련 키 삭제
+            pattern = f"{cls.INDEX_PREFIX}:*"
+            keys = redis_bin_client.keys(pattern)
+            if keys:
+                redis_bin_client.delete(*keys)
+            
+            pattern = f"{cls.CHUNK_TEXT_PREFIX}:*"
+            keys = redis_client.keys(pattern)
+            if keys:
+                redis_client.delete(*keys)
+            
+            pattern = f"{cls.META_PREFIX}:*"
+            keys = redis_client.keys(pattern)
+            if keys:
+                redis_client.delete(*keys)
+            
+            logger.info("✅ 모든 FAISS 캐시 삭제 완료")
+            
+        except Exception as e:
+            logger.error(f"❌ 전체 캐시 삭제 실패: {e}")
 
 class OptimizedFAISSSearchService:
     """성능 최적화된 FAISS 검색 서비스"""
@@ -159,7 +178,7 @@ class OptimizedFAISSSearchService:
             return []
     
     async def _rebuild_cache_from_db(self, user_id: str):
-        """DB에서 캐시 재구성"""
+        """DB에서 캐시 재구성 (안전한 버전)"""
         session = get_session()
         
         try:
@@ -185,26 +204,39 @@ class OptimizedFAISSSearchService:
             }
             
             for chunk in chunks:
-                # embedding 로드
-                embedding = json.loads(chunk.embedding)
-                embeddings.append(embedding)
-                
-                # chunk 텍스트 재구성
-                chunk_text = self._reconstruct_chunk_text(session, chunk)
-                chunk_texts.append(chunk_text)
-                
-                metadata["chunk_ids"].append(chunk.chunk_id)
+                try:
+                    # embedding 로드
+                    embedding = json.loads(chunk.embedding)
+                    embeddings.append(embedding)
+                    
+                    # chunk 텍스트 재구성
+                    chunk_text = self._reconstruct_chunk_text(session, chunk)
+                    chunk_texts.append(chunk_text)
+                    
+                    metadata["chunk_ids"].append(chunk.chunk_id)
+                    
+                except Exception as chunk_error:
+                    logger.error(f"chunk {chunk.chunk_id} 처리 실패: {chunk_error}")
+                    continue
+            
+            if not embeddings:
+                logger.warning(f"처리할 수 있는 embedding이 없습니다: user_id={user_id}")
+                return
             
             # FAISS 인덱스 생성
-            embeddings_np = np.array(embeddings).astype("float32")
-            index = faiss.IndexFlatIP(embeddings_np.shape[1])
-            index.add(embeddings_np)
-            
-            # 캐시에 저장
-            OptimizedFAISSCache.save_faiss_index(user_id, index, chunks, chunk_texts, metadata)
-            
-            logger.info(f"✅ 캐시 재구성 완료: user_id={user_id}, chunks={len(chunks)}")
-            
+            try:
+                embeddings_np = np.array(embeddings).astype("float32")
+                index = faiss.IndexFlatIP(embeddings_np.shape[1])
+                index.add(embeddings_np)
+                
+                # 캐시에 저장
+                OptimizedFAISSCache.save_faiss_index(user_id, index, chunks, chunk_texts, metadata)
+                
+                logger.info(f"✅ 캐시 재구성 완료: user_id={user_id}, chunks={len(chunks)}")
+                
+            except Exception as index_error:
+                logger.error(f"FAISS 인덱스 생성 실패: {index_error}")
+                
         except Exception as e:
             logger.error(f"❌ 캐시 재구성 실패: {e}")
         finally:
