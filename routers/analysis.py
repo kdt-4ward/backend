@@ -98,9 +98,6 @@ async def get_couple_weekly_solution(
             )
 
         result = result.first()
-
-
-        result = result.first()
         
         user1_id, user2_id = get_users_by_couple_id(db, couple_id)
         user1_name = get_user_name(db, user1_id)
