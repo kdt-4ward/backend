@@ -172,3 +172,10 @@ class UserSignupRequest(BaseModel):
 class UserLoginRequest(BaseModel):
     email: EmailStr
     password: str
+
+class ChatUploadResponse(BaseModel):
+    success: bool
+    message: str
+    total_parsed: int
+    total_saved: int
+    couple_id: str

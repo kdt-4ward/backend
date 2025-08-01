@@ -12,6 +12,7 @@ from .survey import router as survey_router
 from .couple import router as couple_router
 from .analysis import router as analysis_router
 from .recommendation import router as recommendation_router
+from .upload_chat import router as upload_chat_router
 
 router = APIRouter()
 router.include_router(ai_chat_router, prefix="/chat", tags=["AI Chat"])
@@ -26,3 +27,4 @@ router.include_router(survey_router, prefix="/survey", tags=["Survey"])
 router.include_router(couple_router, prefix="/couple", tags=["Couple"])
 router.include_router(analysis_router, prefix="/analysis", tags=["Analysis"])
 router.include_router(recommendation_router, prefix="/recommendations", tags=["Recommendation"])
+router.include_router(upload_chat_router, tags=["Chat Upload"])
