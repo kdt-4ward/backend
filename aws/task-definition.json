@@ -43,25 +43,61 @@
                 {
                     "name": "DB_PASSWORD",
                     "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:525127693055:secret:rds!db-1aac4f22-a626-404f-b165-7245ce66a8be-S3552y:password::"
-                }
-            ],
-            "environment": [
+                },
                 {
                     "name": "REDIS_DB",
-                    "value": "0"
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/REDIS_DB"
                 },
                 {
                     "name": "REDIS_HOST",
-                    "value": "luvtune-redis-vosq56.serverless.apn2.cache.amazonaws.com"
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/REDIS_HOST"
                 },
                 {
-                    "name": "GOOGLE_CLIENT_SECRET",
-                    "value": "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"
+                    "name": "REDIS_PORT",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/REDIS_PORT"
                 },
                 {
-                    "name": "ACCESS_TOKEN_EXPIRE_MINUTES",
-                    "value": "60"
+                    "name": "DB_ENDPOINT",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/DB_ENDPOINT"
                 },
+                {
+                    "name": "DB_PORT",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/DB_PORT"
+                },
+                {
+                    "name": "DB_NAME",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/DB_NAME"
+                },
+                {
+                    "name": "APP_NAME",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/APP_NAME"
+                },
+                {
+                    "name": "SECRET_KEY",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:525127693055:secret:luvtune/jwt-secretkey-pgOzVR:SECRET_KEY::"
+                },
+                {
+                    "name": "ALGORITHM",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:525127693055:secret:luvtune/jwt-secretkey-pgOzVR:ALGORITHM::"
+                },
+                {
+                    "name": "APP_HOST",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/APP_HOST"
+                },
+                {
+                    "name": "APP_PORT",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/APP_HOST"
+                },
+                {
+                    "name": "S3_BUCKET_NAME",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/S3_BUCKET_NAME"
+                },
+                {
+                    "name": "S3_REGION",
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/S3_REGION"
+                }
+            ],
+            "environment": [
                 {
                     "name": "ACCESS_TOKEN_EXPIRE_SECONDS",
                     "value": "3600"
@@ -71,28 +107,8 @@
                     "value": "2592000"
                 },
                 {
-                    "name": "DB_NAME",
-                    "value": "test_db"
-                },
-                {
-                    "name": "GOOGLE_CLIENT_ID",
-                    "value": "20389543951-lp415huk9beqdqainbb9u15iam327qha.apps.googleusercontent.com"
-                },
-                {
-                    "name": "ALGORITHM",
-                    "value": "HS256"
-                },
-                {
                     "name": "ENVIRONMENT",
                     "value": "production"
-                },
-                {
-                    "name": "APP_NAME",
-                    "value": "LoveTune"
-                },
-                {
-                    "name": "SECRET_KEY",
-                    "value": "4ward-luvtune"
                 },
                 {
                     "name": "REFRESH_TOKEN_EXPIRE_DAYS",
@@ -101,34 +117,6 @@
                 {
                     "name": "DEBUG",
                     "value": "false"
-                },
-                {
-                    "name": "REDIS_PORT",
-                    "value": "6379"
-                },
-                {
-                    "name": "DB_ENDPOINT",
-                    "value": "database-1.cvgqs06qk6hf.ap-northeast-2.rds.amazonaws.com"
-                },
-                {
-                    "name": "APP_HOST",
-                    "value": "0.0.0.0"
-                },
-                {
-                    "name": "APP_PORT",
-                    "value": "80"
-                },
-                {
-                    "name": "GOOGLE_REDIRECT_URI",
-                    "value": "https://auth.expo.io/@soso12321/frontend"
-                },
-                {
-                    "name": "S3_BUCKET_NAME",
-                    "value": "4ward-s3"
-                },
-                {
-                    "name": "S3_REGION",
-                    "value": "ap-northeast-2"
                 },
                 {
                     "name": "SUM_TURN_THRESHOLD",

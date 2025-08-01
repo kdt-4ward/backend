@@ -25,11 +25,6 @@ class Settings(BaseSettings):
     redis_host: str = Field(default="localhost", env="REDIS_HOST")
     redis_port: int = Field(default=6379, env="REDIS_PORT")
     redis_db: int = Field(default=0, env="REDIS_DB")
-
-    # === Google OAuth ===
-    google_client_id: str = Field(..., env="GOOGLE_CLIENT_ID")
-    google_client_secret: str = Field(..., env="GOOGLE_CLIENT_SECRET")
-    google_redirect_uri: str = Field(..., env="GOOGLE_REDIRECT_URI")
     
     # === JWT ===
     secret_key: str = Field(..., env="SECRET_KEY")
@@ -58,7 +53,7 @@ class Settings(BaseSettings):
     faiss_turns_per_chunk: int = Field(..., env="FAISS_TURNS_PER_CHUNK")
     faiss_overlap_turns: int = Field(..., env="FAISS_OVERLAP_TURNS")
     faiss_threshold: float = Field(..., env="FAISS_THRESHOLD")
-    
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
