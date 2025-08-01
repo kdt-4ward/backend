@@ -7,7 +7,7 @@ from datetime import datetime
 from core.dependencies import get_db_session
 from utils.message_parser import parse_kakao_log
 from db.db_tables import Message, User
-from db.crud import get_couple_id_by_user_id, get_partner_id_by_user_id
+from db.crud import get_couple_id_by_user_id
 from models.schema import ChatUploadResponse
 
 router = APIRouter(prefix="/chat-upload")
@@ -38,7 +38,7 @@ async def upload_kakao_chat_log(
         # 사용자의 커플 ID 조회
         couple_id = get_couple_id_by_user_id(db, user_id)
         user_name = db.query(User).filter(User.user_id == user_id).first().name
-        partner_id = get_partner_id_by_user_id(db, user_id)
+        partner_id = db.query(User).filter(User.couple_id == couple_id, User.user_id != user_id).first().user_id
 
         if not couple_id:
             raise HTTPException(status_code=404, detail="사용자의 커플 정보를 찾을 수 없습니다.")
