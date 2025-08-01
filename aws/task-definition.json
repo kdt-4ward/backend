@@ -86,7 +86,7 @@
                 },
                 {
                     "name": "APP_PORT",
-                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/APP_HOST"
+                    "valueFrom": "arn:aws:ssm:ap-northeast-2:525127693055:parameter/luvtune/APP_PORT"
                 },
                 {
                     "name": "S3_BUCKET_NAME",
