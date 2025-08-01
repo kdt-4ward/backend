@@ -37,14 +37,17 @@ async def upload_kakao_chat_log(
         
         # 사용자의 커플 ID 조회
         couple_id = get_couple_id_by_user_id(db, user_id)
-        user_name = db.query(User).filter(User.user_id == user_id).first().name
+        user = db.query(User).filter(User.user_id == user_id).first()
+        user_name = user.name
         partner_id = db.query(User).filter(User.couple_id == couple_id, User.user_id != user_id).first().user_id
 
+        if user.email is not None:
+            raise HTTPException(status_code=400, detail="kakao 로그인 사용자가 아닙니다.")
+        
         if not couple_id:
             raise HTTPException(status_code=404, detail="사용자의 커플 정보를 찾을 수 없습니다.")
         
-        # 이름 매핑 딕셔너리 생성 (상대방 이름 -> user_id)
-        # 실제 구현에서는 상대방의 user_id를 조회해야 함
+        # 이름 매핑 딕셔너리 생성
         name2id = {user_name: user_id}
         
         # 메시지 파싱
