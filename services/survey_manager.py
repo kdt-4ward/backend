@@ -11,6 +11,7 @@ from services.ai.user_personality_summary import summarize_personality_from_tags
 from db.crud import get_user_traits, save_user_trait_summary
 from core.redis_v2.persona_config_service import PersonaConfigService
 from core.redis_v2.redis import redis_client
+from langchain.output_parsers import JsonOutputParser
 
 logger = get_logger(__name__)
 
@@ -154,14 +155,14 @@ class SurveyManager:
 
 ---
 
-질문을 선택한 경우, 다음 형식으로 응답하세요:
+질문을 선택한 경우, 다음 json 형식으로 응답하세요:
 
 {{
   "selected_question_id": "선택한 질문의 ID",
   "reasoning": "선택 이유에 대한 간단한 설명"
 }}
 
-선택할 만한 질문이 없는 경우, 자연스러운 흐름에 맞는 질문을 새로 생성한 뒤 다음 형식으로 응답하세요:
+선택할 만한 질문이 없는 경우, 자연스러운 흐름에 맞는 질문을 새로 생성한 뒤 다음 json 형식으로 응답하세요:
 
 {{
   "selected_question_id": null,
@@ -169,13 +170,15 @@ class SurveyManager:
   "generated_question": "생성한 질문 문장"
 }}
 """
-            
+
+            json_output_parser = JsonOutputParser()
+            logger.info(f"[SurveyManager] json_output_parser: {prompt}")
             # OpenAI 호출
             response, _ = await call_openai_completion([{"role": "user", "content": prompt}])
             
             # 응답 파싱
             try:
-                result = json.loads(response)
+                result = json_output_parser.parse(response)
                 selected_id = result.get("selected_question_id")
                 reasoning = result.get("reasoning", "")
                 
