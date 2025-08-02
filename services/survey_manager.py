@@ -180,6 +180,9 @@ class SurveyManager:
             try:
                 result = json_output_parser.parse(response)
                 selected_id = result.get("selected_question_id")
+                if isinstance(selected_id, str):
+                    selected_id = int(selected_id.strip())
+                    
                 reasoning = result.get("reasoning", "")
                 
                 if selected_id:
