@@ -11,7 +11,7 @@ from services.ai.user_personality_summary import summarize_personality_from_tags
 from db.crud import get_user_traits, save_user_trait_summary
 from core.redis_v2.persona_config_service import PersonaConfigService
 from core.redis_v2.redis import redis_client
-from langchain.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import JsonOutputParser
 
 logger = get_logger(__name__)
 
@@ -172,7 +172,7 @@ class SurveyManager:
 """
 
             json_output_parser = JsonOutputParser()
-            logger.info(f"[SurveyManager] json_output_parser: {prompt}")
+            logger.info(f"[SurveyManager] Input prompt: {prompt}")
             # OpenAI 호출
             response, _ = await call_openai_completion([{"role": "user", "content": prompt}])
             
