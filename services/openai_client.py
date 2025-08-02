@@ -8,6 +8,7 @@ from typing import List, Optional
 from openai import BadRequestError
 from utils.log_utils import get_logger
 import json
+import asyncio
 
 logger = get_logger(__name__)
 
@@ -112,7 +113,11 @@ async def openai_completion_with_function_call(
                 args["query"] = history[-1]["content"]
 
             # 실제 function 실행
-            result = await function_map[func_name](**args)
+            if func_name == "save_survey_response":
+                result = "비동기 처리 중" 
+                asyncio.create_task(function_map[func_name](**args))
+            else:
+                result = await function_map[func_name](**args)
             # history에 function 결과 append
             if bot is not None:
                 function_msg_id = bot.save_to_db(bot.user_id, "function", json.dumps({"name": func_name, "result": result}, ensure_ascii=False))
