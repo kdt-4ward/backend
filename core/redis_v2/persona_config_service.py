@@ -27,6 +27,10 @@ class PersonaConfigService:
             redis_client.set(self.redis_key, json.dumps(config), ex=3600)
         return config
 
+    def invalidate_cache(self):
+        """캐시를 무효화합니다."""
+        redis_client.delete(self.redis_key)
+
     def _load_from_db(self):
         with SessionLocal() as db:
             config = db.query(PersonaConfig).filter_by(couple_id=self.couple_id).first()
