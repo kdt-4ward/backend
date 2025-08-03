@@ -32,6 +32,15 @@ app = FastAPI(
 def health_check():
     return {"status": "ok"}
 
+# @app.on_event("startup")
+# async def startup_event():
+#     """애플리케이션 시작 시 스케줄러 실행"""
+#     asyncio.create_task(run_scheduler_background())
+
+# @app.on_event("shutdown")
+# async def shutdown_event():
+#     """애플리케이션 종료 시 스케줄러 중지"""
+#     stop_scheduler()
 
 # CORS
 app.add_middleware(
