@@ -4,11 +4,7 @@ from routers import router as api_router
 from db.db_tables import Base
 from db.db import engine
 from core.settings import settings
-from db.db_utils import create_database_if_not_exists, drop_database
-from test_data.seed_data import insert_test_data_to_db
-from test_data.insert_scenario_data import insert_scenario_data
-from jobs.daily_analysis import test_weekly_couplechat_analysis_from_start_date
-from test_data.process_analysis_data import process_analysis_data
+from services.scheduler_advanced import advanced_scheduler
 import logging
 import sys
     
@@ -35,12 +31,12 @@ def health_check():
 # @app.on_event("startup")
 # async def startup_event():
 #     """애플리케이션 시작 시 스케줄러 실행"""
-#     asyncio.create_task(run_scheduler_background())
+#     advanced_scheduler.start()
 
 # @app.on_event("shutdown")
 # async def shutdown_event():
 #     """애플리케이션 종료 시 스케줄러 중지"""
-#     stop_scheduler()
+#     advanced_scheduler.shutdown()
 
 # CORS
 app.add_middleware(
